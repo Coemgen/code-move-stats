@@ -1,0 +1,19 @@
+{
+  "name": "codemovecount-v2",
+  "version": "1.0.0",
+  "description": "Google Apps Script project for Weekend Stats compiling utilities.",
+  "main": "YearlyStatsSetup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Coemgen/CodeMoveStats.git"
+  },
+  "author": "Kevin Griffin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Coemgen/CodeMoveStats/issues"
+  },
+  "homepage": "https://github.com/Coemgen/CodeMoveStats#readme"
+}
