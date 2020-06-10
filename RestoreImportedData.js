@@ -1,50 +1,71 @@
-/*jslint long:true, white:true*/
-
-"use strict";
+/*jslint browser:true, long:true, white:true*/
+/*global DriveApp, MonthlyRun, PropertiesService*/
 
 /**
- * @file Driver for the updateYearlyStatsFile function.
+ * @file Code for relinking monthly totals to a new yearly stats spreadsheet.
+ * Relinking should only be needed to repair data corruption.
  */
- 
-var DriveApp;
-var PropertiesService;
-var updateYearlyStatsFile;
-var YEAR_TO_RESTORE = 2020;
+
+/**
+ * @namespace RestoreImportedData
+ */
 
 // eslint-disable-next-line no-unused-vars
-function restoreImportedDataMain() {
-  const dataFolder = DriveApp.getFolderById(
-    PropertiesService.getScriptProperties()
-    .getProperty("dataFolderId")
-  );
-  const yearFolder = dataFolder.getFoldersByName(
-    YEAR_TO_RESTORE
-  ).next();
-  const fileIterator = yearFolder.getFiles();
-  var fileNameIdArr = [];
-  var fileObj = {};
-  var fileName = "";
-  var yearlyStatsFile = yearFolder.getFilesByName(
-    YEAR_TO_RESTORE + "-stats"
-  ).next();
+const RestoreImportedData = (
 
-  while (fileIterator.hasNext() === true) {
-    fileObj = fileIterator.next();
-    fileName = fileObj.getName();
-    if (fileName.match(/^\d{4}-\d{2}$/) !== null) {
-      fileNameIdArr.push([fileName, fileObj.getId()]);
-    }
-  }
-  fileNameIdArr.sort().forEach(
-    function (fileNameId, index) {
-      var fileId = fileNameId[1];
+  function (DriveApp, MonthlyRun, PropertiesService) {
+    "use strict";
 
-      fileName = fileNameId[0];
-      updateYearlyStatsFile(yearlyStatsFile, fileId, index, fileName);
+    /**
+     * Relinks a deleted yearly stats spreadsheet to its associated monthly
+     * totals spreadsheets.  This should only need to be run if there is a
+     * problem with the link between yearly stats and monthly totals sheets.
+     * @function main
+     * @memberof! RestoreImportedData
+     * @public
+     * @param {(number|string)} yearToRestore - YYYY format
+     */
+    // eslint-disable-next-line no-unused-vars
+    function main(yearToRestore) {
+      const dataFolder = DriveApp.getFolderById(
+        PropertiesService.getScriptProperties()
+        .getProperty("dataFolderId")
+      );
+      const yearFolder = dataFolder.getFoldersByName(yearToRestore).next();
+      const fileIterator = yearFolder.getFiles();
+      var fileNameIdArr = [];
+      var fileObj = {};
+      var fileName = "";
+      var yearlyStatsFile = yearFolder.getFilesByName(
+        yearToRestore + "-stats"
+      ).next();
+
+      while (fileIterator.hasNext() === true) {
+        fileObj = fileIterator.next();
+        fileName = fileObj.getName();
+        if (fileName.match(/^\d{4}-\d{2}$/) !== null) {
+          fileNameIdArr.push([fileName, fileObj.getId()]);
+        }
+      }
+      fileNameIdArr.sort().forEach(
+        function (fileNameId, index) {
+          var fileId = fileNameId[1];
+          // TODO: extract month offset from month name
+          var month = index;
+
+          fileName = fileNameId[0];
+          MonthlyRun.updateYearlyStatsFile(
+            yearlyStatsFile, fileId, month, fileName
+          );
+
+          return undefined;
+        }
+      );
 
       return undefined;
     }
-  );
 
-  return undefined;
-}
+    return Object.freeze({
+      main
+    });
+  }(DriveApp, MonthlyRun, PropertiesService));
