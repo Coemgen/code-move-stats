@@ -15,7 +15,7 @@
 /* jshing ignore:end */
 
 /**
- * @namespace Staff
+ * @namespace StaffUtilities
  */
 
 /**
@@ -27,7 +27,7 @@
  */
 
 // eslint-disable-next-line no-unused-vars
-const Staff = (
+const StaffUtilities = (
 
   function (AdminDirectory, GroupsApp) {
     "use strict";

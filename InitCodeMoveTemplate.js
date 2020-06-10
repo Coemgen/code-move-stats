@@ -1,5 +1,5 @@
 /*jslint browser:true, long:true, white:true*/
-/*global PropertiesService, SpreadsheetApp, Staff*/
+/*global PropertiesService, SpreadsheetApp, StaffUtilities*/
 
 /**
  * @file Code for initialization of the Code Move Counts Template Spreadsheet.
@@ -327,8 +327,8 @@ const InitCodeMoveTemplate = (
       const referencesSheet = spreadsheet.getSheetByName("References");
       const email = PropertiesService.getScriptProperties()
         .getProperty("groupEmail");
-      const staffObjArr = Staff.getObjArr(email);
-      const staffNameArr = Staff.getNameArr(staffObjArr);
+      const staffObjArr = StaffUtilities.getObjArr(email);
+      const staffNameArr = StaffUtilities.getNameArr(staffObjArr);
       const dirRingArr = getColumnArray(referencesSheet, "A:A");
       const platformArr = getColumnArray(referencesSheet, "B:B");
       const peMdNonArr = getColumnArray(referencesSheet, "C:C").slice(1);
