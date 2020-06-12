@@ -22,7 +22,7 @@ function monthlyRunMain() {
 }
 
 /**
- * Run this periodically to add or remove staff from the montly totals
+ * Run this periodically to add or remove staff from the monthly totals
  * template spreadsheet.
  */
 // eslint-disable-next-line no-unused-vars

@@ -134,15 +134,12 @@ const MonthlyRun = (
                 + "\")"
               );
               
+              // set protections
               sheet.protect().setDomainEdit(false)
               .addEditor(email);
               sheet.getRange("A1:Z2").protect()
               .setDomainEdit(false)
               .removeEditor(email);
-
-//              sheet.getRange("A3:Z994").protect()
-//              .setDomainEdit(false)
-//              .addEditor(email);
 
               return undefined;
             }
@@ -166,9 +163,13 @@ const MonthlyRun = (
      */
     function updateYearlyStatsFile(
       yearlyStatsFile, codeMoveFileId, month, yearMonthStr) {
-      const yearlyStatsSheet = SpreadsheetApp.openById(yearlyStatsFile.getId())
-        .getSheetByName("Imported Data");
+      const spreadsheet = SpreadsheetApp.openById(yearlyStatsFile.getId());
+      const weekendDaysSheet = spreadsheet.getSheetByName("Weekend Days");
+      const yearlyStatsSheet = spreadsheet.getSheetByName("Imported Data");
       const row = month + 1;
+      
+      weekendDaysSheet.getRange("A1")
+      .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(0, 4));
 
       yearlyStatsSheet.getRange("A" + row).setValue(yearMonthStr);
 

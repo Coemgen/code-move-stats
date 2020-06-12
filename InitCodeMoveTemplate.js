@@ -339,10 +339,7 @@ const InitCodeMoveTemplate = (
 
       // add staff sheets
       addStaffSheets(staffObjArr, spreadsheet);
-
-      // set user permissions
-      //      setUserPermissions(staffObjArr, spreadsheet);
-
+      
       // populate staff rows
       populateStaffRows(staffNameArr, totalsSheet, headerMatrix, spreadsheet);
 
