@@ -48,14 +48,14 @@ const RestoreImportedData = (
         }
       }
       fileNameIdArr.sort().forEach(
-        function (fileNameId, index) {
+        function (fileNameId) {
           var fileId = fileNameId[1];
-          // TODO: extract month offset from month name
-          var month = index;
+          // filename months are numbered from 1..12
+          var monthOffset = Number(fileNameId[0].slice(5)) - 1;
 
           fileName = fileNameId[0];
           MonthlyRun.updateYearlyStatsFile(
-            yearlyStatsFile, fileId, month, fileName
+            yearlyStatsFile, fileId, monthOffset, fileName
           );
 
           return undefined;
