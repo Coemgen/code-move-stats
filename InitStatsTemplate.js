@@ -212,15 +212,19 @@ const InitStatsTemplate = (
         function (ignore, index) {
           const letter = String.fromCharCode(66 + index);
           const column = 1 + index;
-          sheet.getRange(letter + "36:" + letter + "37").setValues(
+          sheet.getRange(letter + "36:" + letter + "38").setValues(
             [
-              // AL Ring Delection total
+              // AL HCIS Deletion total
               ["=IF('Imported Data'!AL" + column
                 + "<1, 0, 'Imported Data'!AL" + column + ")"
               ],
-              // AM Test Setup Total
+              // AM Ring Deletion Total
               ["=IF('Imported Data'!AM" + column
                 + "<1, 0, 'Imported Data'!AM" + column + ")"
+              ],
+              // AN Test Setup Total
+              ["=IF('Imported Data'!AN" + column
+                + "<1, 0, 'Imported Data'!AN" + column + ")"
               ]
             ]              
           );

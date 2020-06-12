@@ -205,18 +205,25 @@ const MonthlyRun = (
         + "\",\"Totals!H31\")"
       );
 
-      // H33  Ring Deletion Total
+      // H33 HCIS Deletion Total
       yearlyStatsSheet.getRange("AL" + row).setFormula("=IMPORTRANGE("
         + "\"https://docs.google.com/spreadsheets/d/"
         + codeMoveFileId
         + "\",\"Totals!H33\")"
       );
       
-      // H34 TEST Setup Total 
+      // H34 Ring Deletion Total
       yearlyStatsSheet.getRange("AM" + row).setFormula("=IMPORTRANGE("
         + "\"https://docs.google.com/spreadsheets/d/"
         + codeMoveFileId
         + "\",\"Totals!H34\")"
+      );
+      
+      // P34 TEST Setup Total 
+      yearlyStatsSheet.getRange("AN" + row).setFormula("=IMPORTRANGE("
+        + "\"https://docs.google.com/spreadsheets/d/"
+        + codeMoveFileId
+        + "\",\"Totals!P34\")"
       );
       
       return undefined;
