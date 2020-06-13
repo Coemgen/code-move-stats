@@ -212,7 +212,7 @@ const InitStatsTemplate = (
         function (ignore, index) {
           const letter = String.fromCharCode(66 + index);
           const column = 1 + index;
-          sheet.getRange(letter + "36:" + letter + "37").setValues(
+          sheet.getRange(letter + "36:" + letter + "38").setValues(
             [
               // AL Ring Deletion Total
               ["=IF('Imported Data'!AL" + column

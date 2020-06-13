@@ -258,6 +258,31 @@ const InitCodeMoveTemplate = (
     /**
      * Wrapper for calling getFooterFormula to get a formula string for adding to
      * a footer totals cell.
+     * @function setHcisDeletionsTotal
+     * @memberof InitCodeMoveTemplate
+     * @private
+     * @param {Object} totalsSheet
+     * @param {string[]} staffNameArr
+     * @returns {undefined}
+     */
+    function setHcisDeletionsTotal(totalsSheet, staffNameArr) {
+      const action = "HCIS Deletion";
+      const cell = "H33";
+
+      const matchObj1 = {
+        "key": action,
+        "cell": "B2:B"
+      };
+      const formulaStr = getFooterFormula(staffNameArr, matchObj1);
+
+      totalsSheet.getRange(cell).setValue(formulaStr);
+
+      return undefined;
+    }
+
+    /**
+     * Wrapper for calling getFooterFormula to get a formula string for adding to
+     * a footer totals cell.
      * @function setRingDeletionsTotal
      * @memberof InitCodeMoveTemplate
      * @private
@@ -266,8 +291,8 @@ const InitCodeMoveTemplate = (
      * @returns {undefined}
      */
     function setRingDeletionsTotal(totalsSheet, staffNameArr) {
-      const action = "Dir./Ring Deletion";
-      const cell = "H33";
+      const action = "Ring Deletion";
+      const cell = "H34";
 
       const matchObj1 = {
         "key": action,
@@ -293,7 +318,7 @@ const InitCodeMoveTemplate = (
     function setTestSetupsTotal(totalsSheet, staffNameArr) {
       const action = "Dir./Ring Setup";
       const ring = "Test";
-      const cell = "H34";
+      const cell = "P34";
       const matchObj1 = {
         "key": action,
         "cell": "B2:B"
@@ -350,6 +375,7 @@ const InitCodeMoveTemplate = (
         "Client/Server", "Dir./Ring Update", "H30");
       setUpdatesTotal(totalsSheet, staffNameArr,
         "Expanse", "Dir./Ring Update", "H31");
+      setHcisDeletionsTotal(totalsSheet, staffNameArr);
       setRingDeletionsTotal(totalsSheet, staffNameArr);
       setTestSetupsTotal(totalsSheet, staffNameArr);
 
