@@ -214,15 +214,15 @@ const InitStatsTemplate = (
           const column = 1 + index;
           sheet.getRange(letter + "36:" + letter + "38").setValues(
             [
-              // AL HCIS Deletion total
+              // AL Ring Deletion Total
               ["=IF('Imported Data'!AL" + column
                 + "<1, 0, 'Imported Data'!AL" + column + ")"
               ],
-              // AM Ring Deletion Total
+              // AM Test Setup Total
               ["=IF('Imported Data'!AM" + column
                 + "<1, 0, 'Imported Data'!AM" + column + ")"
               ],
-              // AN Test Setup Total
+              // AN HCIS Deletion total
               ["=IF('Imported Data'!AN" + column
                 + "<1, 0, 'Imported Data'!AN" + column + ")"
               ]
