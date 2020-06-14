@@ -112,7 +112,7 @@ const MonthlyRun = (
               const row = FIRST_STAFF_ROW + index; /* jshint ignore:line */
               const sheet = spreadsheet.getSheetByName(name);
               const email = sheet.getRange("B1").getValue();
-              
+
               spreadsheet.getSheetByName("Totals").getRange("A" + row).setValue(
                 "=HYPERLINK(\""
                 + "https://docs.google.com/spreadsheets/d/"
@@ -133,13 +133,17 @@ const MonthlyRun = (
                 + "Totals"
                 + "\")"
               );
-              
+
               // set protections
-              sheet.protect().setDomainEdit(false)
-              .addEditor(email);
-              sheet.getRange("A1:Z2").protect()
-              .setDomainEdit(false)
-              .removeEditor(email);
+              try {
+                sheet.protect().setDomainEdit(false)
+                  .addEditor(email);
+                sheet.getRange("A1:Z2").protect()
+                  .setDomainEdit(false)
+                  .removeEditor(email);
+              } catch (e) {
+                console.log(e);
+              }
 
               return undefined;
             }
@@ -167,9 +171,9 @@ const MonthlyRun = (
       const weekendDaysSheet = spreadsheet.getSheetByName("Weekend Days");
       const yearlyStatsSheet = spreadsheet.getSheetByName("Imported Data");
       const row = month + 1;
-      
+
       weekendDaysSheet.getRange("A1")
-      .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(0, 4));
+        .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(0, 4));
 
       yearlyStatsSheet.getRange("A" + row).setValue(yearMonthStr);
 
@@ -181,7 +185,7 @@ const MonthlyRun = (
       );
 
       // H26 PE/MD Code Move Total (calculated on Stats Weekend Stats sheet)
-      
+
       // H27 Application Code Move Total (calculated on Stats Weekend Stats sheet)
 
       // H29 Magic Update Total 
@@ -211,21 +215,21 @@ const MonthlyRun = (
         + codeMoveFileId
         + "\",\"Totals!H34\")"
       );
-      
+
       // P34 TEST Setup Total 
       yearlyStatsSheet.getRange("AM" + row).setFormula("=IMPORTRANGE("
         + "\"https://docs.google.com/spreadsheets/d/"
         + codeMoveFileId
         + "\",\"Totals!P34\")"
       );
-      
+
       // H33 HCIS Deletion Total
       yearlyStatsSheet.getRange("AN" + row).setFormula("=IMPORTRANGE("
         + "\"https://docs.google.com/spreadsheets/d/"
         + codeMoveFileId
         + "\",\"Totals!H33\")"
       );
-      
+
       return undefined;
     }
 
@@ -266,8 +270,8 @@ const MonthlyRun = (
 
       updateYearlyStatsFile(
         yearlyStatsFile, codeMoveFileId, month, yearMonthStr);
-      
-//      SendEmail.main(yearlyStatsFile, monthStr, "testing");
+
+      //      SendEmail.main(yearlyStatsFile, monthStr, "testing");
 
       return undefined;
     }
