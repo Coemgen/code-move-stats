@@ -1,5 +1,5 @@
 /*jslint browser:true, long:true, white:true*/
-/*global DriveApp, FIRST_STAFF_ROW, PropertiesService, SpreadsheetApp*/
+/*global DriveApp, FIRST_STAFF_ROW, Logger, PropertiesService, SpreadsheetApp*/
 
 /**
  * @file Code for building the file structure used for compiling and viewing
@@ -153,6 +153,13 @@ const MonthlyRun = (
       return codeMoveFile.getId();
     }
 
+    // --------------------
+    // 2020.06.14
+    function getHyperlinkFormula(url, label) {
+      return "=HYPERLINK(\"" + url + "\",\"" + label + "\")";
+    }
+    // --------------------
+
     /**
      * Populate yearly stats Spreadsheet's Weekend Days sheet with references to
      * cells in the year's monthly data sheets.
@@ -175,7 +182,32 @@ const MonthlyRun = (
       weekendDaysSheet.getRange("A1")
         .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(0, 4));
 
-      yearlyStatsSheet.getRange("A" + row).setValue(yearMonthStr);
+      yearlyStatsSheet.getRange("A" + row)
+        .setValue(yearMonthStr);
+
+      // --------------------
+      // 2020.06.14 - Set month date to link formula, that will also be used for month name in *OHS Stats sheet*
+      var codeMoveSheetUrl = "https://docs.google.com/spreadsheets/d/" + codeMoveFileId;
+      var codeMoveSheetLabel = yearMonthStr;
+      var codeMoveSheetHyperlinkFormula = getHyperlinkFormula(
+        codeMoveSheetUrl, codeMoveSheetLabel);
+
+      yearlyStatsSheet.getRange("A" + row)
+        .setFormula(codeMoveSheetHyperlinkFormula);
+
+      // 2020.06.14 - Set Month Column Header per section (minus Miscellaneous) to Month Hyperlink on the *Weekend Days sheet*
+      var colLetter = String.fromCharCode(66 + (row - 1));
+      Logger.log("Column Letter: " + colLetter);
+      var colNumbers = [2, 13, 24, 27, 32, 35];
+
+      for (var i = 0; i < colNumbers.length; i++) {
+        var cellLocation = colLetter + colNumbers[i];
+        var cellValue = weekendDaysSheet.getRange(cellLocation).getValue();
+
+        weekendDaysSheet.getRange(cellLocation)
+          .setFormula(getHyperlinkFormula(codeMoveSheetUrl, cellValue));
+      }
+      // --------------------
 
       // Grand Totals
       yearlyStatsSheet.getRange("B" + row).setFormula("=IMPORTRANGE("
@@ -188,7 +220,7 @@ const MonthlyRun = (
 
       // H27 Application Code Move Total (calculated on Stats Weekend Stats sheet)
 
-      // H29 Magic Update Total 
+      // H29 Magic Update Total
       yearlyStatsSheet.getRange("AI" + row).setFormula("=IMPORTRANGE("
         + "\"https://docs.google.com/spreadsheets/d/"
         + codeMoveFileId
@@ -216,7 +248,7 @@ const MonthlyRun = (
         + "\",\"Totals!H34\")"
       );
 
-      // P34 TEST Setup Total 
+      // P34 TEST Setup Total
       yearlyStatsSheet.getRange("AM" + row).setFormula("=IMPORTRANGE("
         + "\"https://docs.google.com/spreadsheets/d/"
         + codeMoveFileId
