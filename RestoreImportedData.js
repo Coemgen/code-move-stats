@@ -1,5 +1,5 @@
 /*jslint browser:true, long:true, white:true*/
-/*global DriveApp, MonthlyRun, PropertiesService*/
+/*global DriveApp, InitStatsTemplate, MonthlyRun, PropertiesService*/
 
 /**
  * @file Code for relinking monthly totals to a new yearly stats spreadsheet.
@@ -57,6 +57,12 @@ const RestoreImportedData = (
           MonthlyRun.updateYearlyStatsFile(
             yearlyStatsFile, fileId, monthOffset, fileName
           );
+
+          // ---------------
+          // 2020.06.14
+          // Initialize the Yearly Stats for each month - fixes broken formula references because a spreadsheet was deleted =SUM(!REF:!REF)
+          InitStatsTemplate.main(yearlyStatsFile);
+          // ---------------
 
           return undefined;
         }
