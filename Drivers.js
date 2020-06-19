@@ -94,3 +94,18 @@ function emailTest() {
   
   return undefined;
 }
+
+
+/**
+ * Use this function to replace =IMPORTRANGE formula with static cell values
+ * to remove "allow access" button.
+ */
+// eslint-disable-next-line no-unused-vars
+function removeImportRangeMain() {
+  "use strict";
+  RemoveImportRange.main(2020);
+  
+  // Actual use may be:
+  // 1.) restoreImportedDataMain() - to connect/update data with current and previous monthly sheet data
+  // 2.) removeImportRangeMain() - remove ImportRange/"allow access" dependency
+}
