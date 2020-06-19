@@ -303,7 +303,7 @@ const MonthlyRun = (
       updateYearlyStatsFile(
         yearlyStatsFile, codeMoveFileId, month, yearMonthStr);
 
-      //      SendEmail.main(yearlyStatsFile, monthStr, "testing");
+      SendEmail.main(yearlyStatsFile, monthStr);
 
       return undefined;
     }
