@@ -1,11 +1,12 @@
 /*jslint browser:true, long:true, white:true*/
 /*global
-DriveApp, GmailApp, PropertiesService, StaffUtilities
+DriveApp, MailApp, PropertiesService, StaffUtilities
 */
 // eslint-disable-next-line no-unused-vars
 const SendEmail = (
-  function (DriveApp, GmailApp, PropertiesService) {
+  function (DriveApp, MailApp, PropertiesService) {
 
+    // eslint-disable-next-line max-statements
     function main(yearlyStatsFile, monthStr, flagTesting) {
 
       // --- Gather Email Addresses --
@@ -32,12 +33,19 @@ const SendEmail = (
           ? userEmailAddress[0]
           : recipients = userEmailAddress.join(",");
 
-        subject = 'MONTHLY: {file.getName} is now available for editing in Google Drive!';
-        subject = subject.replace(/\{file.getName\}/g, yearlyStatsFile.getName());
+        subject = "MONTHLY: {file.getName} is now available \
+for editing in Google Drive!";
+        subject = subject.replace(
+          /\{file.getName\}/g, yearlyStatsFile.getName());
 
-        body = '<p>Click the following link to access the new sheet: <a href="{file.getUrl}">{file.getName}</a></p>\
-              <div><br></div>\
-<div>Hi everyone,<br><br>This is your monthly reminder message of the Weekend Code Move Count Spreadsheet! The new spreadsheet tab for {getMonthInfo} has been created. Please remember to update the spreadsheet each and every weekend. Thanks</div>';
+        body = "<p>Click the following link to access the new sheet:";
+        body += " <a href=\"{file.getUrl}\">{file.getName}</a>";
+        body += "</p><div><br></div>";
+        body += "<div>Hi everyone,<br><br>This is your monthly reminder";
+        body += " message of the Weekend Code Move Count Spreadsheet! The new";
+        body += " spreadsheet tab for {getMonthInfo} has been created. Please";
+        body += " remember to update the spreadsheet each and every weekend.";
+        body += " Thanks</div>";
         body = body.replace(/\{file.getName\}/g, yearlyStatsFile.getName())
           .replace(/\{getMonthInfo\}/g, monthStr)
           .replace(/\{file.getUrl\}/g, yearlyStatsFile.getUrl());
@@ -47,7 +55,7 @@ const SendEmail = (
         };
 
         // ---- Use Gamil Service to send email(s) ----
-        GmailApp.sendEmail(recipients, subject, body, options);
+        MailApp.sendEmail(recipients, subject, body, options);
       }
 
     }
@@ -55,4 +63,4 @@ const SendEmail = (
       main
     });
 
-  }(DriveApp, GmailApp, PropertiesService));
+  }(DriveApp, MailApp, PropertiesService));

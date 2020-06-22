@@ -172,6 +172,7 @@ const MonthlyRun = (
      * @param {string} yearMonthStr - YYYY-MM format
      * @returns {undefined}
      */
+    // eslint-disable-next-line max-statements
     function updateYearlyStatsFile(
       yearlyStatsFile, codeMoveFileId, month, yearMonthStr) {
       const spreadsheet = SpreadsheetApp.openById(yearlyStatsFile.getId());
