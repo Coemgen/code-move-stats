@@ -194,6 +194,7 @@ const MonthlyRun = (
       yearlyStatsSheet.getRange("A" + row)
         .setFormula(codeMoveSheetHyperlinkFormula);
 
+      // link month's column headers to its source spreadsheet
       colNumbers.forEach(
         function (colNumber) {
           const cellLocation = colLetter + colNumber.toString();
