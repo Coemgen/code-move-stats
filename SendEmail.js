@@ -54,9 +54,9 @@ const SendEmail = (
      * @public
      * @param {string} codeMoveFileId 
      * @param {string} monthStr 
-     * @param {string} testFlag
+     * @param {string} distType live, test, or undefined
      */
-    function main(codeMoveFileId, monthStr, testFlag) {
+    function main(codeMoveFileId, monthStr, distType) {
 
       const curMonth = formatMonthStr(monthStr);
       const subject = `MONTHLY: ${curMonth} is now available
@@ -79,14 +79,16 @@ const SendEmail = (
       };
       let recipients = "";
 
-      if (testFlag !== undefined) {
+      if (distType === "live") {
+        recipients = StaffUtilities.getObjArr(
+            PropertiesService.getScriptProperties()
+            .getProperty("groupEmail")
+          ).map((userObj) => userObj.email)
+          .toString();
+      } else if (distType === "test") {
         recipients = "jeburns@meditech.com,kgriffin@meditech.com";
       } else {
-        recipients = StaffUtilities.getObjArr(
-          PropertiesService.getScriptProperties()
-          .getProperty("groupEmail")
-        ).map((userObj) => userObj.email)
-        .toString();
+        recipients = "kevin.griffin@gmail.com";
       }
 
       MailApp.sendEmail(recipients, subject, body, options);

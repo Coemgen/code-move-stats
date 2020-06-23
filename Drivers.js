@@ -92,7 +92,7 @@ function emailTest() {
 
   // TODO: this should be sending a reminder for the monthly code moves sheet
 
-  SendEmail.main(yearlyStatsFile, "Jun", "testing");
+  SendEmail.main(yearlyStatsFile, "Jun", "test");
   
   return undefined;
 }
