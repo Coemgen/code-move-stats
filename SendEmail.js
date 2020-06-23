@@ -59,21 +59,26 @@ const SendEmail = (
     function main(codeMoveFileId, monthStr, distType) {
 
       const curMonth = formatMonthStr(monthStr);
-      const subject = `MONTHLY: ${curMonth} is now available
-      for editing in Google Drive!`;
-      const body = `Hi everyone,<br><br>This is your monthly reminder message 
-      for the Weekend Code Move Count Spreadsheet! A new spreadsheet has been 
-      created for ${curMonth} at url 
-      ${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}. 
-      Please remember to update the spreadsheet each and every weekend. 
-      Thanks`;
-      const htmlBody = `<p>Click the following link to access the new sheet: 
-        <a href="${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}">
-        ${curMonth}</a></p><div><br>
-        </div><div>Hi everyone,<br><br>This is your monthly reminder message for
-        the Weekend Code Move Count Spreadsheet! A new spreadsheet has been 
-        created for ${curMonth}. Please remember to update
-        the spreadsheet each and every weekend. Thanks</div>`;
+      const subject = `Weekend Code Move Count spreadsheet for ${curMonth} is \
+now available!`;
+      const body = `Hi everyone,
+      
+This is your monthly reminder message for the Weekend Code Move Count \
+Spreadsheet! 
+A new spreadsheet has been created for ${curMonth} at url
+${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}.
+
+Please remember to update the spreadsheet each and every weekend. 
+
+Thanks`;
+      const htmlBody = `<div>Hi everyone,<br><br>This is your monthly \
+reminder message for the Weekend Code Move Count Spreadsheet! A new \
+spreadsheet has been created for ${curMonth}. Please remember to update \
+the spreadsheet each and every weekend. <br><br>Thanks</div>
+<div><p>Click the following link to access the new sheet: 
+<a href="${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}">\
+${curMonth}</a></p>
+</div>`;
       const options = {
         htmlBody: htmlBody
       };
