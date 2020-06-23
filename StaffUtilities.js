@@ -34,7 +34,7 @@ const StaffUtilities = (
 
     /**
      * @function capitalizeFirstLetter
-     * @memberof Staff
+     * @memberof StaffUtilities
      * @private
      */
     function capitalizeFirstLetter(string) {
@@ -44,7 +44,7 @@ const StaffUtilities = (
     /**
      * Gets a Google user object for a given user ID.
      * @function getUser
-     * @memberof Staff
+     * @memberof StaffUtilities
      * @private
      * @param {string} userkey A userID string e.g., kevin.griffin@gmail.com
      * @returns {object} JSON representing the Google user
@@ -87,7 +87,7 @@ const StaffUtilities = (
      * Takes a Google Groups email then returns an array of objects including
      * group members' names and email addresses.
      * @function getObjArr
-     * @memberof! Staff
+     * @memberof! StaffUtilities
      * @public
      * @param {string} email - Google Group Email
      * @returns {UserData[]} - Array of UserData objects
@@ -114,7 +114,7 @@ const StaffUtilities = (
     /**
      * Get a sorted array of staff names from an array of staff objects
      * @function getNameArr
-     * @memberof! Staff
+     * @memberof! StaffUtilities
      * @public
      * @param {UserData[]} staffObjArr - Array of UserData objects
      * @returns {string[]} - A sorted array of name strings
@@ -130,4 +130,3 @@ const StaffUtilities = (
     });
 
   }(AdminDirectory, GroupsApp));
-  
