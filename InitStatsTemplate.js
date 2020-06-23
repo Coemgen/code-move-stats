@@ -244,16 +244,6 @@ const InitStatsTemplate = (
     // eslint-disable-next-line no-unused-vars
     function main(yearlyStatsFile) {
 
-      // --------------------
-      // 2020.06.14 - Allow ability to initize an existing yearly stats sheet (using RestoreImportedData) in addition to default init
-      //              Also made change to: RestoreImportedData.gs
-      /*
-      const statsTemplate = SpreadsheetApp.openById(
-        PropertiesService.getScriptProperties()
-        .getProperty("yearlyStatsTemplateId")
-      );
-      */
-
       var statsTemplate;
       if (yearlyStatsFile) {
         statsTemplate = SpreadsheetApp.open(yearlyStatsFile);
@@ -264,7 +254,6 @@ const InitStatsTemplate = (
           .getProperty("yearlyStatsTemplateId")
         );
       }
-      // --------------------
 
       initCodeMoves(statsTemplate);
       initPeMd(statsTemplate);

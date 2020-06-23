@@ -58,11 +58,7 @@ const RestoreImportedData = (
             yearlyStatsFile, fileId, monthOffset, fileName
           );
 
-          // ---------------
-          // 2020.06.14
-          // Initialize the Yearly Stats for each month - fixes broken formula references because a spreadsheet was deleted =SUM(!REF:!REF)
           InitStatsTemplate.main(yearlyStatsFile);
-          // ---------------
 
           return undefined;
         }

@@ -1,5 +1,7 @@
 /*jslint browser:true, long:true, white:true*/
-/*global DriveApp, FIRST_STAFF_ROW, Logger, PropertiesService, SpreadsheetApp*/
+/*global 
+DriveApp, FIRST_STAFF_ROW, PropertiesService, SendEmail, SpreadsheetApp
+*/
 
 /**
  * @file Code for building the file structure used for compiling and viewing
@@ -92,7 +94,7 @@ const MonthlyRun = (
         (yearMonthFileFound)
         ? fileIterator.next()
         : codeMoveTemplate.makeCopy(codeMoveSheetName, yearFolder));
-      var spreadsheet = {};
+      let spreadsheet = {};
 
       // edit new month spreadsheets
       if (yearMonthFileFound === false) {
@@ -153,12 +155,9 @@ const MonthlyRun = (
       return codeMoveFile.getId();
     }
 
-    // --------------------
-    // 2020.06.14
     function getHyperlinkFormula(url, label) {
       return "=HYPERLINK(\"" + url + "\",\"" + label + "\")";
     }
-    // --------------------
 
     /**
      * Populate yearly stats Spreadsheet's Weekend Days sheet with references to
@@ -172,12 +171,19 @@ const MonthlyRun = (
      * @param {string} yearMonthStr - YYYY-MM format
      * @returns {undefined}
      */
+    // eslint-disable-next-line max-statements
     function updateYearlyStatsFile(
       yearlyStatsFile, codeMoveFileId, month, yearMonthStr) {
       const spreadsheet = SpreadsheetApp.openById(yearlyStatsFile.getId());
       const weekendDaysSheet = spreadsheet.getSheetByName("Weekend Days");
       const yearlyStatsSheet = spreadsheet.getSheetByName("Imported Data");
       const row = month + 1;
+      let codeMoveSheetUrl = "https://docs.google.com/spreadsheets/d/" + codeMoveFileId;
+      let codeMoveSheetLabel = yearMonthStr;
+      let codeMoveSheetHyperlinkFormula = getHyperlinkFormula(
+        codeMoveSheetUrl, codeMoveSheetLabel);
+      let colLetter = String.fromCharCode(66 + (row - 1));
+      let colNumbers = [2, 13, 24, 27, 32, 35];
 
       weekendDaysSheet.getRange("A1")
         .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(0, 4));
@@ -185,29 +191,17 @@ const MonthlyRun = (
       yearlyStatsSheet.getRange("A" + row)
         .setValue(yearMonthStr);
 
-      // --------------------
-      // 2020.06.14 - Set month date to link formula, that will also be used for month name in *OHS Stats sheet*
-      var codeMoveSheetUrl = "https://docs.google.com/spreadsheets/d/" + codeMoveFileId;
-      var codeMoveSheetLabel = yearMonthStr;
-      var codeMoveSheetHyperlinkFormula = getHyperlinkFormula(
-        codeMoveSheetUrl, codeMoveSheetLabel);
-
       yearlyStatsSheet.getRange("A" + row)
         .setFormula(codeMoveSheetHyperlinkFormula);
 
-      // 2020.06.14 - Set Month Column Header per section (minus Miscellaneous) to Month Hyperlink on the *Weekend Days sheet*
-      var colLetter = String.fromCharCode(66 + (row - 1));
-      Logger.log("Column Letter: " + colLetter);
-      var colNumbers = [2, 13, 24, 27, 32, 35];
-
-      for (var i = 0; i < colNumbers.length; i++) {
-        var cellLocation = colLetter + colNumbers[i];
-        var cellValue = weekendDaysSheet.getRange(cellLocation).getValue();
-
-        weekendDaysSheet.getRange(cellLocation)
-          .setFormula(getHyperlinkFormula(codeMoveSheetUrl, cellValue));
-      }
-      // --------------------
+      colNumbers.forEach(
+        function (colNumber) {
+          const cellLocation = colLetter + colNumber.toString();
+          const cellValue = weekendDaysSheet.getRange(cellLocation).getValue();
+          weekendDaysSheet.getRange(cellLocation)
+            .setFormula(getHyperlinkFormula(codeMoveSheetUrl, cellValue));
+        }
+      );
 
       // Grand Totals
       yearlyStatsSheet.getRange("B" + row).setFormula("=IMPORTRANGE("
@@ -220,7 +214,7 @@ const MonthlyRun = (
 
       // H27 Application Code Move Total (calculated on Stats Weekend Stats sheet)
 
-      // H29 Magic Update Total
+      // H29 Magic Update Total 
       yearlyStatsSheet.getRange("AI" + row).setFormula("=IMPORTRANGE("
         + "\"https://docs.google.com/spreadsheets/d/"
         + codeMoveFileId
@@ -248,7 +242,7 @@ const MonthlyRun = (
         + "\",\"Totals!H34\")"
       );
 
-      // P34 TEST Setup Total
+      // P34 TEST Setup Total 
       yearlyStatsSheet.getRange("AM" + row).setFormula("=IMPORTRANGE("
         + "\"https://docs.google.com/spreadsheets/d/"
         + codeMoveFileId
@@ -280,9 +274,9 @@ const MonthlyRun = (
     // eslint-disable-next-line no-unused-vars
     function main(testYear = undefined, testMonth = undefined) {
 
-      var yearFolder = {};
-      var codeMoveFileId = "";
-      var yearlyStatsFile = {};
+      let yearFolder = {};
+      let codeMoveFileId = "";
+      let yearlyStatsFile = {};
 
       const dateObj = (
         ((testYear !== undefined) && (testMonth !== undefined))
@@ -303,7 +297,8 @@ const MonthlyRun = (
       updateYearlyStatsFile(
         yearlyStatsFile, codeMoveFileId, month, yearMonthStr);
 
-      SendEmail.main(yearlyStatsFile, monthStr);
+      // TODO: change "testing" to undefined for "live" operation
+      SendEmail.main(codeMoveFileId, monthStr, "testing");
 
       return undefined;
     }

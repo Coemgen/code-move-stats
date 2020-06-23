@@ -61,9 +61,9 @@ function restoreImportedDataMain() {
 // eslint-disable-next-line no-unused-vars
 function monthlyRunTest() {
   "use strict";
-  const numMonths = 5;
-  const startYear = 2020;
-  const startMonth = 0;
+  const numMonths = 6;
+  const startYear = 2019;
+  const startMonth = 11;
   const monthArr = Array.from({
     "length": numMonths
   });
@@ -89,6 +89,8 @@ function emailTest() {
   const yearFolder = folderIterator.next();
   const fileIterator = yearFolder.getFilesByName(yearStr + "-stats");
   const yearlyStatsFile = fileIterator.next();
+
+  // TODO: this should be sending a reminder for the monthly code moves sheet
 
   SendEmail.main(yearlyStatsFile, "Jun", "testing");
   
