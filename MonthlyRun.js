@@ -155,8 +155,77 @@ const MonthlyRun = (
       return codeMoveFile.getId();
     }
 
+    /**
+     * 
+     * @param {string} url 
+     * @param {string} label 
+     */
     function getHyperlinkFormula(url, label) {
       return "=HYPERLINK(\"" + url + "\",\"" + label + "\")";
+    }
+
+    /**
+     * Populate yearly stats imported data sheet cell with link
+     * to monthly code move footer cell data.
+     * @param {Object} yearlyStatsSheet 
+     * @param {string} codeMoveFileId
+     * @param {string} monthlyRange 
+     * @param {string} yearlyRange 
+     */
+    function monthlyCellToStatsCellLink(
+      yearlyStatsSheet, codeMoveFileId, monthlyRange, yearlyRange) {
+
+      yearlyStatsSheet.getRange(yearlyRange).setFormula("=IMPORTRANGE("
+        + "\"https://docs.google.com/spreadsheets/d/"
+        + codeMoveFileId
+        + "\",\"Totals!" + monthlyRange + "\")"
+      );
+
+      return undefined;
+    }
+
+    /**
+     * Link Monthly Code Moves total's sheet footer values to
+     * the yearly stats sheet.
+     * @param {Object} yearlyStatsSheet 
+     * @param {string} codeMoveFileId
+     * @param {number} row 
+     */
+    function linkCodeMovesFooterToStats(yearlyStatsSheet, codeMoveFileId, row) {
+
+      // Grand Totals
+      monthlyCellToStatsCellLink(
+        yearlyStatsSheet, codeMoveFileId, "B24:A24", "B" + row);
+
+      // H26 PE/MD Code Move Total (calculated on Stats Weekend Stats sheet)
+
+      // H27 Application Code Move Total (calculated on Stats Weekend Stats sheet)
+
+      // H29 Magic Update Total 
+      monthlyCellToStatsCellLink(
+        yearlyStatsSheet, codeMoveFileId, "H29", "AI" + row);
+
+      // H30 C/S Update Total
+      monthlyCellToStatsCellLink(
+        yearlyStatsSheet, codeMoveFileId, "H30", "AJ" + row);
+
+      // H31 Expanse Update Total
+      monthlyCellToStatsCellLink(
+        yearlyStatsSheet, codeMoveFileId, "H31", "AK" + row);
+
+      // H34 Ring Deletion Total
+      monthlyCellToStatsCellLink(
+        yearlyStatsSheet, codeMoveFileId, "H34", "AL" + row);
+
+      // P34 TEST Setup Total 
+      monthlyCellToStatsCellLink(
+        yearlyStatsSheet, codeMoveFileId, "P34", "AM" + row);
+
+      // H33 HCIS Deletion Total
+      monthlyCellToStatsCellLink(
+        yearlyStatsSheet, codeMoveFileId, "H33", "AN" + row);
+
+      return undefined;
     }
 
     /**
@@ -171,7 +240,6 @@ const MonthlyRun = (
      * @param {string} yearMonthStr - YYYY-MM format
      * @returns {undefined}
      */
-    // eslint-disable-next-line max-statements
     function updateYearlyStatsFile(
       yearlyStatsFile, codeMoveFileId, month, yearMonthStr) {
       const spreadsheet = SpreadsheetApp.openById(yearlyStatsFile.getId());
@@ -182,7 +250,8 @@ const MonthlyRun = (
       let codeMoveSheetLabel = yearMonthStr;
       let codeMoveSheetHyperlinkFormula = getHyperlinkFormula(
         codeMoveSheetUrl, codeMoveSheetLabel);
-      let colLetter = String.fromCharCode(66 + (row - 1));
+      // Month columns range from B (ascii 66) to M (ascii 77)
+      let colLetter = String.fromCharCode(66 + month);
       let colNumbers = [2, 13, 24, 27, 32, 35];
 
       weekendDaysSheet.getRange("A1")
@@ -204,58 +273,7 @@ const MonthlyRun = (
         }
       );
 
-      // Grand Totals
-      yearlyStatsSheet.getRange("B" + row).setFormula("=IMPORTRANGE("
-        + "\"https://docs.google.com/spreadsheets/d/"
-        + codeMoveFileId
-        + "\",\"Totals!B24:AH24\")"
-      );
-
-      // H26 PE/MD Code Move Total (calculated on Stats Weekend Stats sheet)
-
-      // H27 Application Code Move Total (calculated on Stats Weekend Stats sheet)
-
-      // H29 Magic Update Total 
-      yearlyStatsSheet.getRange("AI" + row).setFormula("=IMPORTRANGE("
-        + "\"https://docs.google.com/spreadsheets/d/"
-        + codeMoveFileId
-        + "\",\"Totals!H29\")"
-      );
-
-      // H30 C/S Update Total
-      yearlyStatsSheet.getRange("AJ" + row).setFormula("=IMPORTRANGE("
-        + "\"https://docs.google.com/spreadsheets/d/"
-        + codeMoveFileId
-        + "\",\"Totals!H30\")"
-      );
-
-      // H31 Expanse Update Total
-      yearlyStatsSheet.getRange("AK" + row).setFormula("=IMPORTRANGE("
-        + "\"https://docs.google.com/spreadsheets/d/"
-        + codeMoveFileId
-        + "\",\"Totals!H31\")"
-      );
-
-      // H34 Ring Deletion Total
-      yearlyStatsSheet.getRange("AL" + row).setFormula("=IMPORTRANGE("
-        + "\"https://docs.google.com/spreadsheets/d/"
-        + codeMoveFileId
-        + "\",\"Totals!H34\")"
-      );
-
-      // P34 TEST Setup Total 
-      yearlyStatsSheet.getRange("AM" + row).setFormula("=IMPORTRANGE("
-        + "\"https://docs.google.com/spreadsheets/d/"
-        + codeMoveFileId
-        + "\",\"Totals!P34\")"
-      );
-
-      // H33 HCIS Deletion Total
-      yearlyStatsSheet.getRange("AN" + row).setFormula("=IMPORTRANGE("
-        + "\"https://docs.google.com/spreadsheets/d/"
-        + codeMoveFileId
-        + "\",\"Totals!H33\")"
-      );
+      linkCodeMovesFooterToStats(yearlyStatsSheet, codeMoveFileId, row);
 
       return undefined;
     }
@@ -298,7 +316,7 @@ const MonthlyRun = (
       updateYearlyStatsFile(
         yearlyStatsFile, codeMoveFileId, month, yearMonthStr);
 
-      // TODO: change to third arg to "live" for production
+      // TODO: change third arg to "live" for production
       SendEmail.main(codeMoveFileId, monthStr, undefined);
 
       return undefined;
