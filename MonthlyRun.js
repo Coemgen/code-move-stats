@@ -195,7 +195,7 @@ const MonthlyRun = (
 
       // Grand Totals
       monthlyCellToStatsCellLink(
-        yearlyStatsSheet, codeMoveFileId, "B24:A24", "B" + row);
+        yearlyStatsSheet, codeMoveFileId, "B24:AH24", "B" + row);
 
       // H26 PE/MD Code Move Total (calculated on Stats Weekend Stats sheet)
 
