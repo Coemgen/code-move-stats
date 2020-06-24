@@ -189,11 +189,11 @@ const MonthlyRun = (
      * the yearly stats sheet.
      * @param {Object} yearlyStatsSheet 
      * @param {string} codeMoveFileId
-     * @param {number} row 
+     * @param {number} row Yearly Stats Imported Data sheet row
      */
     function linkCodeMovesFooterToStats(yearlyStatsSheet, codeMoveFileId, row) {
 
-      // Grand Totals
+      // Grand Totals (range B24:AH24)
       monthlyCellToStatsCellLink(
         yearlyStatsSheet, codeMoveFileId, "B24:AH24", "B" + row);
 
@@ -245,6 +245,7 @@ const MonthlyRun = (
       const spreadsheet = SpreadsheetApp.openById(yearlyStatsFile.getId());
       const weekendDaysSheet = spreadsheet.getSheetByName("Weekend Days");
       const yearlyStatsSheet = spreadsheet.getSheetByName("Imported Data");
+      // Yearly Stats Imported Data sheet row number.
       const row = month + 1;
       let codeMoveSheetUrl = "https://docs.google.com/spreadsheets/d/" + codeMoveFileId;
       let codeMoveSheetLabel = yearMonthStr;
