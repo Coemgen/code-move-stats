@@ -9,7 +9,7 @@ DriveApp, FIRST_STAFF_ROW, PropertiesService, SendEmail, SpreadsheetApp
  * function once a month.
  *
  * <p>Before using the script, values must be set for these {@linkcode
- * https://developers.google.com/apps-script/guides/properties|
+ * https://developers.google.com/apps-script/guides/properties
  * script properties}:
  * <ul>
  *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the yearly stats template</li>
@@ -18,7 +18,7 @@ DriveApp, FIRST_STAFF_ROW, PropertiesService, SendEmail, SpreadsheetApp
  * </ul>
  *
  * <p>Run the script using the {@linkcode
- * https://developers.google.com/apps-script/guides/v8-runtime|V8 Runtime}.
+ * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
  *
  * @author Kevin Griffin <kevin.griffin@gmail.com>
  */

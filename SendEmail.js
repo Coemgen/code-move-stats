@@ -8,14 +8,14 @@ MailApp, PropertiesService, StaffUtilities
  * SendEmail.main() from Drivers.gs.
  *
  * <p>Before using the script, values must be set for these {@linkcode
- * https://developers.google.com/apps-script/guides/properties|
+ * https://developers.google.com/apps-script/guides/properties
  * script properties}:
  * <ul>
  *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated with this project</li>
  * </ul>
  *
  * <p>Run the script using the {@linkcode
- * https://developers.google.com/apps-script/guides/v8-runtime|V8 Runtime}.
+ * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
  *
  * @author James Burns
  * @author Kevin Griffin <kevin.griffin@gmail.com>
@@ -34,8 +34,8 @@ const SendEmail = (
     /**
      * Takes a month number 01-12 and returns its corresponding month short
      * name in Jan-Dec format.
-     * @param {string} monthStr in 1-12 format
-     * @returns {string} mont in Jan format
+     * @param {string} monthStr in 01-12 format
+     * @returns {string} month in Jan-Dec format
      */
     function formatMonthStr(monthStr) {
       const d = new Date();
@@ -54,7 +54,7 @@ const SendEmail = (
      * @public
      * @param {string} codeMoveFileId 
      * @param {string} monthStr 
-     * @param {string} distType live, test, or undefined
+     * @param {string} distType "live", "test", or <code>undefined</code>
      */
     function main(codeMoveFileId, monthStr, distType) {
 

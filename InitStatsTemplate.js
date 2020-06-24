@@ -6,13 +6,13 @@
  * <b>Weekend Days</b> sheet with A1Notation references to its
  * <b>Imported Data</b> sheet.
  * <p>Before using the script, values must be set for the following {@linkcode
- * https://developers.google.com/apps-script/guides/properties|script
+ * https://developers.google.com/apps-script/guides/properties script
  * properties}:
  * <ul>
  *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the yearly stats template</li>
  * </ul>
  * <p>Run this script with the {@linkcode
- * https://developers.google.com/apps-script/guides/v8-runtime|V8 Runtime}.
+ * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
  * @author Kevin Griffin <kevin.griffin@gmail.com>
  */
 
