@@ -317,8 +317,7 @@ const MonthlyRun = (
       updateYearlyStatsFile(
         yearlyStatsFile, codeMoveFileId, month, yearMonthStr);
 
-      // TODO: change third arg to "live" for production
-      SendEmail.main(codeMoveFileId, monthStr, undefined);
+      SendEmail.main(codeMoveFileId, monthStr);
 
       return undefined;
     }

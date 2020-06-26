@@ -1,6 +1,6 @@
 /*jslint browser:true, white:true*/
-/*global 
-DriveApp, InitCodeMoveTemplate, InitStatsTemplate, MonthlyRun, 
+/*global
+DriveApp, InitCodeMoveTemplate, InitStatsTemplate, MonthlyRun,
 PropertiesService, RestoreImportedData, SendEmail
 */
 
@@ -17,7 +17,7 @@ PropertiesService, RestoreImportedData, SendEmail
 /**
  * Function to be called by a monthly {@linkcode
  * https://developers.google.com/apps-script/guides/triggers/installable
- * Trigger} to set up the totals spreadsheet for each month and a yearly 
+ * Trigger} to set up the totals spreadsheet for each month and a yearly
  * stats spreadsheet for each year.
  * @function monthlyRunMain
  * @memberof Drivers
@@ -36,7 +36,7 @@ function monthlyRunMain() {
  * <li>Monthly via a {@linkcode
  * https://developers.google.com/apps-script/guides/triggers/installable
  * Trigger} before running the monthlyRunMain() function</li>
- * <li>Periodically when changes have been made to staffing in the associated 
+ * <li>Periodically when changes have been made to staffing in the associated
  * Code Move Google Group</li>
  * </ol>
  * template spreadsheet.
@@ -121,9 +121,7 @@ function emailTest() {
   const fileIterator = yearFolder.getFilesByName(yearStr + "-stats");
   const yearlyStatsFile = fileIterator.next();
 
-  // TODO: this should be sending a reminder for the monthly code moves sheet
-
-  SendEmail.main(yearlyStatsFile, "Jun", "test");
+  // SendEmail.main(yearlyStatsFile, "Jun");
 
   return undefined;
 }

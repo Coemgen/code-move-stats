@@ -11,6 +11,7 @@ MailApp, PropertiesService, StaffUtilities
  * https://developers.google.com/apps-script/guides/properties
  * script properties}:
  * <ul>
+ *  <li><b>distributionType</b>&nbsp;&ndash;&nbsp;Email distribution type (values are: live or test)</li>
  *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated with this project</li>
  * </ul>
  *
@@ -56,9 +57,11 @@ const SendEmail = (
      * @param {string} monthStr 
      * @param {string} distType "live", "test", or <code>undefined</code>
      */
-    function main(codeMoveFileId, monthStr, distType) {
+    function main(codeMoveFileId, monthStr) {
 
       const curMonth = formatMonthStr(monthStr);
+      const distType = PropertiesService.getScriptProperties()
+      .getProperty("distributionType");
       const subject = `Weekend Code Move Count spreadsheet for ${curMonth} is \
 now available!`;
       const body = `Hi everyone,
