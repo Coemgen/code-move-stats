@@ -104,8 +104,8 @@ function monthlyRunTest() {
 /**
  * Function to be called by a weekly {@linkcode
  * https://developers.google.com/apps-script/guides/triggers/installable
- * Trigger} to send a reminder, to update the spreadsheet, to the Code Move
- * Group.
+ * Trigger} to send a reminder for the Code Move Group to update the
+ * spreadsheet.
  * @function sendWeeklyReminder
  * @memberof Drivers
  * @public

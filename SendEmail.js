@@ -34,8 +34,8 @@ const SendEmail = (
     "use strict";
 
     /**
-     * Takes a month number 01-12 and returns its corresponding month short
-     * name in Jan-Dec format.
+     * Takes a month number 01-12 and returns its corresponding month name
+     * in Jan-Dec format.
      * @param {string} monthStr in 01-12 format
      * @returns {string} month in Jan-Dec format
      */
