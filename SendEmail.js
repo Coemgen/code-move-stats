@@ -95,7 +95,7 @@ and every weekend. Thanks</div>`;
           ).map((userObj) => userObj.email)
           .toString();
       } else if (distType === "test") {
-        recipients = "jeburns@meditech.com,kgriffin@meditech.com";
+        recipients = "eyip@meditech.com,jeburns@meditech.com,kgriffin@meditech.com";
       } else {
         recipients = "kevin.griffin@gmail.com";
       }
