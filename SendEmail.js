@@ -72,11 +72,9 @@ const SendEmail = (
         + ` ${yearStr} is available for editing in Google Drive!`;
       const body = `Click the following link to access the current sheet: `
         + `${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}`
-        + ` [Weekend Code Move Count ${curMonth} ${yearStr}]`
-        + `
+        + ` [Weekend Code Move Count ${curMonth} ${yearStr}]
         `
-        + `Hi everyone,`
-        + `
+        + `Hi everyone,
         `
         + `This is your ${notifPeriod} reminder message for the Weekend`
         + ` Code Move Count Spreadsheet! Please remember to update the`
