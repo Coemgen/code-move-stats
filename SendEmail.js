@@ -62,7 +62,7 @@ const SendEmail = (
     function main(codeMoveFileId, yearStr, monthStr, reminder) {
 
       const curMonth = formatMonthStr(monthStr);
-      const distType = PropertiesService.getScriptProperties()
+      let distType = PropertiesService.getScriptProperties()
         .getProperty("distributionType") || "";
       const notifType = (
         (reminder === true) ? "REMINDER" : "ATTENTION");
