@@ -64,27 +64,33 @@ const SendEmail = (
       const curMonth = formatMonthStr(monthStr);
       const distType = PropertiesService.getScriptProperties()
         .getProperty("distributionType");
-      const notifType = (reminder === true) ? "REMINDER" : "ATTENTION";
-      const notifPeriod = (reminder === true) ? "weekly" : "monthly";
-      const subject = `${notifType}: Weekend Code Move Count for ${curMonth} \
-${yearStr} is available for editing in Google Drive!`;
-      const body = `Click the following link to access the current sheet: \
-${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId} [Weekend Code \
-Move Count ${curMonth} ${yearStr}]
-
-Hi everyone,
-
-This is your ${notifPeriod} reminder message for the Weekend Code Move Count \
-Spreadsheet! Please remember to update the spreadsheet each and every \
-weekend. Thanks`;
-      const htmlBody = `<p>Click the following link to access the current \
-sheet: <a href="${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}">\
-Weekend Code Move Count ${curMonth} ${yearStr}</a></p><div><br></div><div>Hi \
-everyone,<br><br>This is your ${notifPeriod} reminder message for the Weekend \
-Code Move Count Spreadsheet! Please remember to update the spreadsheet each \
-and every weekend. Thanks</div>`;
+      const notifType = (
+        (reminder === true) ? "REMINDER" : "ATTENTION");
+      const notifPeriod = (
+        (reminder === true) ? "weekly" : "monthly");
+      const subject = `${notifType}: Weekend Code Move Count for ${curMonth}`
+        + ` ${yearStr} is available for editing in Google Drive!`;
+      const body = `Click the following link to access the current sheet: `
+        + `${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}`
+        + ` [Weekend Code Move Count ${curMonth} ${yearStr}]`
+        + `
+        `
+        + `Hi everyone,`
+        + `
+        `
+        + `This is your ${notifPeriod} reminder message for the Weekend`
+        + ` Code Move Count Spreadsheet! Please remember to update the`
+        + ` spreadsheet each and every weekend. Thanks`;
+      const htmlBody = `<p>Click the following link to access the current`
+        + ` sheet: <a href="`
+        + `${"https: //docs.google.com/spreadsheets/d/" + codeMoveFileId}">`
+        + `Weekend Code Move Count ${curMonth} ${yearStr}</a></p><div><br>`
+        + `</div><div>Hi everyone, <br><br> This is your ${notifPeriod} `
+        + `reminder message for the Weekend Code Move Count Spreadsheet!`
+        + ` Please remember to update the spreadsheet each and every weekend.`
+        + ` Thanks</div>`;
       const options = {
-        htmlBody: htmlBody
+        "htmlBody": htmlBody
       };
       let recipients = "";
 
@@ -95,7 +101,8 @@ and every weekend. Thanks</div>`;
           ).map((userObj) => userObj.email)
           .toString();
       } else if (distType === "test") {
-        recipients = "eyip@meditech.com,jeburns@meditech.com,kgriffin@meditech.com";
+        recipients = "eyip@meditech.com,jeburns@meditech.com,"
+          + "kgriffin@meditech.com";
       } else {
         recipients = "kevin.griffin@gmail.com";
       }
