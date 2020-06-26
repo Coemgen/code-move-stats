@@ -63,7 +63,7 @@ const SendEmail = (
 
       const curMonth = formatMonthStr(monthStr);
       const distType = PropertiesService.getScriptProperties()
-        .getProperty("distributionType");
+        .getProperty("distributionType") || "";
       const notifType = (
         (reminder === true) ? "REMINDER" : "ATTENTION");
       const notifPeriod = (
@@ -89,7 +89,9 @@ const SendEmail = (
         "htmlBody": htmlBody
       };
       let recipients = "";
-
+      
+      distType = distType.toLowerCase();
+                                            
       if (distType === "live") {
         recipients = StaffUtilities.getObjArr(
             PropertiesService.getScriptProperties()
