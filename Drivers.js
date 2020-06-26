@@ -106,12 +106,12 @@ function monthlyRunTest() {
  * https://developers.google.com/apps-script/guides/triggers/installable
  * Trigger} to send a reminder, to update the spreadsheet, to the Code Move
  * Group.
- * @function sendMonthlyReminder
+ * @function sendWeeklyReminder
  * @memberof Drivers
  * @public
  */
 // eslint-disable-next-line no-unused-vars
-function sendMonthlyReminder() {
+function sendWeeklyReminder() {
   "use strict";
   const d = new Date();
   const yearStr = d.getFullYear().toString();
