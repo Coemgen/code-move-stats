@@ -39,7 +39,6 @@ function monthlyRunMain() {
  * <li>Periodically when changes have been made to staffing in the associated
  * Code Move Google Group</li>
  * </ol>
- * template spreadsheet.
  * @function initCodeMoveTemplateMain
  * @memberof Drivers
  * @public
