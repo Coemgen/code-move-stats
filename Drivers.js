@@ -35,7 +35,7 @@ function monthlyRunMain() {
  * <ol>
  * <li>Monthly via a {@linkcode
  * https://developers.google.com/apps-script/guides/triggers/installable
- * Trigger} before running the monthlyRunMain() function</li>
+ * Trigger} before running the <b><code>monthlyRunMain()</code></b> function</li>
  * <li>Periodically when changes have been made to staffing in the associated
  * Code Move Google Group</li>
  * </ol>

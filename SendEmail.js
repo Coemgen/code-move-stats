@@ -11,7 +11,8 @@ MailApp, PropertiesService, StaffUtilities
  * https://developers.google.com/apps-script/guides/properties
  * script properties}:
  * <ul>
- *  <li><b>distributionType</b>&nbsp;&ndash;&nbsp;Email distribution type (values are: live or test)</li>
+ *  <li><b>distributionType</b>&nbsp;&ndash;&nbsp;
+ * Email distribution type (values are: <b>live</b> or <b>test</b>)</li>
  *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated with this project</li>
  * </ul>
  *
