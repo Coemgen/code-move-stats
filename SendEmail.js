@@ -55,33 +55,34 @@ const SendEmail = (
      * @memberof! SendEmail
      * @public
      * @param {string} codeMoveFileId
+     * @param {string} yearStr
      * @param {string} monthStr
+     * @param {boolean} reminder is true for weekly reminders
      */
-    function main(codeMoveFileId, monthStr) {
+    function main(codeMoveFileId, yearStr, monthStr, reminder) {
 
       const curMonth = formatMonthStr(monthStr);
       const distType = PropertiesService.getScriptProperties()
-      .getProperty("distributionType");
-      const subject = `Weekend Code Move Count spreadsheet for ${curMonth} is \
-now available!`;
-      const body = `Hi everyone,
+        .getProperty("distributionType");
+      const notifType = (reminder === true) ? "REMINDER" : "ATTENTION";
+      const notifPeriod = (reminder === true) ? "weekly" : "monthly";
+      const subject = `${notifType}: Weekend Code Move Count for ${curMonth} \
+${yearStr} is available for editing in Google Drive!`;
+      const body = `Click the following link to access the current sheet: \
+${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId} [Weekend Code \
+Move Count ${curMonth} ${yearStr}]
 
-This is your monthly reminder message for the Weekend Code Move Count \
-Spreadsheet!
-A new spreadsheet has been created for ${curMonth} at url
-${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}.
+Hi everyone,
 
-Please remember to update the spreadsheet each and every weekend.
-
-Thanks`;
-      const htmlBody = `<div>Hi everyone,<br><br>This is your monthly \
-reminder message for the Weekend Code Move Count Spreadsheet! A new \
-spreadsheet has been created for ${curMonth}. Please remember to update \
-the spreadsheet each and every weekend. <br><br>Thanks</div>
-<div><p>Click the following link to access the new sheet:
-<a href="${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}">\
-${curMonth}</a></p>
-</div>`;
+This is your ${notifPeriod} reminder message for the Weekend Code Move Count \
+Spreadsheet! Please remember to update the spreadsheet each and every \
+weekend. Thanks`;
+      const htmlBody = `<p>Click the following link to access the current \
+sheet: <a href="${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}">\
+Weekend Code Move Count ${curMonth} ${yearStr}</a></p><div><br></div><div>Hi \
+everyone,<br><br>This is your ${notifPeriod} reminder message for the Weekend \
+Code Move Count Spreadsheet! Please remember to update the spreadsheet each \
+and every weekend. Thanks</div>`;
       const options = {
         htmlBody: htmlBody
       };

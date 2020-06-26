@@ -1,5 +1,5 @@
 /*jslint browser:true, long:true, white:true*/
-/*global 
+/*global
 DriveApp, FIRST_STAFF_ROW, PropertiesService, SendEmail, SpreadsheetApp
 */
 
@@ -156,9 +156,9 @@ const MonthlyRun = (
     }
 
     /**
-     * 
-     * @param {string} url 
-     * @param {string} label 
+     *
+     * @param {string} url
+     * @param {string} label
      */
     function getHyperlinkFormula(url, label) {
       return "=HYPERLINK(\"" + url + "\",\"" + label + "\")";
@@ -167,10 +167,10 @@ const MonthlyRun = (
     /**
      * Populate yearly stats imported data sheet cell with link
      * to monthly code move footer cell data.
-     * @param {Object} yearlyStatsSheet 
+     * @param {Object} yearlyStatsSheet
      * @param {string} codeMoveFileId
-     * @param {string} monthlyRange 
-     * @param {string} yearlyRange 
+     * @param {string} monthlyRange
+     * @param {string} yearlyRange
      */
     function monthlyCellToStatsCellLink(
       yearlyStatsSheet, codeMoveFileId, monthlyRange, yearlyRange) {
@@ -187,7 +187,7 @@ const MonthlyRun = (
     /**
      * Link Monthly Code Moves total's sheet footer values to
      * the yearly stats sheet.
-     * @param {Object} yearlyStatsSheet 
+     * @param {Object} yearlyStatsSheet
      * @param {string} codeMoveFileId
      * @param {number} row Yearly Stats Imported Data sheet row
      */
@@ -201,7 +201,7 @@ const MonthlyRun = (
 
       // H27 Application Code Move Total (calculated on Stats Weekend Stats sheet)
 
-      // H29 Magic Update Total 
+      // H29 Magic Update Total
       monthlyCellToStatsCellLink(
         yearlyStatsSheet, codeMoveFileId, "H29", "AI" + row);
 
@@ -217,7 +217,7 @@ const MonthlyRun = (
       monthlyCellToStatsCellLink(
         yearlyStatsSheet, codeMoveFileId, "H34", "AL" + row);
 
-      // P34 TEST Setup Total 
+      // P34 TEST Setup Total
       monthlyCellToStatsCellLink(
         yearlyStatsSheet, codeMoveFileId, "P34", "AM" + row);
 
@@ -317,7 +317,7 @@ const MonthlyRun = (
       updateYearlyStatsFile(
         yearlyStatsFile, codeMoveFileId, month, yearMonthStr);
 
-      SendEmail.main(codeMoveFileId, monthStr);
+      SendEmail.main(codeMoveFileId, yearStr, monthStr);
 
       return undefined;
     }

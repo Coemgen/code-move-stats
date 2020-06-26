@@ -102,25 +102,28 @@ function monthlyRunTest() {
 }
 
 /**
- * Use this funtion for testing sending email
- * @function emailTest
+ * Function to be called by a weekly {@linkcode
+ * https://developers.google.com/apps-script/guides/triggers/installable
+ * Trigger} to send a reminder, to update the spreadsheet, to the Code Move
+ * Group.
+ * @function sendMonthlyReminder
  * @memberof Drivers
- * @private
+ * @public
  */
 // eslint-disable-next-line no-unused-vars
-function emailTest() {
+function sendMonthlyReminder() {
   "use strict";
-
+  const d = new Date();
+  const yearStr = d.getFullYear().toString();
+  const month = d.getMonth() + 1;
+  const monthStr = month.toString().padStart(2, 0);
   const dataFolder = DriveApp.getFolderById(
     PropertiesService.getScriptProperties().getProperty("dataFolderId")
   );
-  const yearStr = "2020";
   const folderIterator = dataFolder.getFoldersByName(yearStr);
   const yearFolder = folderIterator.next();
-  const fileIterator = yearFolder.getFilesByName(yearStr + "-stats");
-  const yearlyStatsFile = fileIterator.next();
-
-  // SendEmail.main(yearlyStatsFile, "Jun");
-
-  return undefined;
+  const fileIterator = yearFolder.getFilesByName(yearStr + "-" + monthStr);
+  const codeMoveFileId = fileIterator.next().getId();
+  const reminder = true;
+  SendEmail.main(codeMoveFileId, yearStr, monthStr, reminder);
 }
