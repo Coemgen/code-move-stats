@@ -36,8 +36,8 @@ const MonthlyRun = (
 
     /**
      * Returns a reference to the folder object, for the current year, and its
-     * yearly stats spreadsheet.  If the folder does not already exist, a new one
-     * will be created and populated with a yearly stats spreadsheet.
+     * yearly stats spreadsheet.  If the folder does not already exist, a new
+     * one will be created and populated with a yearly stats spreadsheet.
      * @function getYearFolder
      * @memberof MonthlyRun
      * @private
@@ -196,9 +196,9 @@ const MonthlyRun = (
       monthlyCellToStatsCellLink(
         yearlyStatsSheet, codeMoveFileId, "B24:AH24", "B" + row);
 
-      // H26 PE/MD Code Move Total (calculated on Stats Weekend Stats sheet)
+      // H26 PE/MD Code Move Total (calculated on Weekend Stats sheet)
 
-      // H27 Application Code Move Total (calculated on Stats Weekend Stats sheet)
+      // H27 Application Code Move Total (calculated on Weekend Stats sheet)
 
       // H29 Magic Update Total
       monthlyCellToStatsCellLink(
@@ -246,7 +246,8 @@ const MonthlyRun = (
       const yearlyStatsSheet = spreadsheet.getSheetByName("Imported Data");
       // Yearly Stats Imported Data sheet row number.
       const row = month + 1;
-      let codeMoveSheetUrl = "https://docs.google.com/spreadsheets/d/" + codeMoveFileId;
+      let codeMoveSheetUrl = "https://docs.google.com/spreadsheets/d/"
+        + codeMoveFileId;
       let codeMoveSheetLabel = yearMonthStr;
       let codeMoveSheetHyperlinkFormula = getHyperlinkFormula(
         codeMoveSheetUrl, codeMoveSheetLabel);
