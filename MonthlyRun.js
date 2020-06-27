@@ -4,22 +4,21 @@ DriveApp, FIRST_STAFF_ROW, PropertiesService, SendEmail, SpreadsheetApp
 */
 
 /**
- * @file Code for building the file structure used for compiling and viewing
- * stats.  Create a script trigger to run MonthlyRun.main() from its driver
- * function once a month.
- *
- * <p>Before using the script, values must be set for these {@linkcode
+ * @file Defines the <code><b>MonthlyRun</b></code> module.  The module builds
+ * the file structure used for compiling and viewing stats.  Create a script
+ * trigger to run the <code><b>MonthlyRun.main()</b></code> method via a driver
+ * function one time each month.
+ * <p>Before using this module, values must be set for these {@linkcode
  * https://developers.google.com/apps-script/guides/properties
  * script properties}:
  * <ul>
- *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the yearly stats template</li>
- *  <li><b>dataFolderId</b>&nbsp;&ndash;&nbsp;the parent folder for yearly data folders</li>
- *  <li><b>codeMoveTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the montly totals template</li>
+ *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for
+ *  the yearly stats template</li>
+ *  <li><b>dataFolderId</b>&nbsp;&ndash;&nbsp;the parent folder for yearly data
+ *  folders</li>
+ *  <li><b>codeMoveTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the
+ *  montly totals template</li>
  * </ul>
- *
- * <p>Run the script using the {@linkcode
- * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
- *
  * @author Kevin Griffin <kevin.griffin@gmail.com>
  */
 

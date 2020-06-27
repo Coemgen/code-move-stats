@@ -2,17 +2,16 @@
 /*global PropertiesService, SpreadsheetApp*/
 
 /**
- * @file Code for initialization of the Stats Template spreadsheet's
- * <b>Weekend Days</b> sheet with A1Notation references to its
- * <b>Imported Data</b> sheet.
- * <p>Before using the script, values must be set for the following {@linkcode
+ * @file Defines the <code><b>InitStatsTemplate</b></code> module.  This module
+ * initializes the Stats Template spreadsheet's <b>Weekend Days</b> sheet with
+ * A1Notation references to its <b>Imported Data</b> sheet.
+ * <p>Before using this module, values must be set for the following {@linkcode
  * https://developers.google.com/apps-script/guides/properties script
  * properties}:
  * <ul>
- *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the yearly stats template</li>
+ *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for
+ *  the yearly stats template</li>
  * </ul>
- * <p>Run this script with the {@linkcode
- * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
  * @author Kevin Griffin <kevin.griffin@gmail.com>
  */
 

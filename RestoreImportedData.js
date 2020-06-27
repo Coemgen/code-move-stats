@@ -2,8 +2,9 @@
 /*global DriveApp, InitStatsTemplate, MonthlyRun, PropertiesService*/
 
 /**
- * @file Code for relinking monthly totals to a new yearly stats spreadsheet.
- * Relinking should only be needed to repair data corruption.
+ * @file Defines the <code><b>RestoreImportedData</b></code> module.  This
+ * module relinks monthly totals to a new yearly stats spreadsheet.  Relinking
+ * should only be needed to repair data corruption.
  */
 
 /**

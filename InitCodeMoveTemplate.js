@@ -2,16 +2,17 @@
 /*global PropertiesService, SpreadsheetApp, StaffUtilities*/
 
 /**
- * @file Code for initialization of the Code Move Counts Template Spreadsheet.
- * <p>Before using the script, values must be set for the following
+ * @file Defines the <code><b>InitCodeMoveTemplate</b></code> module.  This
+ * module initializes the Code Move Counts Template Spreadsheet.
+ * <p>Before using this module, values must be set for the following
  * {@linkcode https://developers.google.com/apps-script/guides/properties
  * script properties}:
  * <ul>
- *  <li><b>codeMoveTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the montly totals template</li>
- *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated with this project</li>
+ *  <li><b>codeMoveTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the
+ *  montly totals template</li>
+ *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated
+ *  with this project</li>
  * </ul>
- * <p>Run the script using the {@linkcode
- * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
  * @author Kevin Griffin <kevin.griffin@gmail.com>
  */
 
@@ -364,7 +365,7 @@ const InitCodeMoveTemplate = (
 
       // add staff sheets
       addStaffSheets(staffObjArr, spreadsheet);
-      
+
       // populate staff rows
       populateStaffRows(staffNameArr, totalsSheet, headerMatrix, spreadsheet);
 

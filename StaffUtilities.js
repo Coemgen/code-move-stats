@@ -2,17 +2,9 @@
 /*global AdminDirectory, GroupsApp*/
 
 /**
- * @file Mostly functions for getting user information.
+ * @file Defines the <code><b>StaffUtilities</b></code> module.  This module has
+ * functions for getting user (staff) information.
  */
-
-/* jshint ignore:start */
-/**
- * Declare global variables to satisfy linter expectations for strict mode.
- * - note that re-declaring a var type global that already has a value does not
- * - affect its value.
- * - See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#Description
- */
-/* jshing ignore:end */
 
 /**
  * @namespace StaffUtilities

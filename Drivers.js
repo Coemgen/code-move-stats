@@ -7,7 +7,25 @@ PropertiesService, RestoreImportedData, SendEmail
 // Project documentation at:  https://coemgen.github.io/code-move-stats/2.0.0/index.html
 
 /**
- * @file Driver functions used as wrappers for running public methods.
+ * @file Defines driver functions for running public methods.
+ *
+ * <p>Google Script Project values must be set for the following
+ * {@linkcode https://developers.google.com/apps-script/guides/properties
+ * script properties}:
+ * <ul>
+ *  <li><b>codeMoveTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the
+ *  montly totals template</li>
+ *  <li><b>dataFolderId</b>&nbsp;&ndash;&nbsp;the parent folder for yearly data
+ *  folders</li>
+ *  <li><b>distributionType</b>&nbsp;&ndash;&nbsp;
+ * Email distribution type (values are: <b>live</b> or <b>test</b>)</li>
+ *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated
+ *  with this project</li>
+ *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for
+ *  the yearly stats template</li>
+ * </ul>
+ * <p>Run the script using the {@linkcode
+ * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
  */
 
 /**

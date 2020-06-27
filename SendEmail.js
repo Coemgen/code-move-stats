@@ -4,21 +4,18 @@ MailApp, PropertiesService, StaffUtilities
 */
 
 /**
- * @file Code for sending emails.  Create a script trigger to periodically run
- * SendEmail.main() from Drivers.gs.
- *
- * <p>Before using the script, values must be set for these {@linkcode
+ * @file Defines the <code><b>SendEmail</b></code> module.  This module builds
+ * and sends emails.  Create a script trigger to periodically run the <code><b>
+ * SendEmail.main()</b></code> function via a driver function.
+ * <p>Before using this module, values must be set for these {@linkcode
  * https://developers.google.com/apps-script/guides/properties
  * script properties}:
  * <ul>
  *  <li><b>distributionType</b>&nbsp;&ndash;&nbsp;
  * Email distribution type (values are: <b>live</b> or <b>test</b>)</li>
- *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated with this project</li>
+ *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated
+ *  with this project</li>
  * </ul>
- *
- * <p>Run the script using the {@linkcode
- * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
- *
  * @author James Burns
  * @author Kevin Griffin <kevin.griffin@gmail.com>
  */
@@ -89,9 +86,9 @@ const SendEmail = (
         "htmlBody": htmlBody
       };
       let recipients = "";
-      
+
       distType = distType.toLowerCase();
-                                            
+
       if (distType === "live") {
         recipients = StaffUtilities.getObjArr(
             PropertiesService.getScriptProperties()
