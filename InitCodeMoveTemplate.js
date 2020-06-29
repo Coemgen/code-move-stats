@@ -337,8 +337,8 @@ const InitCodeMoveTemplate = (
 
     /**
      * Initialize the Monthly Totals Template Sheet with staff names and
-     * spreadsheet formulas.  Run <code>InitCodeMoveTemplate.main()</code> when
-     *  there are staffing changes.
+     * spreadsheet formulas.  Run <code><b>InitCodeMoveTemplate.main()</b>
+     * </code> when there are staffing changes.
      * @function main
      * @memberof! InitCodeMoveTemplate
      * @public
