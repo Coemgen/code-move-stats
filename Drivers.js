@@ -18,7 +18,7 @@ PropertiesService, RestoreImportedData, SendEmail
  *  <li><b>dataFolderId</b>&nbsp;&ndash;&nbsp;the parent folder for yearly data
  *  folders</li>
  *  <li><b>distributionType</b>&nbsp;&ndash;&nbsp;
- *  Email distribution type (values are: <b>live</b> or <b>test</b>)</li>
+ * Email distribution type (values are: <b>live</b> or <b>test</b>)</li>
  *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated
  *  with this project</li>
  *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for
