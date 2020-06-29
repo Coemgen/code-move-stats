@@ -67,8 +67,8 @@ const SendEmail = (
         (reminder === true) ? "weekly reminder" : "monthly");
       const subject = `${notifType}: Weekend Code Move Count for ${curMonth}`
         + ` ${yearStr} is available for editing in Google Drive!`;
-      const body = `Click the following link to access the current sheet: `
-        + `${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}`
+      const body = `Click the following link to access the current sheet:`
+        + ` ${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}`
         + ` [Weekend Code Move Count ${curMonth} ${yearStr}]`
         + "\n\nHi everyone,\n\n"
         + `This is your ${notifPeriod} message for the Weekend`
@@ -78,8 +78,8 @@ const SendEmail = (
         + ` sheet: <a href="`
         + `${"https://docs.google.com/spreadsheets/d/" + codeMoveFileId}">`
         + `Weekend Code Move Count ${curMonth} ${yearStr}</a></p><div><br>`
-        + `</div><div>Hi everyone, <br><br> This is your ${notifPeriod} `
-        + `message for the Weekend Code Move Count Spreadsheet!`
+        + `</div><div>Hi everyone, <br><br> This is your ${notifPeriod}`
+        + ` message for the Weekend Code Move Count Spreadsheet!`
         + ` Please remember to update the spreadsheet each and every weekend.`
         + ` Thanks</div>`;
       const options = {
