@@ -2,5 +2,7 @@
 .clasp.json
 # Visual Studio Code Workpace for the project
 *.code-workspace
-# Caret project file
-*caret-project
+# Caret project
+*-caret-project
+#
+Notes.txt

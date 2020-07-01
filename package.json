@@ -1,6 +1,6 @@
 {
-  "name": "codemovecount-v2",
-  "version": "1.0.0",
+  "name": "code-move-stats",
+  "version": "2.0.0",
   "description": "Google Apps Script project for Weekend Stats compiling utilities.",
   "main": "YearlyStatsSetup.js",
   "scripts": {

@@ -1,8 +1,9 @@
 **/**
+!Drivers.js
 !InitCodeMoveTemplate.js
 !InitStatsTemplate.js
-!RestoreImportedData.js
-!Utilities.js
 !MonthlyRun.js
-!YearlyStatsTest.js
+!RestoreImportedData.js
+!SendEmail.js
+!StaffUtilities.js
 !appsscript.json
