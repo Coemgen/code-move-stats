@@ -1,4 +1,6 @@
 # Google Apps Script ID
-clasp.json
+.clasp.json
 # Visual Studio Code Workpace for the project
-CodeMoveCount-V2.code-workspace
+*.code-workspace
+# Caret project file
+*caret-project
