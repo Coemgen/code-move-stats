@@ -106,7 +106,7 @@ function restoreImportedDataMain() {
 // eslint-disable-next-line no-unused-vars
 function monthlyRunTest() {
   "use strict";
-  const numMonths = 6;
+  const numMonths = 7;
   const startYear = 2019;
   const startMonth = 11;
   const monthArr = Array.from({
@@ -140,7 +140,12 @@ function sendWeeklyReminder() {
   );
   const folderIterator = dataFolder.getFoldersByName(yearStr);
   const yearFolder = folderIterator.next();
-  const fileIterator = yearFolder.getFilesByName(yearStr + "-" + monthStr);
+  const fileIterator = yearFolder.getFilesByName(
+    "Weekend Code Move Count"
+    + " "
+    + yearStr
+    + "-"
+    + monthStr);
   const codeMoveFileId = fileIterator.next().getId();
   const reminder = true;
   SendEmail.main(codeMoveFileId, yearStr, monthStr, reminder);

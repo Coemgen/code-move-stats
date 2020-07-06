@@ -44,7 +44,9 @@ const RestoreImportedData = (
       while (fileIterator.hasNext() === true) {
         fileObj = fileIterator.next();
         fileName = fileObj.getName();
-        if (fileName.match(/^\d{4}-\d{2}$/) !== null) {
+        if (fileName.match(
+            /^Weekend Code Move Count\s\d{4}-\d{2}$/
+          ) !== null) {
           fileNameIdArr.push([fileName, fileObj.getId()]);
         }
       }
@@ -52,7 +54,7 @@ const RestoreImportedData = (
         function (fileNameId) {
           var fileId = fileNameId[1];
           // filename months are numbered from 1..12
-          var monthOffset = Number(fileNameId[0].slice(5)) - 1;
+          var monthOffset = Number(fileNameId[0].slice(29)) - 1;
 
           fileName = fileNameId[0];
           MonthlyRun.updateYearlyStatsFile(

@@ -164,23 +164,31 @@ const MonthlyRun = (
     }
 
     /**
-     * Populate yearly stats imported data sheet cell with link
-     * to monthly code move footer cell data.
+     * Associate yearly stats imported data sheet with monthly code move sheet.
+     * @function setMonthlyToStatsSheetLink
+     * @memberof! MonthlyRun
+     * @private
      * @param {Object} yearlyStatsSheet
      * @param {string} codeMoveFileId
-     * @param {string} monthlyRange
-     * @param {string} yearlyRange
+     * @returns {setMonthlyToStatsSheetLink~monthlyCellToStatsCellLink}
      */
-    function monthlyCellToStatsCellLink(
-      yearlyStatsSheet, codeMoveFileId, monthlyRange, yearlyRange) {
-
-      yearlyStatsSheet.getRange(yearlyRange).setFormula("=IMPORTRANGE("
-        + "\"https://docs.google.com/spreadsheets/d/"
-        + codeMoveFileId
-        + "\",\"Totals!" + monthlyRange + "\")"
-      );
-
-      return undefined;
+    function setMonthlyToStatsSheetLink(yearlyStatsSheet, codeMoveFileId) {
+      /**
+       * Link monthly totals cell to yearly stats sheet cell.
+       * @function monthlyCellToStatsCellLink
+       * @memberof! MonthlyRun
+       * @private
+       * @param {string} monthlyRange - monthly totals cell ref. in A1 notation
+       * @param {string} yearlyRange - yearly stats cell ref. in A1 notation
+       */
+      const monthlyCellToStatsCellLink = function (monthlyRange, yearlyRange) {
+        yearlyStatsSheet.getRange(yearlyRange).setFormula("=IMPORTRANGE("
+          + "\"https://docs.google.com/spreadsheets/d/"
+          + codeMoveFileId
+          + "\",\"Totals!" + monthlyRange + "\")"
+        );
+      };
+      return monthlyCellToStatsCellLink;
     }
 
     /**
@@ -192,37 +200,33 @@ const MonthlyRun = (
      */
     function linkCodeMovesFooterToStats(yearlyStatsSheet, codeMoveFileId, row) {
 
+      const monthlyCellToStatsCellLink = setMonthlyToStatsSheetLink(
+        yearlyStatsSheet, codeMoveFileId);
+
       // Grand Totals (range B24:AH24)
-      monthlyCellToStatsCellLink(
-        yearlyStatsSheet, codeMoveFileId, "B24:AH24", "B" + row);
+      monthlyCellToStatsCellLink("B24:AH24", "B" + row);
 
       // H26 PE/MD Code Move Total (calculated on Weekend Stats sheet)
 
       // H27 Application Code Move Total (calculated on Weekend Stats sheet)
 
       // H29 Magic Update Total
-      monthlyCellToStatsCellLink(
-        yearlyStatsSheet, codeMoveFileId, "H29", "AI" + row);
+      monthlyCellToStatsCellLink("H29", "AI" + row);
 
       // H30 C/S Update Total
-      monthlyCellToStatsCellLink(
-        yearlyStatsSheet, codeMoveFileId, "H30", "AJ" + row);
+      monthlyCellToStatsCellLink("H30", "AJ" + row);
 
       // H31 Expanse Update Total
-      monthlyCellToStatsCellLink(
-        yearlyStatsSheet, codeMoveFileId, "H31", "AK" + row);
+      monthlyCellToStatsCellLink("H31", "AK" + row);
 
       // H34 Ring Deletion Total
-      monthlyCellToStatsCellLink(
-        yearlyStatsSheet, codeMoveFileId, "H34", "AL" + row);
+      monthlyCellToStatsCellLink("H34", "AL" + row);
 
       // P34 TEST Setup Total
-      monthlyCellToStatsCellLink(
-        yearlyStatsSheet, codeMoveFileId, "P34", "AM" + row);
+      monthlyCellToStatsCellLink("P34", "AM" + row);
 
       // H33 HCIS Deletion Total
-      monthlyCellToStatsCellLink(
-        yearlyStatsSheet, codeMoveFileId, "H33", "AN" + row);
+      monthlyCellToStatsCellLink("H33", "AN" + row);
 
       return undefined;
     }
@@ -236,7 +240,7 @@ const MonthlyRun = (
      * @param {Object} yearlyStatsFile
      * @param {string} codeMoveFileId
      * @param {number} month - 0 to 11
-     * @param {string} yearMonthStr - YYYY-MM format
+     * @param {string} yearMonthStr - "Weekend Code Move Count YYYY-MM" format
      * @returns {undefined}
      */
     function updateYearlyStatsFile(
@@ -256,7 +260,7 @@ const MonthlyRun = (
       let colNumbers = [2, 13, 24, 27, 32, 35];
 
       weekendDaysSheet.getRange("A1")
-        .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(0, 4));
+        .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(24, 28));
 
       yearlyStatsSheet.getRange("A" + row)
         .setValue(yearMonthStr);
@@ -305,7 +309,11 @@ const MonthlyRun = (
       const yearStr = dateObj.getFullYear().toString();
       const month = dateObj.getMonth();
       const monthStr = String(month + 1).toString().padStart(2, "0");
-      const yearMonthStr = yearStr + "-" + monthStr;
+      const yearMonthStr = "Weekend Code Move Count"
+        + " "
+        + yearStr
+        + "-"
+        + monthStr;
 
       /* jshint ignore:start */
       // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Array_destructuring
