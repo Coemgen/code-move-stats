@@ -85,13 +85,24 @@ function sendMonthlyOhsStatsReminder() {
 
   var strFileUrl = fileOhsStats.getUrl();
 
-  var recipients = "jeburns@meditech.com";
+  var recipients = "jeburns@meditech.com,"
+    + "kgriffin@meditech.com,"
+    + "rhomsey@meditech.com,"
+    + "mjcarnino@meditech.com,"
+    + "kallfrey@meditech.com,"
+    + "bporter@meditech.com,"
+    + "kmahoney@meditech.com,"
+    + "kkoppy@meditech.com,"
+    + "agrachuk@meditech.com,"
+    + "kellis@meditech.com,"
+    + "sgetchell@meditech.com,"
+    + "eyip@meditech.com";
   var subject = "MONTHLY: " + fileName;
 
-  var body  = '<p>Click the following link to access the sheet: <a href="{file.getUrl}">{file.getName}</a></p>';
-      body += '<p>If you see !#REF in the cell, click the cell, and then click Allow Access to connect the data.</p>';
-      body += '<p>Please enter all non-automated data values.</p>';
-      body += '<p>If you have any questions/comments, please contact James E Burns or Kevin Griffin.</p>';
+  var body = '<p>Click the following link to access the sheet: <a href="{file.getUrl}">{file.getName}</a></p>';
+  body += '<p>If you see #REF! in the cell, click the cell, and then click Allow Access to connect the data.</p>';
+  body += '<p>Please enter all non-automated data values.</p>';
+  body += '<p>If you have any questions/comments, please contact James E Burns or Kevin Griffin.</p>';
 
       body = body.replace(/\{file.getName\}/g, fileOhsStats.getName())
                  .replace(/\{file.getUrl\}/g, fileOhsStats.getUrl());
