@@ -2,8 +2,9 @@
 /*global DriveApp, InitStatsTemplate, MonthlyRun, PropertiesService*/
 
 /**
- * @file Code for relinking monthly totals to a new yearly stats spreadsheet.
- * Relinking should only be needed to repair data corruption.
+ * @file Defines the <code><b>RestoreImportedData</b></code> module.  This
+ * module relinks monthly totals to a new yearly stats spreadsheet.  Relinking
+ * should only be needed to repair data corruption.
  */
 
 /**
@@ -37,13 +38,16 @@ const RestoreImportedData = (
       var fileObj = {};
       var fileName = "";
       var yearlyStatsFile = yearFolder.getFilesByName(
-        yearToRestore + "-stats"
+        "Weekend Days OHS Stat tracking information "
+        + yearToRestore
       ).next();
 
       while (fileIterator.hasNext() === true) {
         fileObj = fileIterator.next();
         fileName = fileObj.getName();
-        if (fileName.match(/^\d{4}-\d{2}$/) !== null) {
+        if (fileName.match(
+            /^Weekend Code Move Count\s\d{4}-\d{2}$/
+          ) !== null) {
           fileNameIdArr.push([fileName, fileObj.getId()]);
         }
       }
@@ -51,18 +55,14 @@ const RestoreImportedData = (
         function (fileNameId) {
           var fileId = fileNameId[1];
           // filename months are numbered from 1..12
-          var monthOffset = Number(fileNameId[0].slice(5)) - 1;
+          var monthOffset = Number(fileNameId[0].slice(29)) - 1;
 
           fileName = fileNameId[0];
           MonthlyRun.updateYearlyStatsFile(
             yearlyStatsFile, fileId, monthOffset, fileName
           );
 
-          // ---------------
-          // 2020.06.14
-          // Initialize the Yearly Stats for each month - fixes broken formula references because a spreadsheet was deleted =SUM(!REF:!REF)
           InitStatsTemplate.main(yearlyStatsFile);
-          // ---------------
 
           return undefined;
         }

@@ -1,0 +1,35 @@
+**/**
+!Drivers.js
+!InitCodeMoveTemplate.js
+!InitStatsTemplate.js
+!MonthlyRun.js
+!RestoreImportedData.js
+!SendEmail.js
+!StaffUtilities.js
+!appsscript.json
+!zDriver.js
+!zInitCodeMoveTemplate.js
+!zInitStatsTemplate.js
+!zMonthlyRun.js
+!zRestoreImportedData.js
+
+//--------------------- Sunday, July 12, 2020 2:08 PM --------------------
+
+https://docs.google.com/spreadsheets/d/1MfAfY74KmR1wZU7u8vG9_5rP7m5nPOIyBScIwtOMGR4/edit#gid=431971751&range=B38
+
+=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1MfAfY74KmR1wZU7u8vG9_5rP7m5nPOIyBScIwtOMGR4/edit", "Weekend Days!B37:F47")
+
+=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1MfAfY74KmR1wZU7u8vG9_5rP7m5nPOIyBScIwtOMGR4/edit", "Weekend Days!H37:N47")
+
+//--------------------- Sunday, July 12, 2020 2:14 PM --------------------
+
+https://docs.google.com/spreadsheets/d/1MfAfY74KmR1wZU7u8vG9_5rP7m5nPOIyBScIwtOMGR4/edit#gid=431971751&range=B37:B49
+
+//--------------------- Sunday, July 12, 2020 2:19 PM --------------------
+
+=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1MfAfY74KmR1wZU7u8vG9_5rP7m5nPOIyBScIwtOMGR4/edit", "Weekend Days!B51:F52")
+
+=IMPORTRANGE("https://docs.google.com/spreadsheets/d/1MfAfY74KmR1wZU7u8vG9_5rP7m5nPOIyBScIwtOMGR4/edit", "Weekend Days!H51:N52")
+
+//--------------------- Sunday, July 12, 2020 2:19 PM --------------------
+

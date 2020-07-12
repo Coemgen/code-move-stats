@@ -2,17 +2,9 @@
 /*global AdminDirectory, GroupsApp*/
 
 /**
- * @file Mostly functions for getting user information.
+ * @file Defines the <code><b>StaffUtilities</b></code> module.  This module has
+ * functions for getting user (staff) information.
  */
-
-/* jshint ignore:start */
-/**
- * Declare global variables to satisfy linter expectations for strict mode.
- * - note that re-declaring a var type global that already has a value does not
- * - affect its value.
- * - See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#Description
- */
-/* jshing ignore:end */
 
 /**
  * @namespace StaffUtilities
@@ -34,7 +26,7 @@ const StaffUtilities = (
 
     /**
      * @function capitalizeFirstLetter
-     * @memberof Staff
+     * @memberof StaffUtilities
      * @private
      */
     function capitalizeFirstLetter(string) {
@@ -44,7 +36,7 @@ const StaffUtilities = (
     /**
      * Gets a Google user object for a given user ID.
      * @function getUser
-     * @memberof Staff
+     * @memberof StaffUtilities
      * @private
      * @param {string} userkey A userID string e.g., kevin.griffin@gmail.com
      * @returns {object} JSON representing the Google user
@@ -87,7 +79,7 @@ const StaffUtilities = (
      * Takes a Google Groups email then returns an array of objects including
      * group members' names and email addresses.
      * @function getObjArr
-     * @memberof! Staff
+     * @memberof! StaffUtilities
      * @public
      * @param {string} email - Google Group Email
      * @returns {UserData[]} - Array of UserData objects
@@ -114,7 +106,7 @@ const StaffUtilities = (
     /**
      * Get a sorted array of staff names from an array of staff objects
      * @function getNameArr
-     * @memberof! Staff
+     * @memberof! StaffUtilities
      * @public
      * @param {UserData[]} staffObjArr - Array of UserData objects
      * @returns {string[]} - A sorted array of name strings

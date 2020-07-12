@@ -2,17 +2,16 @@
 /*global PropertiesService, SpreadsheetApp*/
 
 /**
- * @file Code for initialization of the Stats Template spreadsheet's
- * <b>Weekend Days</b> sheet with A1Notation references to its
- * <b>Imported Data</b> sheet.
- * <p>Before using the script, values must be set for the following {@linkcode
- * https://developers.google.com/apps-script/guides/properties|script
+ * @file Defines the <code><b>InitStatsTemplate</b></code> module.  This module
+ * initializes the Stats Template spreadsheet's <b>Weekend Days</b> sheet with
+ * A1Notation references to its <b>Imported Data</b> sheet.
+ * <p>Before using this module, values must be set for the following {@linkcode
+ * https://developers.google.com/apps-script/guides/properties script
  * properties}:
  * <ul>
- *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the yearly stats template</li>
+ *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for
+ *  the yearly stats template</li>
  * </ul>
- * <p>Run this script with the {@linkcode
- * https://developers.google.com/apps-script/guides/v8-runtime|V8 Runtime}.
  * @author Kevin Griffin <kevin.griffin@gmail.com>
  */
 
@@ -43,33 +42,42 @@ const InitStatsTemplate = (
           const column = 1 + index;
           sheet.getRange(letter + "3:" + letter + "11").setValues(
             [
-              ["=IF('Imported Data'!D" + column
+              [
+                "=IF('Imported Data'!D" + column
                 + "<1, 0, 'Imported Data'!D" + column + ")"
               ],
-              ["=IF('Imported Data'!O" + column
+              [
+                "=IF('Imported Data'!O" + column
                 + "<1, 0, 'Imported Data'!O" + column + ")"
               ],
-              ["=IF('Imported Data'!Z" + column
+              [
+                "=IF('Imported Data'!Z" + column
                 + "<1, 0, 'Imported Data'!Z" + column + ")"
               ],
 
-              ["=IF('Imported Data'!G" + column
+              [
+                "=IF('Imported Data'!G" + column
                 + "<1, 0, 'Imported Data'!G" + column + ")"
               ],
-              ["=IF('Imported Data'!R" + column
+              [
+                "=IF('Imported Data'!R" + column
                 + "<1, 0, 'Imported Data'!R" + column + ")"
               ],
-              ["=IF('Imported Data'!AC" + column
+              [
+                "=IF('Imported Data'!AC" + column
                 + "<1, 0, 'Imported Data'!AC" + column + ")"
               ],
 
-              ["=IF('Imported Data'!J" + column
+              [
+                "=IF('Imported Data'!J" + column
                 + "<1, 0, 'Imported Data'!J" + column + ")"
               ],
-              ["=IF('Imported Data'!U" + column
+              [
+                "=IF('Imported Data'!U" + column
                 + "<1, 0, 'Imported Data'!U" + column + ")"
               ],
-              ["=IF('Imported Data'!AF" + column
+              [
+                "=IF('Imported Data'!AF" + column
                 + "<1, 0, 'Imported Data'!AF" + column + ")"
               ]
             ]
@@ -95,33 +103,42 @@ const InitStatsTemplate = (
           const column = 1 + index;
           sheet.getRange(letter + "14:" + letter + "22").setValues(
             [
-              ["=SUM('Imported Data'!B" + column
+              [
+                "=SUM('Imported Data'!B" + column
                 + ", 'Imported Data'!C" + column + ")"
               ],
-              ["=SUM('Imported Data'!M" + column
+              [
+                "=SUM('Imported Data'!M" + column
                 + ", 'Imported Data'!N" + column + ")"
               ],
-              ["=SUM('Imported Data'!X" + column
+              [
+                "=SUM('Imported Data'!X" + column
                 + ", 'Imported Data'!Y" + column + ")"
               ],
 
-              ["=SUM('Imported Data'!E" + column
+              [
+                "=SUM('Imported Data'!E" + column
                 + ", 'Imported Data'!F" + column + ")"
               ],
-              ["=SUM('Imported Data'!P" + column
+              [
+                "=SUM('Imported Data'!P" + column
                 + ", 'Imported Data'!Q" + column + ")"
               ],
-              ["=SUM('Imported Data'!AA" + column
+              [
+                "=SUM('Imported Data'!AA" + column
                 + ", 'Imported Data'!AB" + column + ")"
               ],
 
-              ["=SUM('Imported Data'!H" + column
+              [
+                "=SUM('Imported Data'!H" + column
                 + ", 'Imported Data'!I" + column + ")"
               ],
-              ["=SUM('Imported Data'!S" + column
+              [
+                "=SUM('Imported Data'!S" + column
                 + ", 'Imported Data'!T" + column + ")"
               ],
-              ["=SUM('Imported Data'!AD" + column
+              [
+                "=SUM('Imported Data'!AD" + column
                 + ", 'Imported Data'!AE" + column + ")"
               ]
 
@@ -148,13 +165,43 @@ const InitStatsTemplate = (
           const column = 1 + index;
           sheet.getRange(letter + "25:" + letter + "26").setValues(
             [
-              ["=SUM('Imported Data'!K" + column
+              [
+                "=SUM('Imported Data'!K" + column
                 + ",'Imported Data'!V" + column
                 + ",'Imported Data'!AG" + column + ")"
               ],
-              ["=SUM('Imported Data'!L" + column
+              [
+                "=SUM('Imported Data'!L" + column
                 + ",'Imported Data'!W" + column
                 + ",'Imported Data'!AH" + column + ")"
+              ]
+            ]
+          );
+        }
+      );
+    }
+
+    /**
+     * Sets up spreadsheet formulas for the Weekend Days sheet bundles cells
+     * @function initAddToShipping
+     * @memberof InitStatsTemplate
+     * @private
+     * @param {Object} statsTemplate - The spreadsheet object
+     */
+    function initAddToShipping(statsTemplate) {
+      const sheet = statsTemplate.getSheetByName("Weekend Days");
+      Array.from({
+        length: 12
+      }).forEach(
+        function (ignore, index) {
+          const letter = String.fromCharCode(66 + index);
+          const column = 1 + index;
+          sheet.getRange(letter + "28").setValues(
+            [
+              [
+                "=IF('Imported Data'!AO" + column
+                + "<1, 0, 'Imported Data'!AO" + column
+                + ")"
               ]
             ]
           );
@@ -177,18 +224,21 @@ const InitStatsTemplate = (
         function (ignore, index) {
           const letter = String.fromCharCode(66 + index);
           const column = 1 + index;
-          sheet.getRange(letter + "28:" + letter + "30").setValues(
+          sheet.getRange(letter + "30:" + letter + "32").setValues(
             [
               // AI Magic Updates total
-              ["=IF('Imported Data'!AI" + column
+              [
+                "=IF('Imported Data'!AI" + column
                 + "<1, 0, 'Imported Data'!AI" + column + ")"
               ],
               // AJ C/S Updates total
-              ["=IF('Imported Data'!AJ" + column
+              [
+                "=IF('Imported Data'!AJ" + column
                 + "<1, 0, 'Imported Data'!AJ" + column + ")"
               ],
               // AK Exp Updates total
-              ["=IF('Imported Data'!AK" + column
+              [
+                "=IF('Imported Data'!AK" + column
                 + "<1, 0, 'Imported Data'!AK" + column + ")"
               ]
             ]
@@ -212,18 +262,21 @@ const InitStatsTemplate = (
         function (ignore, index) {
           const letter = String.fromCharCode(66 + index);
           const column = 1 + index;
-          sheet.getRange(letter + "36:" + letter + "38").setValues(
+          sheet.getRange(letter + "38:" + letter + "40").setValues(
             [
               // AN HCIS Deletion total
-              ["=IF('Imported Data'!AN" + column
+              [
+                "=IF('Imported Data'!AN" + column
                 + "<1, 0, 'Imported Data'!AN" + column + ")"
               ],
               // AL Ring Deletion Total
-              ["=IF('Imported Data'!AL" + column
+              [
+                "=IF('Imported Data'!AL" + column
                 + "<1, 0, 'Imported Data'!AL" + column + ")"
               ],
               // AM Test Setup Total
-              ["=IF('Imported Data'!AM" + column
+              [
+                "=IF('Imported Data'!AM" + column
                 + "<1, 0, 'Imported Data'!AM" + column + ")"
               ]
             ]
@@ -231,10 +284,6 @@ const InitStatsTemplate = (
         }
       );
     }
-    
-    // function initSumFormulas
-    //  These formulas are defined on the sheet itself and don't need to be created programmatically.
-    //  Totals, Quaterly values
 
     /**
      * Sets up spreadsheet formulas to link the <b>Imported Data</b> sheet to the
@@ -273,6 +322,7 @@ const InitStatsTemplate = (
       initCodeMoves(statsTemplate);
       initPeMd(statsTemplate);
       initBundles(statsTemplate);
+      initAddToShipping(statsTemplate);
       initUpdates(statsTemplate);
       initSoftwareSuppport(statsTemplate);
     }

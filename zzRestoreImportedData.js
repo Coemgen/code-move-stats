@@ -2,9 +2,8 @@
 /*global DriveApp, InitStatsTemplate, MonthlyRun, PropertiesService*/
 
 /**
- * @file Defines the <code><b>RestoreImportedData</b></code> module.  This
- * module relinks monthly totals to a new yearly stats spreadsheet.  Relinking
- * should only be needed to repair data corruption.
+ * @file Code for relinking monthly totals to a new yearly stats spreadsheet.
+ * Relinking should only be needed to repair data corruption.
  */
 
 /**
@@ -12,9 +11,9 @@
  */
 
 // eslint-disable-next-line no-unused-vars
-const zRestoreImportedData = (
+const zzRestoreImportedData = (
 
-  function (DriveApp, zMonthlyRun, PropertiesService) {
+  function (DriveApp, zzMonthlyRun, PropertiesService) {
     "use strict";
 
     /**
@@ -38,16 +37,13 @@ const zRestoreImportedData = (
       var fileObj = {};
       var fileName = "";
       var yearlyStatsFile = yearFolder.getFilesByName(
-        "Weekend Days OHS Stat tracking information "
-        + yearToRestore
+        yearToRestore + "-stats"
       ).next();
 
       while (fileIterator.hasNext() === true) {
         fileObj = fileIterator.next();
         fileName = fileObj.getName();
-        if (fileName.match(
-            /^Weekend Code Move Count\s\d{4}-\d{2}$/
-          ) !== null) {
+        if (fileName.match(/^\d{4}-\d{2}$/) !== null) {
           fileNameIdArr.push([fileName, fileObj.getId()]);
         }
       }
@@ -55,14 +51,18 @@ const zRestoreImportedData = (
         function (fileNameId) {
           var fileId = fileNameId[1];
           // filename months are numbered from 1..12
-          var monthOffset = Number(fileNameId[0].slice(29)) - 1;
+          var monthOffset = Number(fileNameId[0].slice(5)) - 1;
 
           fileName = fileNameId[0];
-          zMonthlyRun.updateYearlyStatsFile(
+          zzMonthlyRun.updateYearlyStatsFile(
             yearlyStatsFile, fileId, monthOffset, fileName
           );
 
+          // ---------------
+          // 2020.06.14
+          // Initialize the Yearly Stats for each month - fixes broken formula references because a spreadsheet was deleted =SUM(!REF:!REF)
           InitStatsTemplate.main(yearlyStatsFile);
+          // ---------------
 
           return undefined;
         }
@@ -74,4 +74,4 @@ const zRestoreImportedData = (
     return Object.freeze({
       main
     });
-  }(DriveApp, zMonthlyRun, PropertiesService));
+  }(DriveApp, MonthlyRun, PropertiesService));

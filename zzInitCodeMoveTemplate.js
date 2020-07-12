@@ -2,17 +2,16 @@
 /*global PropertiesService, SpreadsheetApp, StaffUtilities*/
 
 /**
- * @file Defines the <code><b>InitCodeMoveTemplate</b></code> module.  This
- * module initializes the Code Move Counts Template Spreadsheet.
- * <p>Before using this module, values must be set for the following
- * {@linkcode https://developers.google.com/apps-script/guides/properties
+ * @file Code for initialization of the Code Move Counts Template Spreadsheet.
+ * <p>Before using the script, values must be set for the following
+ * {@linkcode https://developers.google.com/apps-script/guides/properties|
  * script properties}:
  * <ul>
- *  <li><b>codeMoveTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the
- *  montly totals template</li>
- *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated
- *  with this project</li>
+ *  <li><b>codeMoveTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for the montly totals template</li>
+ *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated with this project</li>
  * </ul>
+ * <p>Run the script using the {@linkcode
+ * https://developers.google.com/apps-script/guides/v8-runtime|V8 Runtime}.
  * @author Kevin Griffin <kevin.griffin@gmail.com>
  */
 
@@ -23,7 +22,7 @@
  */
 
 // eslint-disable-next-line no-unused-vars
-const zInitCodeMoveTemplate = (
+const zzInitCodeMoveTemplate = (
 
   function (PropertiesService, SpreadsheetApp) {
     "use strict";
@@ -318,33 +317,9 @@ const zInitCodeMoveTemplate = (
     }
 
     /**
-     * Wrapper for calling getFooterFormula to get a formula string for adding to
-     * a footer totals cell.
-     * @function additionsToShipSource
-     * @memberof InitCodeMoveTemplate
-     * @private
-     * @param {Object} totalsSheet
-     * @param {string[]} staffNameArr
-     * @returns {undefined}
-     */
-    function additionsToShipSource(totalsSheet, staffNameArr) {
-      const action = "Add to Ship Source";
-      const cell = "P36";
-      const matchObj1 = {
-        "key": action,
-        "cell": "B2:B"
-      };
-      const formulaStr = getFooterFormula(staffNameArr, matchObj1);
-
-      totalsSheet.getRange(cell).setValue(formulaStr);
-
-      return undefined;
-    }
-    
-    /**
      * Initialize the Monthly Totals Template Sheet with staff names and
-     * spreadsheet formulas.  Run <code><b>InitCodeMoveTemplate.main()</b>
-     * </code> when there are staffing changes.
+     * spreadsheet formulas.  Run this InitCodeMoveTemplate.main() when there
+     * are staffing changes.
      * @function main
      * @memberof! InitCodeMoveTemplate
      * @public
@@ -385,7 +360,6 @@ const zInitCodeMoveTemplate = (
       setHcisDeletionsTotal(totalsSheet, staffNameArr);
       setRingDeletionsTotal(totalsSheet, staffNameArr);
       setTestSetupsTotal(totalsSheet, staffNameArr);
-      additionsToShipSource(totalsSheet, staffNameArr);
 
       return undefined;
     }
