@@ -7,3 +7,8 @@
 !SendEmail.js
 !StaffUtilities.js
 !appsscript.json
+!zDrivers.js
+!zInitCodeMoveTemplate.js
+!zInitStatsTemplate.js
+!zMonthlyRun.js
+!zRestoreImportedData.js

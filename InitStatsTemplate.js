@@ -231,6 +231,10 @@ const InitStatsTemplate = (
         }
       );
     }
+    
+    // function initSumFormulas
+    //  These formulas are defined on the sheet itself and don't need to be created programmatically.
+    //  Totals, Quaterly values
 
     /**
      * Sets up spreadsheet formulas to link the <b>Imported Data</b> sheet to the
