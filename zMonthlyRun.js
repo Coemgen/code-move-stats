@@ -265,7 +265,7 @@ const zMonthlyRun = (
         codeMoveSheetUrl, codeMoveSheetLabel);
       // Month columns range from B (ascii 66) to M (ascii 77)
       let colLetter = String.fromCharCode(66 + month);
-      let colNumbers = [2, 13, 24, 27, 32, 35];
+      let colNumbers = [2, 13, 24, 27, 29, 34, 37];
 
       weekendDaysSheet.getRange("A1")
         .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(24, 28));

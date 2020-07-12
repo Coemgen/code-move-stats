@@ -36,7 +36,7 @@ function zRestoreImportedDataMain() {
  * template spreadsheet.
  */
 // eslint-disable-next-line no-unused-vars
-function zInitCodeMoveTemplateMain() {
+function zInitStatsTemplateMain() {
   "use strict";
-  zInitCodeMoveTemplate.main();
+  zInitStatsTemplate.main();
 }

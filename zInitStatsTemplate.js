@@ -21,7 +21,7 @@
  */
 
 // eslint-disable-next-line no-unused-vars
-const InitStatsTemplate = (
+const zInitStatsTemplate = (
 
   function (PropertiesService, SpreadsheetApp) {
     "use strict";
