@@ -30,3 +30,13 @@ function zRestoreImportedDataMain() {
   "use strict";
   zRestoreImportedData.main(2020);
 }
+
+/**
+ * Run this periodically to add or remove staff from the monthly totals
+ * template spreadsheet.
+ */
+// eslint-disable-next-line no-unused-vars
+function zInitCodeMoveTemplateMain() {
+  "use strict";
+  zInitCodeMoveTemplate.main();
+}
