@@ -43,28 +43,63 @@ const MonthlyRun = (
      * @param {string} yearStr
      * @returns {object[]} - [yearfolder, yearlyStatsFile] object references
      */
+    // 2020.06.20
     function getYearFolder(yearStr) {
-      const yearlyStatsTemplate = SpreadsheetApp.openById(
-        PropertiesService.getScriptProperties()
-        .getProperty("yearlyStatsTemplateId")
-      );
+//      /*
+//      const yearlyStatsTemplate = SpreadsheetApp.openById(
+//        PropertiesService.getScriptProperties()
+//        .getProperty("yearlyStatsTemplateId")
+//      );
+//      */
       // find root folder
       const dataFolder = DriveApp.getFolderById(
         PropertiesService.getScriptProperties().getProperty("dataFolderId")
       );
       const folderIterator = dataFolder.getFoldersByName(yearStr);
+      const yearFolderFound = folderIterator.hasNext();
+//      /*
+//      const yearFolder = (
+//        (folderIterator.hasNext() === true)
+//        ? folderIterator.next()
+//        : dataFolder.createFolder(yearStr));
+//        */
       const yearFolder = (
-        (folderIterator.hasNext() === true)
+        (yearFolderFound)
         ? folderIterator.next()
         : dataFolder.createFolder(yearStr));
+      
+      // ------------
+      // 2020.06.20 - separate get folder and get file
+//      /*
+//      const fileIterator = yearFolder.getFilesByName(yearStr + "-stats");
+//      const yearlyStatsFile = (
+//        (fileIterator.hasNext() === true)
+//        ? fileIterator.next()
+//        : DriveApp.getFileById(yearlyStatsTemplate.getId())
+//        .makeCopy((yearStr + "-stats"), yearFolder));
+//
+//      return [yearFolder, yearlyStatsFile];
+//      */
+      return yearFolder;
+      // ------------
+    }
+    
+    function getYearlyStatsFile(yearStr, yearFolder){
+      
+      const yearlyStatsTemplate = SpreadsheetApp.openById(
+        PropertiesService.getScriptProperties()
+        .getProperty("yearlyStatsTemplateId")
+      );
+      
       const fileIterator = yearFolder.getFilesByName(yearStr + "-stats");
+      const yearFileFound = fileIterator.hasNext();
       const yearlyStatsFile = (
-        (fileIterator.hasNext() === true)
+        (yearFileFound)
         ? fileIterator.next()
         : DriveApp.getFileById(yearlyStatsTemplate.getId())
         .makeCopy((yearStr + "-stats"), yearFolder));
 
-      return [yearFolder, yearlyStatsFile];
+      return [yearlyStatsFile, yearFileFound];
     }
 
     /**
@@ -78,7 +113,8 @@ const MonthlyRun = (
      * @param {Object} dateObj - JavaScript date object for current month
      * @returns {string} monthly data spreadsheet file ID
      */
-    function getCodeMoveFileId(yearFolder, yearMonthStr, dateObj) {
+    function getCodeMoveFile(yearFolder, yearMonthStr, dateObj) {
+    //function getCodeMoveFileId(yearFolder, yearMonthStr, dateObj) {
       // get code move template
       const codeMoveTemplate = DriveApp.getFileById(
         PropertiesService.getScriptProperties()
@@ -92,65 +128,126 @@ const MonthlyRun = (
         (yearMonthFileFound)
         ? fileIterator.next()
         : codeMoveTemplate.makeCopy(codeMoveSheetName, yearFolder));
-      var spreadsheet = {};
+      
+//      /*
+//      var spreadsheet = {};
+//
+//      // edit new month spreadsheets
+//      if (yearMonthFileFound === false) {
+//        spreadsheet = SpreadsheetApp.openById(
+//          codeMoveFile.getId()
+//        );
+//        spreadsheet.getSheetByName("Totals")
+//          .getRange("A1:A3")
+//          .setValue(dateObj);
+//
+//        // for each staff member update link to and from Totals sheet
+//        spreadsheet.getSheetByName("Totals").getRange("A4:A23")
+//          .getValues().map((nameArr) => nameArr[0])
+//          .filter((name) => name).forEach(
+//            function (name, index) {
+//              // eslint-disable-next-line no-undef
+//              const row = FIRST_STAFF_ROW + index; /* jshint ignore:line *//*
+//              const sheet = spreadsheet.getSheetByName(name);
+//              const email = sheet.getRange("B1").getValue();
+//
+//              spreadsheet.getSheetByName("Totals").getRange("A" + row).setValue(
+//                "=HYPERLINK(\""
+//                + "https://docs.google.com/spreadsheets/d/"
+//                + spreadsheet.getId()
+//                + "/edit#gid="
+//                + spreadsheet.getSheetByName(name).getSheetId()
+//                + "\", \""
+//                + name
+//                + "\")"
+//              );
+//              spreadsheet.getSheetByName(name).getRange("A1").setValue(
+//                "=HYPERLINK(\""
+//                + "https://docs.google.com/spreadsheets/d/"
+//                + spreadsheet.getId()
+//                + "/edit#gid="
+//                + spreadsheet.getSheetByName("Totals").getSheetId()
+//                + "\", \""
+//                + "Totals"
+//                + "\")"
+//              );
+//
+//              // set protections
+//              try {
+//                sheet.protect().setDomainEdit(false)
+//                  .addEditor(email);
+//                sheet.getRange("A1:Z2").protect()
+//                  .setDomainEdit(false)
+//                  .removeEditor(email);
+//              } catch (e) {
+//                console.log(e);
+//              }
+//
+//              return undefined;
+//            }
+//          );
+//      } // end if statement
+//      */
 
-      // edit new month spreadsheets
-      if (yearMonthFileFound === false) {
-        spreadsheet = SpreadsheetApp.openById(
-          codeMoveFile.getId()
-        );
-        spreadsheet.getSheetByName("Totals")
-          .getRange("A1:A3")
-          .setValue(dateObj);
-
-        // for each staff member update link to and from Totals sheet
-        spreadsheet.getSheetByName("Totals").getRange("A4:A23")
-          .getValues().map((nameArr) => nameArr[0])
-          .filter((name) => name).forEach(
-            function (name, index) {
-              // eslint-disable-next-line no-undef
-              const row = FIRST_STAFF_ROW + index; /* jshint ignore:line */
-              const sheet = spreadsheet.getSheetByName(name);
-              const email = sheet.getRange("B1").getValue();
-
-              spreadsheet.getSheetByName("Totals").getRange("A" + row).setValue(
-                "=HYPERLINK(\""
-                + "https://docs.google.com/spreadsheets/d/"
-                + spreadsheet.getId()
-                + "/edit#gid="
-                + spreadsheet.getSheetByName(name).getSheetId()
-                + "\", \""
-                + name
-                + "\")"
-              );
-              spreadsheet.getSheetByName(name).getRange("A1").setValue(
-                "=HYPERLINK(\""
-                + "https://docs.google.com/spreadsheets/d/"
-                + spreadsheet.getId()
-                + "/edit#gid="
-                + spreadsheet.getSheetByName("Totals").getSheetId()
-                + "\", \""
-                + "Totals"
-                + "\")"
-              );
-
-              // set protections
-              try {
-                sheet.protect().setDomainEdit(false)
-                  .addEditor(email);
-                sheet.getRange("A1:Z2").protect()
-                  .setDomainEdit(false)
-                  .removeEditor(email);
-              } catch (e) {
-                console.log(e);
-              }
-
-              return undefined;
-            }
+      //return codeMoveFile.getId();
+      //return codeMoveFile;
+      return [codeMoveFile, yearMonthFileFound]
+    }
+    
+    
+    function updateMonthlyStatsFile(codeMoveFile, dateObj){
+      
+      var spreadsheet = SpreadsheetApp.openById(codeMoveFile.getId());
+      
+      spreadsheet.getSheetByName("Totals")
+                 .getRange("A1:A3")
+                 .setValue(dateObj);
+      
+      // for each staff member update link to and from Totals sheet
+      spreadsheet.getSheetByName("Totals").getRange("A4:A23")
+                 .getValues().map((nameArr) => nameArr[0])
+      .filter((name) => name).forEach(
+        function (name, index) {
+          // eslint-disable-next-line no-undef
+          const row = FIRST_STAFF_ROW + index; /* jshint ignore:line */
+          const sheet = spreadsheet.getSheetByName(name);
+          const email = sheet.getRange("B1").getValue();
+          
+          spreadsheet.getSheetByName("Totals").getRange("A" + row).setValue(
+            "=HYPERLINK(\""
+            + "https://docs.google.com/spreadsheets/d/"
+            + spreadsheet.getId()
+          + "/edit#gid="
+          + spreadsheet.getSheetByName(name).getSheetId()
+          + "\", \""
+          + name
+          + "\")"
           );
-      } // end if statement
-
-      return codeMoveFile.getId();
+          spreadsheet.getSheetByName(name).getRange("A1").setValue(
+            "=HYPERLINK(\""
+            + "https://docs.google.com/spreadsheets/d/"
+            + spreadsheet.getId()
+          + "/edit#gid="
+          + spreadsheet.getSheetByName("Totals").getSheetId()
+          + "\", \""
+          + "Totals"
+          + "\")"
+          );
+          
+          // set protections
+          try {
+            sheet.protect().setDomainEdit(false)
+            .addEditor(email);
+            sheet.getRange("A1:Z2").protect()
+            .setDomainEdit(false)
+            .removeEditor(email);
+          } catch (e) {
+            console.log(e);
+          }
+          
+          return undefined;
+        }
+      );
     }
 
     // --------------------
@@ -172,7 +269,6 @@ const MonthlyRun = (
      * @param {string} yearMonthStr - YYYY-MM format
      * @returns {undefined}
      */
-    // eslint-disable-next-line max-statements
     function updateYearlyStatsFile(
       yearlyStatsFile, codeMoveFileId, month, yearMonthStr) {
       const spreadsheet = SpreadsheetApp.openById(yearlyStatsFile.getId());
@@ -266,6 +362,18 @@ const MonthlyRun = (
       return undefined;
     }
 
+    
+    function maybeSendReminder(){
+      var now = new Date();
+      var intDay = now.getDate();
+  
+      if ( intDay > 6 )
+        return true; // After the 6th or 6 days, we should only need to remind
+      else
+        return false; // Before the 6th day, there's a good chance we need to create, which will send an email, so don't also send a reminder email
+    }
+    
+    
     /**
      * Gets the current year's data folder.  If the folder does not exist then it
      * will be created and populated with a yearly stats spreadsheet. A monthly
@@ -281,10 +389,7 @@ const MonthlyRun = (
     // eslint-disable-next-line no-unused-vars
     function main(testYear = undefined, testMonth = undefined) {
 
-      var yearFolder = {};
-      var codeMoveFileId = "";
-      var yearlyStatsFile = {};
-
+      // --- SETUP ---
       const dateObj = (
         ((testYear !== undefined) && (testMonth !== undefined))
         ? new Date(testYear, testMonth)
@@ -293,19 +398,43 @@ const MonthlyRun = (
       const month = dateObj.getMonth();
       const monthStr = String(month + 1).toString().padStart(2, "0");
       const yearMonthStr = yearStr + "-" + monthStr;
-
+      const monthName = dateObj.toLocaleString('default', { month: 'short' });
+      
+      // --- GET or CREATE Files ---
+      var yearFolder = getYearFolder(yearStr);
+      
+      var yearlyStatsFile, yearFileFound;
+      //var yearlyStatsFile = getYearlyStatsFile(yearStr, yearFolder);
+      [yearlyStatsFile, yearFileFound] = getYearlyStatsFile(yearStr, yearFolder);
+      
+      //var codeMoveFile = getCodeMoveFile(yearFolder, yearMonthStr, dateObj);
+      var codeMoveFile, yearMonthFileFound;
+      [codeMoveFile, yearMonthFileFound] = getCodeMoveFile(yearFolder, yearMonthStr, dateObj);
+      
+      var codeMoveFileId = codeMoveFile.getId();
+      
+      // --- Update built files, maybe send email ---
+      if ( yearMonthFileFound === false) { // We should really only be updating the file if it never existed before; once a month
+        updateMonthlyStatsFile(codeMoveFile, dateObj);
+        SendEmail.main(codeMoveFile,monthName,"testing","Weekend Code Move Count");
+      }
+     
+      if ( !maybeSendReminder() || yearFileFound === false ) { // Sheet updates can happen every month, which would update the same file
+        updateYearlyStatsFile(yearlyStatsFile, codeMoveFileId, month, yearMonthStr); // Updates YearlyStatsFile: set formulas (HYPERLINK, IMPORTRANGE)
+        SendEmail.main(yearlyStatsFile, monthName, "testing","OHS Stat"); // (yearlyStatsFile, monthStr, flagTesting, monthlyStatsFile, typeEmail)  
+      }
       /* jshint ignore:start */
       // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Array_destructuring
       /* jshint ignore:end */
-      [yearFolder, yearlyStatsFile] = getYearFolder(yearStr);
-
-      codeMoveFileId = getCodeMoveFileId(yearFolder, yearMonthStr, dateObj);
-
-      updateYearlyStatsFile(
-        yearlyStatsFile, codeMoveFileId, month, yearMonthStr);
-
-      //      SendEmail.main(yearlyStatsFile, monthStr, "testing");
-
+      //[yearFolder, yearlyStatsFile] = getYearFolder(yearStr);
+      //codeMoveFileId = getCodeMoveFile(yearFolder, yearMonthStr, dateObj); // Includes SendEmail for WeekendCodeMoveCount
+      
+      if ( maybeSendReminder() ) { // If past the 6th of the month, we assume that the file was created and only reminders need to be sent out
+        SendEmail.main(codeMoveFile,monthName,"testing","Weekend Code Move Count");
+        // Maybe send Rob reminder emails.
+      }
+      
+      // --- Exit code ---
       return undefined;
     }
 

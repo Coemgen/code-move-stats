@@ -87,10 +87,21 @@ function emailTest() {
   const yearStr = "2020";
   const folderIterator = dataFolder.getFoldersByName(yearStr);
   const yearFolder = folderIterator.next();
-  const fileIterator = yearFolder.getFilesByName(yearStr + "-stats");
+  var fileIterator = yearFolder.getFilesByName(yearStr + "-stats");
   const yearlyStatsFile = fileIterator.next();
 
-  SendEmail.main(yearlyStatsFile, "Jun", "testing");
+  fileIterator = yearFolder.getFiles();
+  var fileObj = fileIterator.next();
+      fileObj = fileIterator.next();
+  var fileName = fileObj.getName();
+  Logger.log("fileName: " + fileName);
+  if (fileName.match(/^\d{4}-\d{2}$/) !== null) 
+  {
+    var monthlyStatsFile = fileObj;
+    //SendEmail.main(monthlyStatsFile,"Jun","testing","Weekend Code Move Count");
+  }
+  
+  SendEmail.main(yearlyStatsFile, "Jun", "testing","OHS Stat"); // (yearlyStatsFile, monthStr, flagTesting, monthlyStatsFile, typeEmail)  
   
   return undefined;
 }
