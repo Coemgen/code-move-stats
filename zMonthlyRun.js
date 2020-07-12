@@ -58,12 +58,17 @@ const zMonthlyRun = (
         (folderIterator.hasNext() === true)
         ? folderIterator.next()
         : dataFolder.createFolder(yearStr));
-      const fileIterator = yearFolder.getFilesByName(yearStr + "-stats");
+      const fileIterator = yearFolder.getFilesByName(
+        "Weekend Days OHS Stat tracking information "
+        + yearStr);
       const yearlyStatsFile = (
         (fileIterator.hasNext() === true)
         ? fileIterator.next()
         : DriveApp.getFileById(yearlyStatsTemplate.getId())
-        .makeCopy((yearStr + "-stats"), yearFolder));
+        .makeCopy(
+          ("Weekend Days OHS Stat tracking information "
+            + yearStr),
+          yearFolder));
 
       return [yearFolder, yearlyStatsFile];
     }
@@ -227,7 +232,7 @@ const zMonthlyRun = (
 
       // H33 HCIS Deletion Total
       monthlyCellToStatsCellLink("H33", "AN" + row);
-      
+
       // P36 Additions to Ship Source
       monthlyCellToStatsCellLink("P36", "AO" + row);
 
