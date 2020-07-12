@@ -336,6 +336,30 @@ const InitCodeMoveTemplate = (
     }
 
     /**
+     * Wrapper for calling getFooterFormula to get a formula string for adding to
+     * a footer totals cell.
+     * @function additionsToShipSource
+     * @memberof InitCodeMoveTemplate
+     * @private
+     * @param {Object} totalsSheet
+     * @param {string[]} staffNameArr
+     * @returns {undefined}
+     */
+    function additionsToShipSource(totalsSheet, staffNameArr) {
+      const action = "Add to Ship Source";
+      const cell = "P36";
+      const matchObj1 = {
+        "key": action,
+        "cell": "B2:B"
+      };
+      const formulaStr = getFooterFormula(staffNameArr, matchObj1);
+
+      totalsSheet.getRange(cell).setValue(formulaStr);
+
+      return undefined;
+    }
+    
+    /**
      * Initialize the Monthly Totals Template Sheet with staff names and
      * spreadsheet formulas.  Run <code><b>InitCodeMoveTemplate.main()</b>
      * </code> when there are staffing changes.
@@ -379,6 +403,7 @@ const InitCodeMoveTemplate = (
       setHcisDeletionsTotal(totalsSheet, staffNameArr);
       setRingDeletionsTotal(totalsSheet, staffNameArr);
       setTestSetupsTotal(totalsSheet, staffNameArr);
+      additionsToShipSource(totalsSheet, staffNameArr);
 
       return undefined;
     }
