@@ -38,7 +38,8 @@ const RestoreImportedData = (
       var fileObj = {};
       var fileName = "";
       var yearlyStatsFile = yearFolder.getFilesByName(
-        yearToRestore + "-stats"
+        "Weekend Days OHS Stat tracking information "
+        + yearToRestore
       ).next();
 
       while (fileIterator.hasNext() === true) {
