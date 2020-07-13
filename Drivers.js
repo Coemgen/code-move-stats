@@ -91,10 +91,10 @@ function initStatsTemplateMain() {
  * @private
  */
 // eslint-disable-next-line no-unused-vars
-function restoreImportedDataMain() {
-  "use strict";
-  RestoreImportedData.main(2020);
-}
+//function restoreImportedDataMain() {
+//  "use strict";
+//  RestoreImportedData.main(2020);
+//}
 
 /**
  * Use this funtion for testing the project.
@@ -104,20 +104,20 @@ function restoreImportedDataMain() {
  * @private
  */
 // eslint-disable-next-line no-unused-vars
-function monthlyRunTest() {
-  "use strict";
-  const numMonths = 7;
-  const startYear = 2019;
-  const startMonth = 11;
-  const monthArr = Array.from({
-    "length": numMonths
-  });
-  monthArr.forEach(function (ignore, index) {
-    MonthlyRun.main(startYear, startMonth + index);
-  });
-
-  return undefined;
-}
+//function monthlyRunTest() {
+//  "use strict";
+//  const numMonths = 7;
+//  const startYear = 2019;
+//  const startMonth = 11;
+//  const monthArr = Array.from({
+//    "length": numMonths
+//  });
+//  monthArr.forEach(function (ignore, index) {
+//    MonthlyRun.main(startYear, startMonth + index);
+//  });
+//
+//  return undefined;
+//}
 
 /**
  * Function to be called by a weekly {@linkcode
