@@ -23,6 +23,8 @@ PropertiesService, RestoreImportedData, SendEmail
  *  with this project</li>
  *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for
  *  the yearly stats template</li>
+ *  <li><b>googleSiteUrl</b>&nbsp;&ndash;&nbsp;the url for the project's
+ *  associated Google Site</li>
  * </ul>
  * <p>Run the script using the {@linkcode
  * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.
