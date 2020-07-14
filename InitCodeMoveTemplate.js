@@ -369,6 +369,7 @@ const InitCodeMoveTemplate = (
      * @returns {undefined}
      */
     // eslint-disable-next-line no-unused-vars
+    // eslint-disable-next-line max-statements
     function main() { // jshint ignore:line
       const spreadsheet = SpreadsheetApp.openById(
         PropertiesService.getScriptProperties()

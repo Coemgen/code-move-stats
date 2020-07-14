@@ -104,8 +104,7 @@ const MonthlyRun = (
 
     /**
      * Creates and returns a new monthly code moves file object.  Also adds the code
-     * moves file's url to the associated Google Site (assumes code-moves-count template
-     * page exists).
+     * moves file's url to the associated Google Site.
      * @param {Object} codeMoveTemplate
      * @param {string} codeMoveSheetName
      * @param {Object} yearFolder
@@ -121,30 +120,20 @@ const MonthlyRun = (
         PropertiesService.getScriptProperties().getProperty("googleSiteUrl")
       );
       const codeMovePage = site.getChildByName("code-move-counts");
-      const template = site.getTemplates()
-        .reduce((t) => t.getName() === "code-move-counts");
-      const title = dateObj.getFullYear();
-      const name = dateObj.getFullYear();
-      const values = [
-        "<a href=\"" + codeMoveFile.getUrl() + "\">"
-        + dateObj.toLocaleDateString("en-US", {
+      const year = dateObj.getFullYear();
+      const month = dateObj.toLocaleDateString("en-US", {
           "month": "numeric"
         })
-        .padStart(2, "0")
+        .padStart(2, "0");
+      const urlStr = "<a href=\"" + codeMoveFile.getUrl() + "\">"
+        + year
         + "-"
-        + dateObj.toLocaleDateString("en-US", {
-          "month": "long"
-        })
-        + "</a>"
+        + month
+        + "</a>";
+      const values = [
+        urlStr
       ];
-      let childPage = codeMovePage.getChildByName(name);
-
-      if (childPage === undefined
-        || childPage === null
-        || childPage === false) {
-        childPage = codeMovePage.createPageFromTemplate(title, name, template);
-      }
-      childPage.addListItem(values);
+      codeMovePage.addListItem(values);
 
       return codeMoveFile;
     }
