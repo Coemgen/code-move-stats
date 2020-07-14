@@ -113,3 +113,41 @@ function sendMonthlyOhsStatsReminder() {
   // ---- Use Gamil Service to send email(s) ----
   GmailApp.sendEmail(recipients, subject, body, options);
 }
+
+/**
+ * Use this function to relink a deleted yearly stats spreadsheet to its
+ * associated monthly totals spreadsheets.  This should only need to be run
+ * if there is a problem with the link between yearly stats and monthly totals
+ * sheets.
+ * @function restoreImportedDataMain
+ * @memberof Drivers
+ * @private
+ */
+// eslint-disable-next-line no-unused-vars
+//function restoreImportedDataMain() {
+//  "use strict";
+//  RestoreImportedData.main(2020);
+//}
+
+/**
+ * Use this funtion for testing the project.
+ * Months are numbered 0..11
+ * @function monthlyRunTest
+ * @memberof Drivers
+ * @private
+ */
+// eslint-disable-next-line no-unused-vars
+function monthlyRunTest() {
+  "use strict";
+  const numMonths = 4;
+  const startYear = 2018;
+  const startMonth = 10;
+  const monthArr = Array.from({
+    "length": numMonths
+  });
+  monthArr.forEach(function (ignore, index) {
+    MonthlyRun.main(startYear, startMonth + index);
+  });
+
+  return undefined;
+}

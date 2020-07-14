@@ -59,7 +59,7 @@ const MonthlyRun = (
       );
       const ohsStatsListPage = site.getChildByName("ohs-stats");
       const values = [
-        "<a href=\"" + yearlyStatsFile.getUrl() + ">"
+        "<a href=\"" + yearlyStatsFile.getUrl() + "\">"
         + yearStr + " OHS Stats</a>"
       ];
       ohsStatsListPage.addListItem(values);
@@ -103,30 +103,44 @@ const MonthlyRun = (
     }
 
     /**
-     *
-     * @param {*} codeMoveTemplate
-     * @param {*} codeMoveSheetName
-     * @param {*} yearFolder
+     * Creates and returns a new monthly code moves file object.  Also adds the code
+     * moves file's url to the associated Google Site (assumes code-moves-count template
+     * page exists).
+     * @param {Object} codeMoveTemplate
+     * @param {string} codeMoveSheetName
+     * @param {Object} yearFolder
+     * @param {Object} dateObj
+     * @returns {Object}
      */
-    function addCodeMoveFile(codeMoveTemplate, codeMoveSheetName, yearFolder) {
+    function addCodeMoveFile(
+      codeMoveTemplate, codeMoveSheetName, yearFolder, dateObj) {
       const codeMoveFile = codeMoveTemplate.makeCopy(
         codeMoveSheetName, yearFolder
         );
       const site = SitesApp.getSiteByUrl(
         PropertiesService.getScriptProperties().getProperty("googleSiteUrl")
       );
-      const codeMoveCountsPage = site.getChildByName("code-move-counts");
-      // add a yearly subpage
-      // add to subpate's list of monthly urls
+      const codeMovePage = site.getChildByName("code-move-counts");
+      const template = site.getTemplates().reduce((t) => t.getName() === "code-move-counts");
+      const title = dateObj.getFullYear();
+      const name = dateObj.getFullYear();
       const values = [
-        "<a href=\"" + yearlyStatsFile.getUrl() + ">"
-        + yearStr + " OHS Stats</a>"
+        "<a href=\"" + codeMoveFile.getUrl() + "\">"
+        + dateObj.toLocaleDateString("en-US",{"month":"numeric"}).padStart(2, "0") 
+        + "-" 
+        + dateObj.toLocaleDateString("en-US",{"month":"long"})
+        + "</a>"
       ];
-      ohsStatsListPage.addListItem(values);
+      let childPage = codeMovePage.getChildByName(name);
+
+      if (childPage === undefined || childPage === null || childPage === false) {
+        childPage = codeMovePage.createPageFromTemplate(title, name, template);
+      }
+      childPage.addListItem(values);
 
       return codeMoveFile;
     }
-
+    
     /**
      * Returns a the file ID for the monthly data file object, for the current
      * month.  If the file does not already exist, a new one will be created.
@@ -151,7 +165,7 @@ const MonthlyRun = (
       const codeMoveFile = (
         (yearMonthFileFound)
         ? fileIterator.next()
-        : addCodeMoveFile(codeMoveTemplate, codeMoveSheetName, yearFolder));
+        : addCodeMoveFile(codeMoveTemplate, codeMoveSheetName, yearFolder, dateObj));
       let spreadsheet = {};
 
       // edit new month spreadsheets
