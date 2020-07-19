@@ -12,3 +12,9 @@
 !zzInitStatsTemplate.js
 !zzMonthlyRun.js
 !zzRestoreImportedData.js
+!ZgInitCodeMoveTemplate.js
+!ZgMonthlyRun.js
+!ZgInitStatsTemplate.js
+!ZgRestoreImportedData.js
+!RemoveImportRange.js
+!TriggerCode.js
