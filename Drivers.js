@@ -45,7 +45,7 @@ PropertiesService
 // eslint-disable-next-line no-unused-vars
 function monthlyRunMain() {
   "use strict";
-  MonthlyRun.main();
+  ZgMonthlyRun.main();
 }
 
 /**
@@ -67,73 +67,6 @@ function initCodeMoveTemplateMain() {
   "use strict";
   ZgInitCodeMoveTemplate.main();
 }
-
-/**
- * Links the yearly stats spreadsheet template Weekend Days sheet to its
- * Imported Data sheet.  This should only need to be run for a brand new yearly
- * stats template spreadsheet.
- * @function initStatsTemplateMain
- * @memberof Drivers
- * @private
- */
-// eslint-disable-next-line no-unused-vars
-function initStatsTemplateMain() {
-  "use strict";
-  ZgInitStatsTemplate.main();
-}
-
-/**
- * Use this function to relink a deleted yearly stats spreadsheet to its
- * associated monthly totals spreadsheets.  This should only need to be run
- * if there is a problem with the link between yearly stats and monthly totals
- * sheets.
- * @function restoreImportedDataMain
- * @memberof Drivers
- * @private
- */
-// eslint-disable-next-line no-unused-vars
-//function restoreImportedDataMain() {
-//  "use strict";
-//  RestoreImportedData.main(2020);
-//}
-
-/**
- * Use this funtion for testing the project.
- * Months are numbered 0..11
- * @function monthlyRunTest
- * @memberof Drivers
- * @private
- */
-// eslint-disable-next-line no-unused-vars
-//function monthlyRunTest() {
-//  "use strict";
-//  const numMonths = 7;
-//  const startYear = 2019;
-//  const startMonth = 11;
-//  const monthArr = Array.from({
-//    "length": numMonths
-//  });
-//  monthArr.forEach(function (ignore, index) {
-//    MonthlyRun.main(startYear, startMonth + index);
-//  });
-//
-//  return undefined;
-//}
-
-// /**
-//  * Function to be called by a weekly {@linkcode
-//  * https://developers.google.com/apps-script/guides/triggers/installable
-//  * Trigger} to send a reminder for the Code Move Group to update the
-//  * spreadsheet.
-//  * @function sendWeeklyReminder
-//  * @memberof Drivers
-//  * @public
-//  */
-// // eslint-disable-next-line no-unused-vars
-// function initStatsTemplateMain() {
-//   "use strict";
-//   InitStatsTemplate.main();
-// }
 
 /**
  * Function to be called by a weekly {@linkcode
@@ -216,21 +149,6 @@ function sendMonthlyOhsStatsReminder() {
 }
 
 /**
- * Use this function to relink a deleted yearly stats spreadsheet to its
- * associated monthly totals spreadsheets.  This should only need to be run
- * if there is a problem with the link between yearly stats and monthly totals
- * sheets.
- * @function restoreImportedDataMain
- * @memberof Drivers
- * @private
- */
-// eslint-disable-next-line no-unused-vars
-//function restoreImportedDataMain() {
-//  "use strict";
-//  RestoreImportedData.main(2020);
-//}
-
-/**
  * Use this funtion for testing the project.
  * Months are numbered 0..11
  * @function monthlyRunTest
@@ -240,14 +158,14 @@ function sendMonthlyOhsStatsReminder() {
 // eslint-disable-next-line no-unused-vars
 function monthlyRunTest() {
   "use strict";
-  const numMonths = 5;
-  const startYear = 2020;
+  const numMonths = 1;
+  const startYear = 2017;
   const startMonth = 0;
   const monthArr = Array.from({
     "length": numMonths
   });
   monthArr.forEach(function (ignore, index) {
-    MonthlyRun.main(startYear, startMonth + index);
+    ZgMonthlyRun.main(startYear, startMonth + index);
   });
 
   return undefined;

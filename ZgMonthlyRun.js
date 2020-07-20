@@ -240,15 +240,17 @@ const ZgMonthlyRun = (
     function updateYearlyStatsFile(
       yearlyStatsFile, codeMoveFile, month, yearMonthStr) {
       const spreadsheet = SpreadsheetApp.openById(yearlyStatsFile.getId());
+      const importedDataSheet = spreadsheet.getSheetByName("Imported Data");
       const row = 2;
       const column = month + 2;
+      const formula = "=IMPORTRANGE(B2,\"Totals!AD1:AD\")";
 
-       spreadsheet.getSheetByName("Weekend Days")
-       .getRange("A1")
+      spreadsheet.getSheetByName("Weekend Days")
+        .getRange("A1")
         .setValue("Weekend Days OHS Stats " + yearMonthStr.slice(24, 28));
 
-      spreadsheet.getSheetByName("Imported Data")
-      .getRange(row, column).setValue(codeMoveFile.getUrl());
+        importedDataSheet.getRange(row, column).setValue(codeMoveFile.getUrl());
+        importedDataSheet.getRange(row + 1, column).setFormula(formula);
 
       return undefined;
     }
