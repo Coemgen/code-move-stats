@@ -1,5 +1,5 @@
 /*jslint browser:true, long:true, white:true*/
-/*global PropertiesService, SpreadsheetApp, StaffUtilities*/
+/*global LAST_STAFF_ROW, FIRST_STAFF_ROW, PropertiesService, SpreadsheetApp, StaffUtilities*/
 
 /**
  * @file Defines the <code><b>InitCodeMoveTemplate</b></code> module.  This

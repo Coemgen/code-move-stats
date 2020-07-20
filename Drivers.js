@@ -1,7 +1,8 @@
+/* eslint-disable max-statements */
 /*jslint browser:true, white:true*/
 /*global
-DriveApp, InitCodeMoveTemplate, InitStatsTemplate, MonthlyRun,
-PropertiesService, RestoreImportedData, SendEmail
+DriveApp, ZgInitCodeMoveTemplate, ZgInitStatsTemplate, Logger, MailApp, MonthlyRun,
+PropertiesService
 */
 
 // Project documentation at:  https://coemgen.github.io/code-move-stats/2.0.0/index.html
@@ -78,7 +79,7 @@ function initCodeMoveTemplateMain() {
 // eslint-disable-next-line no-unused-vars
 function initStatsTemplateMain() {
   "use strict";
-  InitStatsTemplate.main();
+  ZgInitStatsTemplate.main();
 }
 
 /**
@@ -157,55 +158,61 @@ function sendMonthlyOhsStatsReminder() {
   //if ( (new Date().getMonth() !== 1) ) return; // Not the 1st.
 
   var strYear = new Date().getFullYear().toString().trim();
-  var folderData = DriveApp.getFolderById( PropertiesService.getScriptProperties().getProperty("dataFolderId") );
-  var folderIterator = folderData.getFoldersByName( strYear );
+  var folderData = DriveApp.getFolderById(
+    PropertiesService.getScriptProperties().getProperty("dataFolderId")
+  );
+  var folderIterator = folderData.getFoldersByName(strYear);
   var folderYear = (folderIterator.hasNext()) ? folderIterator.next() : false;
 
-  if ( !folderYear )
-  {
+  if (!folderYear) {
     Logger.log("YYYY Folder was not found: " + strYear);
     return; // No matching YYYY folder found
   }
 
   var fileName = "Weekend Days OHS Stat tracking information " + strYear;
-  var fileIterator = folderYear.getFilesByName( fileName );
+  var fileIterator = folderYear.getFilesByName(fileName);
   var fileOhsStats = (fileIterator.hasNext()) ? fileIterator.next() : false;
 
-  if ( !fileOhsStats ) {
+  if (!fileOhsStats) {
     Logger.log("OHS Stats spreadsheet was not found: " + fileName);
     return; // No matching OHS Stat sheet found
   }
 
-  var strFileUrl = fileOhsStats.getUrl();
+  // var strFileUrl = fileOhsStats.getUrl();
 
   var recipients = "jeburns@meditech.com,"
     + "kgriffin@meditech.com,"
     + "rhomsey@meditech.com,"
     + "directs.rhomsey@meditech.com,"
-//    + "mjcarnino@meditech.com,"
-//    + "bporter@meditech.com,"
-//    + "kmahoney@meditech.com,"
-//    + "kkoppy@meditech.com,"
-//    + "agrachuk@meditech.com,"
-//    + "kallfrey@meditech.com,"
+    //    + "mjcarnino@meditech.com,"
+    //    + "bporter@meditech.com,"
+    //    + "kmahoney@meditech.com,"
+    //    + "kkoppy@meditech.com,"
+    //    + "agrachuk@meditech.com,"
+    //    + "kallfrey@meditech.com,"
     + "kellis@meditech.com,"
     + "sgetchell@meditech.com,"
     + "eyip@meditech.com";
   var subject = "MONTHLY: " + fileName;
 
-  var body = '<p>Click the following link to access the sheet: <a href="{file.getUrl}">{file.getName}</a></p>';
-  body += '<p>If you see #REF! in the cell, click the cell, and then click Allow Access to connect the data.</p>';
-  body += '<p>Please enter all non-automated data values.</p>';
-  body += '<p>If you have any questions/comments, please contact James E Burns or Kevin Griffin.</p>';
+  var body = "<p>Click the following link to access the sheet: "
+    + "<a href=\"{file.getUrl}\">{file.getName}</a></p>";
+  body += "<p>If you see #REF! in the cell, click the cell, and then"
+    + " click Allow Access to connect the data.</p>";
+  body += "<p>Please enter all non-automated data values.</p>";
+  body += "<p>If you have any questions/comments, please contact"
+    + " James E Burns or Kevin Griffin.</p>";
 
-      body = body.replace(/\{file.getName\}/g, fileOhsStats.getName())
-                 .replace(/\{file.getUrl\}/g, fileOhsStats.getUrl());
+  body = body.replace(/\{file.getName\}/g, fileOhsStats.getName())
+    .replace(/\{file.getUrl\}/g, fileOhsStats.getUrl());
 
 
-  var options = {htmlBody: body};
+  var options = {
+    htmlBody: body
+  };
 
   // ---- Use Gamil Service to send email(s) ----
-  GmailApp.sendEmail(recipients, subject, body, options);
+  MailApp.sendEmail(recipients, subject, body, options);
 }
 
 /**
