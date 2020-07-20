@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 /*jslint browser:true, white:true*/
 /*global
-DriveApp, ZgInitCodeMoveTemplate, ZgInitStatsTemplate, Logger, MailApp, MonthlyRun,
+DriveApp, InitCodeMoveTemplate, Logger, MailApp, MonthlyRun,
 PropertiesService
 */
 
@@ -45,7 +45,7 @@ PropertiesService
 // eslint-disable-next-line no-unused-vars
 function monthlyRunMain() {
   "use strict";
-  ZgMonthlyRun.main();
+  MonthlyRun.main();
 }
 
 /**
@@ -65,7 +65,7 @@ function monthlyRunMain() {
 // eslint-disable-next-line no-unused-vars
 function initCodeMoveTemplateMain() {
   "use strict";
-  ZgInitCodeMoveTemplate.main();
+  InitCodeMoveTemplate.main();
 }
 
 /**
@@ -165,7 +165,7 @@ function monthlyRunTest() {
     "length": numMonths
   });
   monthArr.forEach(function (ignore, index) {
-    ZgMonthlyRun.main(startYear, startMonth + index);
+    MonthlyRun.main(startYear, startMonth + index);
   });
 
   return undefined;
