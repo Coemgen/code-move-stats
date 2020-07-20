@@ -64,7 +64,7 @@ function monthlyRunMain() {
 // eslint-disable-next-line no-unused-vars
 function initCodeMoveTemplateMain() {
   "use strict";
-  InitCodeMoveTemplate.main();
+  ZgInitCodeMoveTemplate.main();
 }
 
 /**

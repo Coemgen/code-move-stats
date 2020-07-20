@@ -111,19 +111,16 @@ const ZgInitCodeMoveTemplate = (
      * @param {string[]} platformArr - Array of platform type strings
      * @param {string[]} dirRingArr - Array of ring type strings
      * @param {string[]} peMdNonArr - Array of action type strings
-     * @param {string[]} bundleTypesArr - Array of bundle action strings
      * @returns {string[][]} - [[dirRing,platform,peMedNon|bundleType],...]
      */
     function buildHeaderMatrix(
-      dirRingArr, platformArr, peMdNonArr, bundleTypesArr) {
+      dirRingArr, platformArr, peMdNonArr) {
       return dirRingArr.reduce(
         (acc, dirRing) => [
           ...acc,
           ...platformArr.reduce(
             (acc, platform) => [...acc, ...peMdNonArr.map(
-              (activity) => [dirRing, platform, activity])], []),
-          ...bundleTypesArr.map(
-            (bundleType) => [dirRing, "Bundle", bundleType])
+              (activity) => [dirRing, platform, activity])], [])
         ], []);
     }
 
@@ -144,7 +141,7 @@ const ZgInitCodeMoveTemplate = (
       staffNameArr, totalsSheet, headerMatrix) {
       const noOfRows = LAST_STAFF_ROW - FIRST_STAFF_ROW + 1;
       const column = 1;
-      const numColumns = 34;
+      const numColumns = 28;
 
       if (staffNameArr.length > noOfRows) {
         // throw an error
@@ -152,36 +149,21 @@ const ZgInitCodeMoveTemplate = (
       }
 
       totalsSheet.getRange(FIRST_STAFF_ROW, column, noOfRows, numColumns)
-      .clearContent();
+        .clearContent();
 
       staffNameArr.forEach(function (name, index) {
         const row = FIRST_STAFF_ROW + index;
 
         totalsSheet.getRange("A" + row).setValue(name);
-        totalsSheet.getRange("B" + row + ":AH" + row)
+        totalsSheet.getRange("B" + row + ":AB" + row)
           .setFormulas(
             [
               headerMatrix.map(function (headerArr) {
-                var formula = "";
-
-                if (headerArr[2] === "10+ Changes") {
-                  formula = "=COUNTIFS('"
-                    + name + "'!C2:C,\"=" + headerArr[0] + "\","
-                    + "'" + name + "'!G2:G,\"=Yes\","
-                    + "'" + name + "'!B2:B,\"=Change Move\")";
-                } else if (headerArr[2] === "Addl. Staff?") {
-                  formula = "=COUNTIFS('"
-                    + name + "'!C2:C,\"=" + headerArr[0] + "\","
-                    + "'" + name + "'!H2:H,\"=Yes\","
-                    + "'" + name + "'!B2:B,\"=Change Move\")";
-                } else {
-                  formula = "=COUNTIFS('"
-                    + name + "'!C2:C,\"=" + headerArr[0] + "\","
-                    + "'" + name + "'!D2:D,\"=" + headerArr[1] + "\","
-                    + "'" + name + "'!E2:E,\"=" + headerArr[2] + "\","
-                    + "'" + name + "'!B2:B,\"=Change Move\")";
-                }
-                return formula;
+                return "=COUNTIFS('"
+                  + name + "'!C2:C,\"=" + headerArr[0] + "\","
+                  + "'" + name + "'!D2:D,\"=" + headerArr[1] + "\","
+                  + "'" + name + "'!E2:E,\"=" + headerArr[2] + "\","
+                  + "'" + name + "'!B2:B,\"=Change Move\")";
               })
             ]
           );
@@ -383,10 +365,9 @@ const ZgInitCodeMoveTemplate = (
       const dirRingArr = getColumnArray(referencesSheet, "A:A");
       const platformArr = getColumnArray(referencesSheet, "B:B");
       const peMdNonArr = getColumnArray(referencesSheet, "C:C").slice(1);
-      const bundleTypesArr = getColumnArray(referencesSheet, "E:E").slice(1);
       const totalsSheet = spreadsheet.getSheetByName("Totals");
       const headerMatrix = buildHeaderMatrix(
-        platformArr, dirRingArr, peMdNonArr, bundleTypesArr);
+        platformArr, dirRingArr, peMdNonArr);
 
       // add staff sheets
       addStaffSheets(staffObjArr, spreadsheet);
