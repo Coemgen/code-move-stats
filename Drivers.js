@@ -78,6 +78,38 @@ function initCodeMoveTemplateMain() {
  * @public
  */
 // eslint-disable-next-line no-unused-vars
+function sendWeeklyReminder() {
+  "use strict";
+  const d = new Date();
+  const yearStr = d.getFullYear().toString();
+  const month = d.getMonth() + 1;
+  const monthStr = month.toString().padStart(2, 0);
+  const dataFolder = DriveApp.getFolderById(
+    PropertiesService.getScriptProperties().getProperty("dataFolderId")
+  );
+  const folderIterator = dataFolder.getFoldersByName(yearStr);
+  const yearFolder = folderIterator.next();
+  const fileIterator = yearFolder.getFilesByName(
+    "Weekend Code Move Count"
+    + " "
+    + yearStr
+    + "-"
+    + monthStr);
+  const codeMoveFileId = fileIterator.next().getId();
+  const reminder = true;
+  SendEmail.main(codeMoveFileId, yearStr, monthStr, reminder);
+}
+
+/**
+ * Function to be called by a weekly {@linkcode
+ * https://developers.google.com/apps-script/guides/triggers/installable
+ * Trigger} to send a reminder for the Code Move Group to update the
+ * spreadsheet.
+ * @function sendWeeklyReminder
+ * @memberof Drivers
+ * @public
+ */
+// eslint-disable-next-line no-unused-vars
 function sendMonthlyOhsStatsReminder() {
   "use strict";
 
@@ -158,9 +190,9 @@ function sendMonthlyOhsStatsReminder() {
 // eslint-disable-next-line no-unused-vars
 function monthlyRunTest() {
   "use strict";
-  const numMonths = 1;
+  const numMonths = 6;
   const startYear = 2017;
-  const startMonth = 0;
+  const startMonth = 9;
   const monthArr = Array.from({
     "length": numMonths
   });
