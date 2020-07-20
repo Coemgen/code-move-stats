@@ -243,7 +243,8 @@ const MonthlyRun = (
       const importedDataSheet = spreadsheet.getSheetByName("Imported Data");
       const row = 2;
       const column = month + 2;
-      const formula = "=IMPORTRANGE(B2,\"Totals!AD1:AD\")";
+      const colChar = String.fromCharCode(66 + month);
+      const formula = "=IMPORTRANGE(" + colChar + "2,\"Totals!AD1:AD\")";
 
       spreadsheet.getSheetByName("Weekend Days")
         .getRange("A1")
