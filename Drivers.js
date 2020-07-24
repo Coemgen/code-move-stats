@@ -70,6 +70,29 @@ function initCodeMoveTemplateMain() {
 }
 
 /**
+ * Use this funtion for testing the project.
+ * Months are numbered 0..11
+ * @function monthlyRunTest
+ * @memberof Drivers
+ * @private
+ */
+// eslint-disable-next-line no-unused-vars
+function monthlyRunTest() {
+  "use strict";
+  const numMonths = 4;
+  const startYear = 2017;
+  const startMonth = 10;
+  const monthArr = Array.from({
+    "length": numMonths
+  });
+  monthArr.forEach(function (ignore, index) {
+    MonthlyRun.main(startYear, startMonth + index);
+  });
+
+  return undefined;
+}
+
+/**
  * Function to be called by a weekly {@linkcode
  * https://developers.google.com/apps-script/guides/triggers/installable
  * Trigger} to send a reminder for the Code Move Group to update the
