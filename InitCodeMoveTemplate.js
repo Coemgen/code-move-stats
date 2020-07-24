@@ -340,6 +340,53 @@ const InitCodeMoveTemplate = (
 
       return undefined;
     }
+    
+    /**
+     * Wrapper for calling getFooterFormula to get a formula string for adding to
+     * a footer totals cell.
+     * @function bundlesAddlStaff
+     * @memberof InitCodeMoveTemplate
+     * @private
+     * @param {Object} totalsSheet
+     * @param {string[]} staffNameArr
+     * @returns {undefined}
+     */
+    function bundlesAddlStaff(totalsSheet, staffNameArr) {
+      let cell = "H36";
+      let matchObj1 = {
+        "key": "Yes",
+        "cell": "G2:G"
+      };
+      let formulaStr = getFooterFormula(staffNameArr, matchObj1);
+
+      totalsSheet.getRange(cell).setValue(formulaStr);
+      
+      // AddlStaff cell
+      cell = "H37";
+      matchObj1 = {
+        "cell": "H2:H"
+      };
+      
+      formulaStr = "=SUM(";
+
+      // add users to formula string
+      formulaStr += staffNameArr.reduce(function (acc, name, index) {
+        var value = "";
+
+        if (index > 0) {
+          value += ",";
+        }
+        value += "'" + name + "'!" + matchObj1.cell;
+
+        return acc + value;
+      }, "");
+      // terminate formula string
+      formulaStr += ")";
+
+      totalsSheet.getRange(cell).setValue(formulaStr);
+
+      return undefined;
+    }
 
     /**
      * Initialize the Monthly Totals Template Sheet with staff names and
@@ -386,6 +433,7 @@ const InitCodeMoveTemplate = (
       setRingDeletionsTotal(totalsSheet, staffNameArr);
       setTestSetupsTotal(totalsSheet, staffNameArr);
       additionsToShipSource(totalsSheet, staffNameArr);
+      bundlesAddlStaff(totalsSheet, staffNameArr);
 
       return undefined;
     }
