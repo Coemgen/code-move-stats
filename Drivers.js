@@ -79,7 +79,7 @@ function initCodeMoveTemplateMain() {
 // eslint-disable-next-line no-unused-vars
 function monthlyRunTest() {
   "use strict";
-  const numMonths = 4;
+  const numMonths = 1;
   const startYear = 2017;
   const startMonth = 10;
   const monthArr = Array.from({
