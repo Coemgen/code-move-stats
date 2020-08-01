@@ -35,6 +35,14 @@ PropertiesService, RestoreImportedData, SendEmail
  */
 
 /**
+ * Function to be called to set permissions when new Google Script script class
+ * methods are being called.
+ */
+function getScriptPermissions() {
+  return;
+}
+
+/**
  * Function to be called by a monthly {@linkcode
  * https://developers.google.com/apps-script/guides/triggers/installable
  * Trigger} to set up the totals spreadsheet for each month and a yearly
