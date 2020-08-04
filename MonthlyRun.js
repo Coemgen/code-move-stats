@@ -58,10 +58,19 @@ const MonthlyRun = (
         PropertiesService.getScriptProperties().getProperty("googleSiteUrl")
       );
       const ohsStatsListPage = site.getChildByName("ohs-stats");
+      const urlLink = yearlyStatsFile.getUrl();
+      const urlName = yearStr + " OHS Stats";
       const values = [
-        "<a href=\"" + yearlyStatsFile.getUrl() + "\">"
-        + yearStr + " OHS Stats</a>"
+        "<a href=\"" + urlLink + "\">" + urlName + "</a>"
       ];
+      // remove any existing links for the current year
+      ohsStatsListPage.getListItems()
+        .filter(
+          (row) => row.getValueByName("Spreadsheet Links")
+          .match(/>([^<]+)/)[1] === urlName
+        )
+        .forEach((link) => link.deleteListItem());
+      // add current year to list
       ohsStatsListPage.addListItem(values);
 
       return yearlyStatsFile;
@@ -125,14 +134,20 @@ const MonthlyRun = (
           "month": "numeric"
         })
         .padStart(2, "0");
-      const urlStr = "<a href=\"" + codeMoveFile.getUrl() + "\">"
-        + year
-        + "-"
-        + month
-        + "</a>";
+      const urlLink = codeMoveFile.getUrl();
+      const urlName = year + "-" + month;
+      const urlStr = "<a href=\"" + urlLink + "\">" + urlName + "</a>";
       const values = [
         urlStr
       ];
+      // remove any existing links for the current month
+      codeMovePage.getListItems()
+        .filter(
+          (row) => row.getValueByName("Spreadsheet Links")
+          .match(/>([^<]+)/)[1] === urlName
+        )
+        .forEach((link) => link.deleteListItem());
+      // add current month to list
       codeMovePage.addListItem(values);
 
       return codeMoveFile;
@@ -298,7 +313,7 @@ const MonthlyRun = (
       updateYearlyStatsFile(
         yearlyStatsFile, codeMoveFile, month, yearMonthStr);
 
-      SendEmail.main(codeMoveFile.getId(), yearStr, monthStr);
+//      SendEmail.main(codeMoveFile.getId(), yearStr, monthStr);
 
       return undefined;
     }
