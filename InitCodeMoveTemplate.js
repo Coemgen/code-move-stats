@@ -411,7 +411,7 @@ const InitCodeMoveTemplate = (
       const staffNameArr = StaffUtilities.getNameArr(staffObjArr);
       const dirRingArr = getColumnArray(referencesSheet, "A:A");
       const platformArr = getColumnArray(referencesSheet, "B:B");
-      const peMdNonArr = getColumnArray(referencesSheet, "C:C").slice(1);
+      const peMdNonArr = getColumnArray(referencesSheet, "C:C");
       const totalsSheet = spreadsheet.getSheetByName("Totals");
       const headerMatrix = buildHeaderMatrix(
         platformArr, dirRingArr, peMdNonArr);
