@@ -113,6 +113,7 @@ function monthlyRunTest() {
 function sendWeeklyReminder() {
   "use strict";
   const d = new Date();
+  const dayInt = d.getDate();
   const yearStr = d.getFullYear().toString();
   const month = d.getMonth() + 1;
   const monthStr = month.toString().padStart(2, 0);
@@ -129,6 +130,12 @@ function sendWeeklyReminder() {
     + monthStr);
   const codeMoveFileId = fileIterator.next().getId();
   const reminder = true;
+
+  if (dayInt > 0 && dayInt < 5) {
+    // Avoid sending out a reminder email if the day is part of the same weekend that includes the 1st.
+    return;
+  }
+
   SendEmail.main(codeMoveFileId, yearStr, monthStr, reminder);
 }
 
@@ -179,12 +186,12 @@ function sendMonthlyOhsStatsReminder() {
     + "kgriffin@meditech.com,"
     + "rhomsey@meditech.com,"
     + "directs.rhomsey@meditech.com,"
-//    + "mjcarnino@meditech.com,"
-//    + "bporter@meditech.com,"
-//    + "kmahoney@meditech.com,"
-//    + "kkoppy@meditech.com,"
-//    + "agrachuk@meditech.com,"
-//    + "kallfrey@meditech.com,"
+    //    + "mjcarnino@meditech.com,"
+    //    + "bporter@meditech.com,"
+    //    + "kmahoney@meditech.com,"
+    //    + "kkoppy@meditech.com,"
+    //    + "agrachuk@meditech.com,"
+    //    + "kallfrey@meditech.com,"
     + "kellis@meditech.com,"
     + "sgetchell@meditech.com,"
     + "eyip@meditech.com";
