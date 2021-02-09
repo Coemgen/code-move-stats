@@ -190,9 +190,9 @@ function sendMonthlyOhsStatsReminder() {
 // eslint-disable-next-line no-unused-vars
 function monthlyRunTest() {
   "use strict";
-  const numMonths = 3;
-  const startYear = 2017;
-  const startMonth = 9;
+  const numMonths = 1;
+  const startYear = 2021;
+  const startMonth = 0;
   const monthArr = Array.from({
     "length": numMonths
   });
