@@ -17,14 +17,24 @@ PropertiesService, RestoreImportedData, SendEmail
  *  montly totals template</li>
  *  <li><b>dataFolderId</b>&nbsp;&ndash;&nbsp;the parent folder for yearly data
  *  folders</li>
+ *  <li><b>deliveriesSpreadsheetId&nbsp;&ndash;&nbsp;the C/S to 6.x Pathway Info
+ * spreadsheet (owner is Lorraine Lennon)</b></li>
  *  <li><b>distributionType</b>&nbsp;&ndash;&nbsp;
  * Email distribution type (values are: <b>live</b> or <b>test</b>)</li>
- *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email associated
- *  with this project</li>
- *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for
- *  the yearly stats template</li>
  *  <li><b>googleSiteUrl</b>&nbsp;&ndash;&nbsp;the url for the project's
- *  associated Google Site</li>
+ * associated Google Site</li>
+ *  <li><b>groupEmail</b>&nbsp;&ndash;&nbsp;the Google Group email address
+ * associated with this project</li>
+ *  <li><b>managerEmail</b>&nbsp;&ndash;&nbsp;the group manager's email address
+ *  </li>
+ *  <li><b>secretaryEmail</b>&nbsp;&ndash;&nbsp;the email address for the
+ * group's secretary's secretary</li>
+ *  <li><b>supervisorEmails</b>&nbsp;&ndash;&nbsp;the Google Group email address
+ * for the group's supervisors</li>
+ *  <li><b>techEmails</b>&nbsp;&ndash;&nbsp;the Google Group email address for 
+ * the group's tech staff</li>
+ *  <li><b>yearlyStatsTemplateId</b>&nbsp;&ndash;&nbsp;the spreadsheet id for
+ * the yearly stats template</li>
  * </ul>
  * <p>Run the script using the {@linkcode
  * https://developers.google.com/apps-script/guides/v8-runtime V8 Runtime}.

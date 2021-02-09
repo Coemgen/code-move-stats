@@ -1,7 +1,7 @@
 /*jslint browser:true, long:true, white:true*/
 /*global
 DriveApp, FIRST_STAFF_ROW, PropertiesService, SendEmail, SitesApp,
-SpreadsheetApp
+SpreadsheetApp, SupTechStats
 */
 
 /**
@@ -34,7 +34,8 @@ SpreadsheetApp
 // eslint-disable-next-line no-unused-vars
 const MonthlyRun = (
 
-  function (DriveApp, PropertiesService, SitesApp, SpreadsheetApp) {
+  function (
+    DriveApp, PropertiesService, SitesApp, SpreadsheetApp, SupTechStats) {
     "use strict";
 
     /**
@@ -77,19 +78,68 @@ const MonthlyRun = (
     }
 
     /**
+     * Creates and returns a new supervisor/tech stats file object.  Also adds 
+     * the file's url to the associated Google Site.
+     * @function addYearlySupTechFile
+     * @memberof MonthlyRun
+     * @private
+     * @param {*} yearlySupTechTemplate 
+     * @param {*} yearStr 
+     * @param {*} yearFolder 
+     * @returns {Object}
+     */
+    function addYearlySupTechFile(yearlySupTechTemplate, yearStr, yearFolder) {
+      const yearlySupTechFile = DriveApp.getFileById(
+          yearlySupTechTemplate.getId())
+        .makeCopy(
+          ("Weekend Supervisor/Tech Stats "
+            + yearStr),
+          yearFolder);
+      const site = SitesApp.getSiteByUrl(
+        PropertiesService.getScriptProperties().getProperty("googleSiteUrl")
+      );
+      const supTechLogsListPage = site.getChildByName("supervisor-tech-logs");
+      const urlLink = yearlySupTechFile.getUrl();
+      const urlName = "Weekend Supervisor/Tech Stats " + yearStr;
+      const values = [
+        "<a href=\"" + urlLink + "\">" + urlName + "</a>"
+      ];
+      // remove any existing links for the current year
+      supTechLogsListPage.getListItems()
+        .filter(
+          (row) => row.getValueByName("Spreadsheet Links")
+          .match(/>([^<]+)/)[1] === urlName
+        )
+        .forEach((link) => link.deleteListItem());
+      // add current year to list
+      supTechLogsListPage.addListItem(values);
+      // initialize Yearly Sup/Tech formula with the current year.
+      SupTechStats.yearlyInit(yearlySupTechFile, yearStr);
+
+      return yearlySupTechFile;
+    }
+
+    /**
      * Returns a reference to the folder object, for the current year, and its
-     * yearly stats spreadsheet.  If the folder does not already exist, a new
-     * one will be created and populated with a yearly stats spreadsheet.
-     * @function getYearFolder
+     * yearly OHS and Sup/Tech stats spreadsheets.  If the folder does not 
+     * already exist, a new one will be created and populated with a yearly OHS
+     * and Suppervisor/Tech stats spreadsheets.
+     * @function getYearlyFolderAndFiles
      * @memberof MonthlyRun
      * @private
      * @param {string} yearStr
-     * @returns {object[]} - [yearfolder, yearlyStatsFile] object references
+     * @returns {object[]}
      */
-    function getYearFolder(yearStr) {
+    function getYearlyFolderAndFiles(yearStr) {
+      // get Yearly OHS Stats template ID
       const yearlyStatsTemplate = SpreadsheetApp.openById(
         PropertiesService.getScriptProperties()
         .getProperty("yearlyStatsTemplateId")
+      );
+      // get Yearly Supervisor/Tech Stats template ID
+      const yearlySupTechTemplate = SpreadsheetApp.openById(
+        PropertiesService.getScriptProperties()
+        .getProperty("yearlySupTechTemplateId")
       );
       // find root folder
       const dataFolder = DriveApp.getFolderById(
@@ -100,15 +150,24 @@ const MonthlyRun = (
         (folderIterator.hasNext() === true)
         ? folderIterator.next()
         : dataFolder.createFolder(yearStr));
-      const fileIterator = yearFolder.getFilesByName(
+      // get yearly OHS Stats file
+      let fileIterator = yearFolder.getFilesByName(
         "Weekend Days OHS Stat tracking information "
         + yearStr);
       const yearlyStatsFile = (
         (fileIterator.hasNext() === true)
         ? fileIterator.next()
         : addYearlyStatsFile(yearlyStatsTemplate, yearStr, yearFolder));
+      // get yearly Supervisor/Tech Logs file
+      fileIterator = yearFolder.getFilesByName(
+        "Weekend Supervisor/Tech Stats "
+        + yearStr);
+      const yearlySupTechFile = (
+        (fileIterator.hasNext() === true)
+        ? fileIterator.next()
+        : addYearlySupTechFile(yearlySupTechTemplate, yearStr, yearFolder));
 
-      return [yearFolder, yearlyStatsFile];
+      return [yearFolder, yearlyStatsFile, yearlySupTechFile];
     }
 
     /**
@@ -190,7 +249,7 @@ const MonthlyRun = (
           .getRange("A1:A3")
           .setValue(dateObj);
 
-        // for each staff member update link to and from Totals sheet
+        // for each staff member update link from Totals sheet
         spreadsheet.getSheetByName("Totals").getRange("A4:A23")
           .getValues().map((nameArr) => nameArr[0])
           .filter((name) => name).forEach(
@@ -208,16 +267,6 @@ const MonthlyRun = (
                 + spreadsheet.getSheetByName(name).getSheetId()
                 + "\", \""
                 + name
-                + "\")"
-              );
-              spreadsheet.getSheetByName(name).getRange("A1").setValue(
-                "=HYPERLINK(\""
-                + "https://docs.google.com/spreadsheets/d/"
-                + spreadsheet.getId()
-                + "/edit#gid="
-                + spreadsheet.getSheetByName("Totals").getSheetId()
-                + "\", \""
-                + "Totals"
                 + "\")"
               );
 
@@ -247,19 +296,20 @@ const MonthlyRun = (
      * @memberof MonthlyRun
      * @private
      * @param {Object} yearlyStatsFile
+     * @param {Object} yearlySupTechFile
      * @param {Object} codeMoveFile
      * @param {number} month - 0 to 11
      * @param {string} yearMonthStr - "Weekend Code Move Count YYYY-MM" format
      * @returns {undefined}
      */
     function updateYearlyStatsFile(
-      yearlyStatsFile, codeMoveFile, month, yearMonthStr) {
+      yearlyStatsFile, yearlySupTechFile, codeMoveFile, month, yearMonthStr) {
       const spreadsheet = SpreadsheetApp.openById(yearlyStatsFile.getId());
       const importedDataSheet = spreadsheet.getSheetByName("Imported Data");
       const row = 2;
       const column = month + 2;
       const colChar = String.fromCharCode(66 + month);
-      const formula = "=IMPORTRANGE(" + colChar + "2,\"Totals!AD1:AD\")";
+      const formula = "=IMPORTRANGE(" + colChar + "2,\"Totals!AD1:AD36\")";
 
       spreadsheet.getSheetByName("Weekend Days")
         .getRange("A1")
@@ -267,6 +317,10 @@ const MonthlyRun = (
 
       importedDataSheet.getRange(row, column).setValue(codeMoveFile.getUrl());
       importedDataSheet.getRange(row + 1, column).setFormula(formula);
+      // yearlySupTechFile to yearlyStats sheet
+      importedDataSheet.getRange("B39").setFormula(
+        `=IMPORTRANGE("${yearlySupTechFile.getUrl()}}","Index!B2:M19")`
+      );
 
       return undefined;
     }
@@ -289,6 +343,7 @@ const MonthlyRun = (
       let yearFolder = {};
       let codeMoveFile = {};
       let yearlyStatsFile = {};
+      let yearlySupTechFile = {};
 
       const dateObj = (
         ((testYear !== undefined) && (testMonth !== undefined))
@@ -306,13 +361,19 @@ const MonthlyRun = (
       /* jshint ignore:start */
       // See: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#Array_destructuring
       /* jshint ignore:end */
-      [yearFolder, yearlyStatsFile] = getYearFolder(yearStr);
+      [
+        yearFolder,
+        yearlyStatsFile,
+        yearlySupTechFile
+      ] = getYearlyFolderAndFiles(yearStr);
 
       codeMoveFile = getCodeMoveFile(yearFolder, yearMonthStr, dateObj);
 
       updateYearlyStatsFile(
-        yearlyStatsFile, codeMoveFile, month, yearMonthStr);
+        yearlyStatsFile, yearlySupTechFile, codeMoveFile, month, yearMonthStr
+      );
 
+      // TODO: remove this?
       SendEmail.main(codeMoveFile.getId(), yearStr, monthStr);
 
       return undefined;
@@ -323,6 +384,6 @@ const MonthlyRun = (
       updateYearlyStatsFile
     });
 
-  }(DriveApp, PropertiesService, SitesApp, SpreadsheetApp));
+  }(DriveApp, PropertiesService, SitesApp, SpreadsheetApp, SupTechStats));
 
 /******************************************************************************/
