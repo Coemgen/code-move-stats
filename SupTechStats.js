@@ -29,10 +29,12 @@ const SupTechStats = (
             const name = sheet.getName();
             name !== "Index" && name !== "References" && name !== "Template";
           }).sort();
-      const nextYearStr = parseInt(yearStr) + 1;
+      const nextYearStr = `${parseInt(yearStr) + 1}`;
 
-      // TODO: address special case of 6.x Pathway Code Deliveries
-      `=QUERY(IMPORTRANGE("${deliveriesSs.getUrl()}","Sheet1!A10:G"),\
+      // special case for 6.x Pathway Code Deliveries
+      spreadsheet.getSheetByName("6.x Pathway Code Deliveries")
+        .getRange("A3").setFormula(`=QUERY(IMPORTRANGE("\
+      ${deliveriesSs.getUrl()}","Sheet1!A10:G"),\
       "Select Col1, Col2, Col3, Col5, Col6 Where\
       (Col5 >= date '${yearStr}-01-01' AND Col5 < date '${nextYearStr}-01-01')\
       OR\
@@ -40,7 +42,7 @@ const SupTechStats = (
       AND\
       (dayOfWeek(Col5)=1 OR dayOfWeek(Col5)>=2 OR dayOfWeek(Col5)=6 OR\
       dayOfWeek(Col5)>=7 OR dayOfWeek(Col6)=1 OR dayOfWeek(Col6)>=2 OR\
-      dayOfWeek(Col6)=6 OR dayOfWeek(Col6)>=7)")`;
+      dayOfWeek(Col6)=6 OR dayOfWeek(Col6)>=7)")`);
 
       // construct formulas for current year
 

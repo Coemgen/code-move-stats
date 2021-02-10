@@ -1,5 +1,6 @@
 **/**
 !Drivers.js
+!EditScriptProperties.js
 !InitCodeMoveTemplate.js
 !MonthlyRun.js
 !SendEmail.js

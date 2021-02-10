@@ -39,6 +39,11 @@
         "ignoreUrls": true,
         "ignoreComments": true
       }
+    ],
+    "no-unused-vars": [
+      "error", {
+        "varsIgnorePattern": "[iI]gnored"
+      }
     ]
   }
 }
