@@ -94,7 +94,9 @@ const SupTechStats = (
           pathwaysDisplayDataFormula(tabArr, yearNum, monthNum, endOfMonth)
         );
         // CSCT Messages
-        `=COUNT(UNIQUE(FILTER('${tabArr[1]}'!$B:$B,'${tabArr[1]}'!$E:$E >= Date(2021,1,1),'${tabArr[1]}'!$E:$E <= Date(2021,2,1))))`;
+        `=COUNT(UNIQUE(FILTER('${tabArr[1]}'!$B:$B,'${tabArr[1]}'!$E:$E\
+        >= Date(${yearNum},${monthNum},1),'${tabArr[1]}'!$E:$E\
+        <= Date(${yearNum},${monthNum},${endOfMonth}))))`;
         // Data Recoveries
         genericDisplayDataFormula(tabArr[2], yearNum, monthNum, endOfMonth)
         // Development Projects (CSTS)
@@ -102,7 +104,9 @@ const SupTechStats = (
         // Health Check
         genericDisplayDataFormula(tabArr[4], yearNum, monthNum, endOfMonth)
         // Health Check - Resolution
-        `=SUMIFS('${tabArr[5]}'!E:E,'${tabArr[5]}'!A:A,">="&Date(2021,1,1),'${tabArr[5]}'!A:A,"<"&Date(2021,2,1))`;
+        `=SUMIFS('${tabArr[5]}'!E:E,'${tabArr[5]}'!A:A,\
+        ">="&Date(${yearNum},${monthNum},1),'${tabArr[5]}'!A:A,\
+        "<"&Date(${yearNum},${monthNum},${endOfMonth}))`;
         // Infrastructure Projects
         genericDisplayDataFormula(tabArr[6], yearNum, monthNum, endOfMonth)
         // Large Scale Projects
@@ -120,11 +124,26 @@ const SupTechStats = (
         // Tech Code Moves
         genericDisplayDataFormula(tabArr[13], yearNum, monthNum, endOfMonth)
         // Updates Supported (MG)
-        `=COUNTIFS('${tabArr[14]}'!$D:$D, ">="&Date(2021,1,1),'${tabArr[14]}'!$D:$D,"<"&Date(2021,2,1),'${tabArr[14]}'!$G:$G,"Magic",'${tabArr[14]}'!$K:$K,"Yes")`;
+        `=COUNTIFS('${tabArr[14]}'!$D:$D,\
+        ">="&Date(${yearNum},${monthNum},1),'${tabArr[14]}'!$D:$D,\
+        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[14]}'!$G:$G,\
+        "Magic",'${tabArr[14]}'!$K:$K,"Yes")`;
         // Updates Supported (CS)
-        `=COUNTIFS('${tabArr[15]}'!$D:$D, ">="&Date(2021,1,1),'${tabArr[15]}'!$D:$D,"<"&Date(2021,2,1),'${tabArr[15]}'!$G:$G,"CS",'${tabArr[15]}'!$K:$K,"Yes")`;
+        `=COUNTIFS('${tabArr[15]}'!$D:$D,\
+        ">="&Date(${yearNum},${monthNum},1),'${tabArr[15]}'!$D:$D,\
+        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[15]}'!$G:$G,\
+        "CS",'${tabArr[15]}'!$K:$K,"Yes")`;
         // Updates Supported (Exp)
-        `=COUNTIFS('${tabArr[16]}'!$D:$D, ">="&Date(2021,1,1),'${tabArr[16]}'!$D:$D,"<"&Date(2021,2,1),'${tabArr[16]}'!$G:$G,"6.08",'${tabArr[16]}'!$K:$K,"Yes")+COUNTIFS('${tabArr[16]}'!$D:$D, ">="&Date(2021,1,1),'${tabArr[16]}'!$D:$D,"<"&Date(2021,2,1),'${tabArr[16]}'!$G:$G,"6.15",'${tabArr[16]}'!$K:$K,"Yes")+COUNTIFS('${tabArr[16]}'!$D:$D, ">="&Date(2021,1,1),'${tabArr[16]}'!$D:$D,"<"&Date(2021,2,1),'${tabArr[16]}'!$G:$G,"Expanse",'${tabArr[16]}'!$K:$K,"Yes")`;
+        `=COUNTIFS('${tabArr[16]}'!$D:$D,\
+        ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,\
+        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[16]}'!$G:$G,\
+        "6.08",'${tabArr[16]}'!$K:$K,"Yes")+COUNTIFS('${tabArr[16]}'!$D:$D,\
+        ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,\
+        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[16]}'!$G:$G,\
+        "6.15",'${tabArr[16]}'!$K:$K,"Yes")+COUNTIFS('${tabArr[16]}'!$D:$D,\
+        ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,\
+        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[16]}'!$G:$G,\
+        "Expanse",'${tabArr[16]}'!$K:$K,"Yes")`;
         // UWI Code Moves
         genericDisplayDataFormula(tabArr[17], yearNum, monthNum, endOfMonth)
       });
