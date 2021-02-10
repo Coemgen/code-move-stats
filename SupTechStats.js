@@ -52,7 +52,8 @@ const SupTechStats = (
         OR dayOfWeek(E)=6 OR dayOfWeek(E)=7)"))),"")`;
     }
 
-    genericDisplayDataFormula(sheetName, yearNum, monthNum, endOfMonth) {
+    function genericDisplayDataFormula(
+      sheetName, yearNum, monthNum, endOfMonth) {
       return `=COUNTIFS('${sheetName}'!$A:$A,\
       ">="&Date(${yearNum},${monthNum},1),'${sheetName}'!$A:$A,\
       "<"&Date(${yearNum},${monthNum},${endOfMonth}))`;
@@ -98,31 +99,31 @@ const SupTechStats = (
         >= Date(${yearNum},${monthNum},1),'${tabArr[1]}'!$E:$E\
         <= Date(${yearNum},${monthNum},${endOfMonth}))))`;
         // Data Recoveries
-        genericDisplayDataFormula(tabArr[2], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[2], yearNum, monthNum, endOfMonth);
         // Development Projects (CSTS)
-        genericDisplayDataFormula(tabArr[3], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[3], yearNum, monthNum, endOfMonth);
         // Health Check
-        genericDisplayDataFormula(tabArr[4], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[4], yearNum, monthNum, endOfMonth);
         // Health Check - Resolution
         `=SUMIFS('${tabArr[5]}'!E:E,'${tabArr[5]}'!A:A,\
         ">="&Date(${yearNum},${monthNum},1),'${tabArr[5]}'!A:A,\
         "<"&Date(${yearNum},${monthNum},${endOfMonth}))`;
         // Infrastructure Projects
-        genericDisplayDataFormula(tabArr[6], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[6], yearNum, monthNum, endOfMonth);
         // Large Scale Projects
-        genericDisplayDataFormula(tabArr[7], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[7], yearNum, monthNum, endOfMonth);
         // LIVE Tasks Support
-        genericDisplayDataFormula(tabArr[8], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[8], yearNum, monthNum, endOfMonth);
         // MaaS
-        genericDisplayDataFormula(tabArr[9], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[9], yearNum, monthNum, endOfMonth);
         // Maintenance/Downtime Projects
-        genericDisplayDataFormula(tabArr[10], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[10], yearNum, monthNum, endOfMonth);
         // Scheduled Projects
-        genericDisplayDataFormula(tabArr[11], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[11], yearNum, monthNum, endOfMonth);
         // Stipend/Non Stipend
-        genericDisplayDataFormula(tabArr[12], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[12], yearNum, monthNum, endOfMonth);
         // Tech Code Moves
-        genericDisplayDataFormula(tabArr[13], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[13], yearNum, monthNum, endOfMonth);
         // Updates Supported (MG)
         `=COUNTIFS('${tabArr[14]}'!$D:$D,\
         ">="&Date(${yearNum},${monthNum},1),'${tabArr[14]}'!$D:$D,\
@@ -145,7 +146,7 @@ const SupTechStats = (
         "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[16]}'!$G:$G,\
         "Expanse",'${tabArr[16]}'!$K:$K,"Yes")`;
         // UWI Code Moves
-        genericDisplayDataFormula(tabArr[17], yearNum, monthNum, endOfMonth)
+        genericDisplayDataFormula(tabArr[17], yearNum, monthNum, endOfMonth);
       });
 
       return undefined;

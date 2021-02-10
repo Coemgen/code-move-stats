@@ -98,7 +98,7 @@ function initCodeMoveTemplateMain() {
 function monthlyRunTest() {
   "use strict";
   const numMonths = 1;
-  const startYear = 2017;
+  const startYear = 2019;
   const startMonth = 10;
   const monthArr = Array.from({
     "length": numMonths
