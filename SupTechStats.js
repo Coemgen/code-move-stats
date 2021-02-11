@@ -16,47 +16,48 @@ const SupTechStats = (
   function (DriveApp, PropertiesService, SitesApp, SpreadsheetApp) {
 
     function pathwaysGetDataFormula(deliveriesSs, yearStr, nextYearStr) {
-      return `=QUERY(IMPORTRANGE("\
-      ${deliveriesSs.getUrl()}","Sheet1!A10:G"),\
-      "Select Col1, Col2, Col3, Col5, Col6 Where\
-      (Col5 >= date '${yearStr}-01-01' AND Col5 < date '${nextYearStr}-01-01')\
-      OR\
-      (Col6 >= date '${yearStr}-01-01' AND Col6 < date '${nextYearStr}-01-01')\
-      AND\
-      (dayOfWeek(Col5)=1 OR dayOfWeek(Col5)>=2 OR dayOfWeek(Col5)=6 OR\
-      dayOfWeek(Col5)>=7 OR dayOfWeek(Col6)=1 OR dayOfWeek(Col6)>=2 OR\
-      dayOfWeek(Col6)=6 OR dayOfWeek(Col6)>=7)")`;
+      return `=QUERY(IMPORTRANGE("`
+        + `${deliveriesSs.getUrl()}","Sheet1!A10:G"),`
+        + `"Select Col1, Col2, Col3, Col5, Col6 Where`
+        + ` (Col5 >= date '${yearStr}-01-01' AND Col5 < date`
+        + ` '${nextYearStr}-01-01') OR`
+        + ` (Col6 >= date '${yearStr}-01-01' AND Col6 < date'`
+        + ` ${nextYearStr}-01-01') AND`
+        + ` (dayOfWeek(Col5)=1 OR dayOfWeek(Col5)>=2 OR dayOfWeek(Col5)=6 OR`
+        + ` dayOfWeek(Col5)>=7 OR dayOfWeek(Col6)=1 OR dayOfWeek(Col6)>=2 OR`
+        + ` dayOfWeek(Col6)=6 OR dayOfWeek(Col6)>=7)")`;
     }
 
     function pathwaysDisplayDataFormula(tabArr, yearNum, monthNum, endOfMonth) {
-      return `=IFERROR(ISNA(QUERY('${tabArr[0]}'!A3:F,"Select * WHERE\
-        year(D)=${yearNum}\
-        AND (D >= date '${yearNum}-${monthNum}-1'\
-        AND D <= date '${yearNum}-${monthNum}-${endOfMonth}')\
-        AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2 OR dayOfWeek(D)=6\
-        OR dayOfWeek(D)=7)")),0,ROWS(QUERY('${tabArr[0]}'!A3:F,"Select *\
-        WHERE year(D)=${yearNum}/
-        AND (D >= date '${yearNum}-${monthNum}-01'\
-        AND D <= date '${yearNum}-${monthNum}-${endOfMonth}')\
-        AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2\
-        OR dayOfWeek(D)=6\
-        OR dayOfWeek(D)=7)")))+IF(ISERR(QUERY('${tabArr[0]}'\
-        !A3:F,"Select * WHERE year(E)=${yearNum}\
-        AND (E >= date '${yearNum}-${monthNum}-01'\
-        AND E <= date '${yearNum}-${monthNum}-${endOfMonth}')\
-        AND (dayOfWeek(E)=1 OR dayOfWeek(E)=2 OR dayOfWeek(E)=6\
-        OR dayOfWeek(E)=7)")),0,ROWS(QUERY('${tabArr[0]}'!A3:F,"Select\
-        * WHERE year(E)=${yearNum} AND (E >= date '${yearNum}-${monthNum}-01'\
-        AND E <= date '${yearNum}-${monthNum}-${endOfMonth}')\
-        AND (dayOfWeek(E)=1 OR dayOfWeek(E)=2\
-        OR dayOfWeek(E)=6 OR dayOfWeek(E)=7)"))),"")`;
+      return `=IFERROR(ISNA(QUERY('${tabArr[0]}'!A3:F,"Select * WHERE`
+        + ` year(D)=${yearNum}`
+        + ` AND (D >= date '${yearNum}-${monthNum}-1'`
+        + ` AND D <= date '${yearNum}-${monthNum}-${endOfMonth}')`
+        + ` AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2 OR dayOfWeek(D)=6`
+        + ` OR dayOfWeek(D)=7)")),0,ROWS(QUERY('${tabArr[0]}'!A3:F,"Select *`
+        + ` WHERE year(D)=${yearNum}`
+        + ` AND (D >= date '${yearNum}-${monthNum}-01'`
+        + ` AND D <= date '${yearNum}-${monthNum}-${endOfMonth}')`
+        + ` AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2`
+        + ` OR dayOfWeek(D)=6`
+        + ` OR dayOfWeek(D)=7)")))+IF(ISERR(QUERY('${tabArr[0]}'`
+        + `!A3:F,"Select * WHERE year(E)=${yearNum}`
+        + ` AND (E >= date '${yearNum}-${monthNum}-01'`
+        + ` AND E <= date '${yearNum}-${monthNum}-${endOfMonth}')`
+        + ` AND (dayOfWeek(E)=1 OR dayOfWeek(E)=2 OR dayOfWeek(E)=6`
+        + ` OR dayOfWeek(E)=7)")),0,ROWS(QUERY('${tabArr[0]}'!A3:F,"Select`
+        + ` * WHERE year(E)=${yearNum} AND (E >= date`
+        + ` '${yearNum}-${monthNum}-01'`
+        + ` AND E <= date '${yearNum}-${monthNum}-${endOfMonth}')`
+        + ` AND (dayOfWeek(E)=1 OR dayOfWeek(E)=2`
+        + ` OR dayOfWeek(E)=6 OR dayOfWeek(E)=7)"))),"")`;
     }
 
     function genericDisplayDataFormula(
       sheetName, yearNum, monthNum, endOfMonth) {
-      return `=COUNTIFS('${sheetName}'!$A:$A,\
-      ">="&Date(${yearNum},${monthNum},1),'${sheetName}'!$A:$A,\
-      "<"&Date(${yearNum},${monthNum},${endOfMonth}))`;
+      return `=COUNTIFS('${sheetName}'!$A:$A,`
+        + ` ">="&Date(${yearNum},${monthNum},1),'${sheetName}'!$A:$A,`
+        + ` "<"&Date(${yearNum},${monthNum},${endOfMonth}))`;
     }
 
     function yearlyInit(yearlySupTechFile, yearStr) {
@@ -85,68 +86,87 @@ const SupTechStats = (
       Array.from({
         length: 12
         // eslint-disable-next-line max-statements
-      }).forEach((ignored, index) => {
+      }).forEach((ignore, index) => {
         const yearNum = Number(yearStr);
         const monthNum = index + 1;
         const endOfMonth = new Date(yearStr, monthNum, 0).getDate();
         const colLetter = String.fromCharCode(66 + index);
         // 6.x Pathway Code Deliveries
-        indexSheet.getRange(`"${colLetter}:2"`).setFormula(
+        indexSheet.getRange(`${colLetter}2`).setFormula(
           pathwaysDisplayDataFormula(tabArr, yearNum, monthNum, endOfMonth)
         );
         // CSCT Messages
-        `=COUNT(UNIQUE(FILTER('${tabArr[1]}'!$B:$B,'${tabArr[1]}'!$E:$E\
-        >= Date(${yearNum},${monthNum},1),'${tabArr[1]}'!$E:$E\
-        <= Date(${yearNum},${monthNum},${endOfMonth}))))`;
+        indexSheet.getRange(`${colLetter}3`).setFormula(
+          `=COUNT(UNIQUE(FILTER('${tabArr[1]}'!$B:$B,'${tabArr[1]}'!$E:$E`
+          + ` >= Date(${yearNum},${monthNum},1),'${tabArr[1]}'!$E:$E`
+          + ` <= Date(${yearNum},${monthNum},${endOfMonth}))))`);
         // Data Recoveries
-        genericDisplayDataFormula(tabArr[2], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}4`).setFormula(
+          genericDisplayDataFormula(tabArr[2], yearNum, monthNum, endOfMonth));
         // Development Projects (CSTS)
-        genericDisplayDataFormula(tabArr[3], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}5`).setFormula(
+          genericDisplayDataFormula(tabArr[3], yearNum, monthNum, endOfMonth));
         // Health Check
-        genericDisplayDataFormula(tabArr[4], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}6`).setFormula(
+          genericDisplayDataFormula(tabArr[4], yearNum, monthNum, endOfMonth));
         // Health Check - Resolution
-        `=SUMIFS('${tabArr[5]}'!E:E,'${tabArr[5]}'!A:A,\
-        ">="&Date(${yearNum},${monthNum},1),'${tabArr[5]}'!A:A,\
-        "<"&Date(${yearNum},${monthNum},${endOfMonth}))`;
+        indexSheet.getRange(`${colLetter}7`).setFormula(
+          `=SUMIFS('${tabArr[5]}'!E:E,'${tabArr[5]}'!A:A,`
+          + ` ">="&Date(${yearNum},${monthNum},1),'${tabArr[5]}'!A:A,`
+          + ` "<"&Date(${yearNum},${monthNum},${endOfMonth}))`);
         // Infrastructure Projects
-        genericDisplayDataFormula(tabArr[6], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}8`).setFormula(
+          genericDisplayDataFormula(tabArr[6], yearNum, monthNum, endOfMonth));
         // Large Scale Projects
-        genericDisplayDataFormula(tabArr[7], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}9`).setFormula(
+          genericDisplayDataFormula(tabArr[7], yearNum, monthNum, endOfMonth));
         // LIVE Tasks Support
-        genericDisplayDataFormula(tabArr[8], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}10`).setFormula(
+          genericDisplayDataFormula(tabArr[8], yearNum, monthNum, endOfMonth));
         // MaaS
-        genericDisplayDataFormula(tabArr[9], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}11`).setFormula(
+          genericDisplayDataFormula(tabArr[9], yearNum, monthNum, endOfMonth));
         // Maintenance/Downtime Projects
-        genericDisplayDataFormula(tabArr[10], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}12`).setFormula(
+          genericDisplayDataFormula(tabArr[10], yearNum, monthNum, endOfMonth));
         // Scheduled Projects
-        genericDisplayDataFormula(tabArr[11], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}13`).setFormula(
+          genericDisplayDataFormula(tabArr[11], yearNum, monthNum, endOfMonth));
         // Stipend/Non Stipend
-        genericDisplayDataFormula(tabArr[12], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}14`).setFormula(
+          genericDisplayDataFormula(tabArr[12], yearNum, monthNum, endOfMonth));
         // Tech Code Moves
-        genericDisplayDataFormula(tabArr[13], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}15`).setFormula(
+          genericDisplayDataFormula(tabArr[13], yearNum, monthNum, endOfMonth));
         // Updates Supported (MG)
-        `=COUNTIFS('${tabArr[14]}'!$D:$D,\
-        ">="&Date(${yearNum},${monthNum},1),'${tabArr[14]}'!$D:$D,\
-        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[14]}'!$G:$G,\
-        "Magic",'${tabArr[14]}'!$K:$K,"Yes")`;
+        indexSheet.getRange(`${colLetter}16`).setFormula(
+          `=COUNTIFS('${tabArr[14]}'!$D:$D,`
+          + ` ">="&Date(${yearNum},${monthNum},1),'${tabArr[14]}'!$D:$D,`
+          + ` "<"&Date(${yearNum},${monthNum},${endOfMonth}),`
+          + `'${tabArr[14]}'!$G:$G,"Magic",'${tabArr[14]}'!$K:$K,"Yes")`);
         // Updates Supported (CS)
-        `=COUNTIFS('${tabArr[15]}'!$D:$D,\
-        ">="&Date(${yearNum},${monthNum},1),'${tabArr[15]}'!$D:$D,\
-        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[15]}'!$G:$G,\
-        "CS",'${tabArr[15]}'!$K:$K,"Yes")`;
+        indexSheet.getRange(`${colLetter}17`).setFormula(
+          `=COUNTIFS('${tabArr[15]}'!$D:$D,`
+          + ` ">="&Date(${yearNum},${monthNum},1),'${tabArr[15]}'!$D:$D,`
+          + ` "<"&Date(${yearNum},${monthNum},${endOfMonth}),`
+          + `'${tabArr[15]}'!$G:$G,"CS",'${tabArr[15]}'!$K:$K,"Yes")`);
         // Updates Supported (Exp)
-        `=COUNTIFS('${tabArr[16]}'!$D:$D,\
-        ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,\
-        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[16]}'!$G:$G,\
-        "6.08",'${tabArr[16]}'!$K:$K,"Yes")+COUNTIFS('${tabArr[16]}'!$D:$D,\
-        ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,\
-        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[16]}'!$G:$G,\
-        "6.15",'${tabArr[16]}'!$K:$K,"Yes")+COUNTIFS('${tabArr[16]}'!$D:$D,\
-        ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,\
-        "<"&Date(${yearNum},${monthNum},${endOfMonth}),'${tabArr[16]}'!$G:$G,\
-        "Expanse",'${tabArr[16]}'!$K:$K,"Yes")`;
+        indexSheet.getRange(`${colLetter}18`).setFormula(
+          `=COUNTIFS('${tabArr[16]}'!$D:$D,`
+          + ` ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,`
+          + ` "<"&Date(${yearNum},${monthNum},${endOfMonth}),`
+          + `'${tabArr[16]}'!$G:$G,"6.08",'${tabArr[16]}'!$K:$K,"Yes")`
+          + `+COUNTIFS('${tabArr[16]}'!$D:$D,`
+          + ` ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,`
+          + ` "<"&Date(${yearNum},${monthNum},${endOfMonth}),`
+          + `'${tabArr[16]}'!$G:$G,"6.15",'${tabArr[16]}'!$K:$K,"Yes")`
+          + `+COUNTIFS('${tabArr[16]}'!$D:$D,`
+          + ` ">="&Date(${yearNum},${monthNum},1),'${tabArr[16]}'!$D:$D,`
+          + ` "<"&Date(${yearNum},${monthNum},${endOfMonth}),`
+          + `'${tabArr[16]}'!$G:$G,"Expanse",'${tabArr[16]}'!$K:$K,"Yes")`);
         // UWI Code Moves
-        genericDisplayDataFormula(tabArr[17], yearNum, monthNum, endOfMonth);
+        indexSheet.getRange(`${colLetter}19`).setFormula(
+          genericDisplayDataFormula(tabArr[17], yearNum, monthNum, endOfMonth));
       });
 
       return undefined;

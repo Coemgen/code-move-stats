@@ -42,7 +42,7 @@
     ],
     "no-unused-vars": [
       "error", {
-        "varsIgnorePattern": "[iI]gnored"
+        "varsIgnorePattern": "[iI]gnore"
       }
     ]
   }

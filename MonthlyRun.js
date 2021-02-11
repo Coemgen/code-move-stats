@@ -301,64 +301,62 @@ const MonthlyRun = (
 
       Array.from({
         length: 12
-      }).forEach((ignored, index) => {
+      }).forEach((ignore, index) => {
         const colLetter = String.fromCharCode(66 + index);
         const month = index + 1;
         // 30 'Imported Data'!B53 Magic Updates supported
-        console.log(`${colLetter}:30`);
-        Logger.log(`${colLetter}:30`);
-        weekendDaysSheet.getRange(`${colLetter}:30`)
+        weekendDaysSheet.getRange(`${colLetter}30`)
           .setFormula(getTechFormula(yearStr, month, 53, colLetter));
         // 31 'Imported Data'!B54 CS Updates supported
-        weekendDaysSheet.getRange(`${colLetter}:31`)
+        weekendDaysSheet.getRange(`${colLetter}31`)
           .setFormula(getTechFormula(yearStr, month, 54, colLetter));
         // 32 'Imported Data'!B55 Expanse Updates supported
-        weekendDaysSheet.getRange(`${colLetter}:32`)
+        weekendDaysSheet.getRange(`${colLetter}32`)
           .setFormula(getTechFormula(yearStr, month, 55, colLetter));
         // 35 'Imported Data'!B56 UWI code moves
-        weekendDaysSheet.getRange(`${colLetter}:35`)
+        weekendDaysSheet.getRange(`${colLetter}35`)
           .setFormula(getTechFormula(yearStr, month, 56, colLetter));
         // 36 'Imported Data'!B52 Tech code moves
-        weekendDaysSheet.getRange(`${colLetter}:36`)
+        weekendDaysSheet.getRange(`${colLetter}36`)
           .setFormula(getTechFormula(yearStr, month, 52, colLetter));
         // 42 'Imported Data'!B$49 Maintenance/Downtime projects
-        weekendDaysSheet.getRange(`${colLetter}:42`)
+        weekendDaysSheet.getRange(`${colLetter}42`)
           .setFormula(getTechFormula(yearStr, month, 49, colLetter));
         // 43 'Imported Data'!B$40 CSCT Messages
-        weekendDaysSheet.getRange(`${colLetter}:43`)
+        weekendDaysSheet.getRange(`${colLetter}43`)
           .setFormula(getTechFormula(yearStr, month, 40, colLetter));
         // 44 'Imported Data'!B$42 Development Projects
-        weekendDaysSheet.getRange(`${colLetter}:44`)
+        weekendDaysSheet.getRange(`${colLetter}44`)
           .setFormula(getTechFormula(yearStr, month, 42, colLetter));
         // 45 'Imported Data'!B$46 Large Scale Projects 
-        weekendDaysSheet.getRange(`${colLetter}:45`)
+        weekendDaysSheet.getRange(`${colLetter}45`)
           .setFormula(getTechFormula(yearStr, month, 46, colLetter));
         // 46 'Imported Data'!B$41 Data Recoveries
-        weekendDaysSheet.getRange(`${colLetter}:46`)
+        weekendDaysSheet.getRange(`${colLetter}46`)
           .setFormula(getTechFormula(yearStr, month, 41, colLetter));
         // 47 'Imported Data'!B$43 Health Check - Post Downtime 
-        weekendDaysSheet.getRange(`${colLetter}:47`)
+        weekendDaysSheet.getRange(`${colLetter}47`)
           .setFormula(getTechFormula(yearStr, month, 43, colLetter));
         // 48 'Imported Data'!B$44 Health Check Resolution
-        weekendDaysSheet.getRange(`${colLetter}:48`)
+        weekendDaysSheet.getRange(`${colLetter}48`)
           .setFormula(getTechFormula(yearStr, month, 44, colLetter));
         // 49 'Imported Data'!B$48 MaaS
-        weekendDaysSheet.getRange(`${colLetter}:49`)
+        weekendDaysSheet.getRange(`${colLetter}49`)
           .setFormula(getTechFormula(yearStr, month, 48, colLetter));
         // 50 'Imported Data'!B$47 LIVE tasks support
-        weekendDaysSheet.getRange(`${colLetter}:50`)
+        weekendDaysSheet.getRange(`${colLetter}50`)
           .setFormula(getTechFormula(yearStr, month, 47, colLetter));
         // 51 'Imported Data'!B$51 Stipend/Non Stipend
-        weekendDaysSheet.getRange(`${colLetter}:51`)
+        weekendDaysSheet.getRange(`${colLetter}51`)
           .setFormula(getTechFormula(yearStr, month, 51, colLetter));
         // 52 'Imported Data'!B$39 6.x pathway code deliveries
-        weekendDaysSheet.getRange(`${colLetter}:52`)
+        weekendDaysSheet.getRange(`${colLetter}52`)
           .setFormula(getTechFormula(yearStr, month, 39, colLetter));
         // 53 'Imported Data'!B$45 Infrastructure projects
-        weekendDaysSheet.getRange(`${colLetter}:53`)
+        weekendDaysSheet.getRange(`${colLetter}53`)
           .setFormula(getTechFormula(yearStr, month, 45, colLetter));
         // 54 'Imported Data'!B$50 Scheduled projects
-        weekendDaysSheet.getRange(`${colLetter}:54`)
+        weekendDaysSheet.getRange(`${colLetter}54`)
           .setFormula(getTechFormula(yearStr, month, 50, colLetter));
       });
 
@@ -400,7 +398,6 @@ const MonthlyRun = (
         `=IMPORTRANGE("${yearlySupTechFile.getUrl()}}","Index!B2:M19")`
       );
 
-      // TODO: add formulas for OHS stats sheet tech cells
       // add formulas linking Weekend Days sheet sup/tech #'s to Imported Data
       addSupTechFormulas(spreadsheet, yearStr);
 
