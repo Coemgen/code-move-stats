@@ -29,12 +29,17 @@ const SupTechStats = (
     }
 
     function pathwaysDisplayDataFormula(tabArr, yearNum, monthNum, endOfMonth) {
-      return `=IFERROR(COUNTIF(QUERY('${tabArr[0]}'!A3:F,`
+      return `=IFERROR(ADD(COUNTIF(QUERY('${tabArr[0]}'!A3:F,`
         + `"Select A WHERE year(D)=${yearNum}`
-        + ` AND (D >= date '${yearNum}-${monthNum}-01'`
+        + ` AND (D >= date '${yearNum}-${monthNum}-1'`
         + ` AND D <= date '${yearNum}-${monthNum}-${endOfMonth}')`
         + ` AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2 OR dayOfWeek(D)=6`
-        + ` OR dayOfWeek(D)=7)"),">''"),0)`;
+        + ` OR dayOfWeek(D)=7)"),"> ''"),COUNTIF(QUERY('${tabArr[0]}'!A3:F,`
+        + `"Select A WHERE year(E)=${yearNum}`
+        + ` AND (E >= date '${yearNum}-${monthNum}-1'`
+        + ` AND E <= date '${yearNum}-${monthNum}-${endOfMonth}')`
+        + ` AND (dayOfWeek(E)=1 OR dayOfWeek(E)=2 OR dayOfWeek(E)=6`
+        + ` OR dayOfWeek(E)=7)"),">''")),0)`;
     }
 
     function genericDisplayDataFormula(
