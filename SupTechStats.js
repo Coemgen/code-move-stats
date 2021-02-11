@@ -21,24 +21,20 @@ const SupTechStats = (
         + `"Select Col1, Col2, Col3, Col5, Col6 Where`
         + ` (Col5 >= date '${yearStr}-01-01' AND Col5 < date`
         + ` '${nextYearStr}-01-01') OR`
-        + ` (Col6 >= date '${yearStr}-01-01' AND Col6 < date'`
-        + ` ${nextYearStr}-01-01') AND`
+        + ` (Col6 >= date '${yearStr}-01-01' AND Col6 < date`
+        + ` '${nextYearStr}-01-01') AND`
         + ` (dayOfWeek(Col5)=1 OR dayOfWeek(Col5)>=2 OR dayOfWeek(Col5)=6 OR`
         + ` dayOfWeek(Col5)>=7 OR dayOfWeek(Col6)=1 OR dayOfWeek(Col6)>=2 OR`
         + ` dayOfWeek(Col6)=6 OR dayOfWeek(Col6)>=7)")`;
     }
 
     function pathwaysDisplayDataFormula(tabArr, yearNum, monthNum, endOfMonth) {
-      return `=IF(ISERROR(QUERY('${tabArr[0]}'!A3:F,"Select * WHERE`
-        + ` year(D)=${yearNum} AND (D >= date '${yearNum}-${monthNum}-01'`
-        + ` AND D < date '${yearNum}-${monthNum}-${endOfMonth}')`
+      return `=IFERROR(COUNTIF(QUERY('${tabArr[0]}'!A3:F,`
+        + `"Select A WHERE year(D)=${yearNum}`
+        + ` AND (D >= date '${yearNum}-${monthNum}-01'`
+        + ` AND D <= date '${yearNum}-${monthNum}-${endOfMonth}')`
         + ` AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2 OR dayOfWeek(D)=6`
-        + ` OR dayOfWeek(D)=7)")),0,QUERY('${tabArr[0]}'!A3:F,"Select * WHERE`
-        + ` year(D)=${yearNum} AND (D >= date '${yearNum}-${monthNum}-01'`
-        + ` AND D < date '${yearNum}-${monthNum}-${endOfMonth}')`
-        + ` AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2 OR dayOfWeek(D)=6`
-        + ` OR dayOfWeek(D)=7)"))
-      `;
+        + ` OR dayOfWeek(D)=7)"),">''"),0)`;
     }
 
     function genericDisplayDataFormula(
@@ -63,7 +59,9 @@ const SupTechStats = (
             return name !== "Index"
               && name !== "References"
               && name !== "Template";
-          }).sort();
+          })
+        .map((sheet) => sheet.getName())
+        .sort();
       const nextYearStr = `${parseInt(yearStr) + 1}`;
 
       // special case for 6.x Pathway Code Deliveries
