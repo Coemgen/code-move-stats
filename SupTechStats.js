@@ -29,28 +29,16 @@ const SupTechStats = (
     }
 
     function pathwaysDisplayDataFormula(tabArr, yearNum, monthNum, endOfMonth) {
-      return `=IFERROR(ISNA(QUERY('${tabArr[0]}'!A3:F,"Select * WHERE`
-        + ` year(D)=${yearNum}`
-        + ` AND (D >= date '${yearNum}-${monthNum}-1'`
-        + ` AND D <= date '${yearNum}-${monthNum}-${endOfMonth}')`
+      return `=IF(ISERROR(QUERY('${tabArr[0]}'!A3:F,"Select * WHERE`
+        + ` year(D)=${yearNum} AND (D >= date '${yearNum}-${monthNum}-01'`
+        + ` AND D < date '${yearNum}-${monthNum}-${endOfMonth}')`
         + ` AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2 OR dayOfWeek(D)=6`
-        + ` OR dayOfWeek(D)=7)")),0,ROWS(QUERY('${tabArr[0]}'!A3:F,"Select *`
-        + ` WHERE year(D)=${yearNum}`
-        + ` AND (D >= date '${yearNum}-${monthNum}-01'`
-        + ` AND D <= date '${yearNum}-${monthNum}-${endOfMonth}')`
-        + ` AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2`
-        + ` OR dayOfWeek(D)=6`
-        + ` OR dayOfWeek(D)=7)")))+IF(ISERR(QUERY('${tabArr[0]}'`
-        + `!A3:F,"Select * WHERE year(E)=${yearNum}`
-        + ` AND (E >= date '${yearNum}-${monthNum}-01'`
-        + ` AND E <= date '${yearNum}-${monthNum}-${endOfMonth}')`
-        + ` AND (dayOfWeek(E)=1 OR dayOfWeek(E)=2 OR dayOfWeek(E)=6`
-        + ` OR dayOfWeek(E)=7)")),0,ROWS(QUERY('${tabArr[0]}'!A3:F,"Select`
-        + ` * WHERE year(E)=${yearNum} AND (E >= date`
-        + ` '${yearNum}-${monthNum}-01'`
-        + ` AND E <= date '${yearNum}-${monthNum}-${endOfMonth}')`
-        + ` AND (dayOfWeek(E)=1 OR dayOfWeek(E)=2`
-        + ` OR dayOfWeek(E)=6 OR dayOfWeek(E)=7)"))),"")`;
+        + ` OR dayOfWeek(D)=7)")),0,QUERY('${tabArr[0]}'!A3:F,"Select * WHERE`
+        + ` year(D)=${yearNum} AND (D >= date '${yearNum}-${monthNum}-01'`
+        + ` AND D < date '${yearNum}-${monthNum}-${endOfMonth}')`
+        + ` AND (dayOfWeek(D)=1 OR dayOfWeek(D)=2 OR dayOfWeek(D)=6`
+        + ` OR dayOfWeek(D)=7)"))
+      `;
     }
 
     function genericDisplayDataFormula(
@@ -72,7 +60,9 @@ const SupTechStats = (
         .filter(
           (sheet) => {
             const name = sheet.getName();
-            name !== "Index" && name !== "References" && name !== "Template";
+            return name !== "Index"
+              && name !== "References"
+              && name !== "Template";
           }).sort();
       const nextYearStr = `${parseInt(yearStr) + 1}`;
 
