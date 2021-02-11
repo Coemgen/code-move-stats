@@ -407,9 +407,12 @@ const InitCodeMoveTemplate = (
       const referencesSheet = spreadsheet.getSheetByName("References");
       const managerEmail = PropertiesService.getScriptProperties()
         .getProperty("managerEmail");
+      // don't add manager to Code Move Counts sheet
       const email = PropertiesService.getScriptProperties()
         .getProperty("groupEmail")
-        .filter((email) => email !== managerEmail);
+        .split(",")
+        .filter((email) => email !== managerEmail)
+        .join();
       const staffObjArr = StaffUtilities.getObjArr(email);
       const staffNameArr = StaffUtilities.getNameArr(staffObjArr);
       const dirRingArr = getColumnArray(referencesSheet, "A:A");
