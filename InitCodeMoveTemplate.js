@@ -340,7 +340,7 @@ const InitCodeMoveTemplate = (
 
       return undefined;
     }
-    
+
     /**
      * Wrapper for calling getFooterFormula to get a formula string for adding to
      * a footer totals cell.
@@ -360,13 +360,13 @@ const InitCodeMoveTemplate = (
       let formulaStr = getFooterFormula(staffNameArr, matchObj1);
 
       totalsSheet.getRange(cell).setValue(formulaStr);
-      
+
       // AddlStaff cell
       cell = "H37";
       matchObj1 = {
         "cell": "H2:H"
       };
-      
+
       formulaStr = "=SUM(";
 
       // add users to formula string
@@ -405,8 +405,11 @@ const InitCodeMoveTemplate = (
         .getProperty("codeMoveTemplateId")
       );
       const referencesSheet = spreadsheet.getSheetByName("References");
+      const managerEmail = PropertiesService.getScriptProperties()
+        .getProperty("managerEmail");
       const email = PropertiesService.getScriptProperties()
-        .getProperty("groupEmail");
+        .getProperty("groupEmail")
+        .filter((email) => email !== managerEmail);
       const staffObjArr = StaffUtilities.getObjArr(email);
       const staffNameArr = StaffUtilities.getNameArr(staffObjArr);
       const dirRingArr = getColumnArray(referencesSheet, "A:A");
